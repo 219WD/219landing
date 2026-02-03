@@ -1181,3 +1181,72 @@ body {
     padding: 3px;
   }
 }
+
+/* ============================================
+   TESTIMONIAL LINK BUTTON
+   ============================================ */
+
+.testimonial-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: var(--spacing-sm);
+  align-self: flex-start;
+  cursor: pointer;
+}
+
+.testimonial-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 255, 136, 0.1);
+}
+
+.testimonial-link svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* Asegurar que el layout de las tarjetas de testimonio sea consistente */
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Ajustar para que los botones se alineen bien */
+.testimonial-metrics + .testimonial-link {
+  margin-top: auto; /* Empuja el botón hacia abajo */
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .testimonial-link {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .testimonial-link svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .testimonial-link {
+    width: 100%;
+    justify-content: center;
+    margin-top: var(--spacing-sm);
+  }
+}

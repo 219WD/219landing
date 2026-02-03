@@ -4,6 +4,76 @@ import Albiero from "../assets/albiero.jpg";
 import Canepa from "../assets/aclogo.png";
 
 const TestimonialsSection = React.forwardRef(({ onWhatsAppClick }, ref) => {
+  const testimonials = [
+    {
+      id: 1,
+      name: "Maria Emilia",
+      role: "CEO, ColorUva",
+      quote: "Empezamos de cero sin ventas en la web y ahora facturamos de forma estable. Ordenaron nuestro contenido y nos guiaron paso a paso en la creacion de contenido. Son muy atentos de todo lo que pasa en mi local.",
+      metrics: [
+        { value: "68%", label: "Tasa Conv." },
+        { value: "5.8x", label: "ROAS" }
+      ],
+      logo: ColorUva,
+      logoAlt: "ColorUva",
+      placeholder: "ME",
+      url: "https://coloruva.com.ar/",
+      urlLabel: "Visitar sitio web",
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+      ),
+      featured: false
+    },
+    {
+      id: 2,
+      name: "Alejandro Zambrizzi",
+      role: "Director, Albiero Seguridad",
+      quote: "Nuestra presencia online se transformó completamente con Meta Ads y Google Ads. Pasamos de recibir apenas 10 consultas a más de 300 leads mensuales. El crecimiento ha sido exponencial y constante cada mes.",
+      metrics: [
+        { value: "+2900%", label: "Leads" },
+        { value: "10 → 300", label: "Mensajes/Mes" }
+      ],
+      logo: Albiero,
+      logoAlt: "Albiero Seguridad",
+      placeholder: "AZ",
+      url: "https://www.instagram.com/albieroseguridad.tuc/",
+      urlLabel: "Ver Instagram",
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+      ),
+      featured: true
+    },
+    {
+      id: 3,
+      name: "Alejandro Canepa",
+      role: "Dueño, Canepa Peluquería",
+      quote: "Creamos contenido desde cero logrando una presencia online sólida. Los resultados son claros: pasamos de cero a generar entre 250 y 350 mensajes de clientas de calidad. La estrategia fue impecable.",
+      metrics: [
+        { value: "250-350", label: "Mensajes de Clientas" },
+        { value: "Desde 0", label: "Inicio" }
+      ],
+      logo: Canepa,
+      logoAlt: "Canepa Peluquería",
+      placeholder: "AC",
+      url: "https://www.facebook.com/alejandrocanepapeluqueria1",
+      urlLabel: "Visitar Facebook",
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+        </svg>
+      ),
+      featured: false
+    }
+  ];
+
   return (
     <section className="testimonials-section" ref={ref}>
       <div className="container">
@@ -17,126 +87,60 @@ const TestimonialsSection = React.forwardRef(({ onWhatsAppClick }, ref) => {
         </div>
 
         <div className="testimonials-grid">
-          <div className="testimonial-card" data-index="2">
-            <div className="testimonial-header">
-              <div className="testimonial-avatar">
-                {/* Logo ColorUva */}
-                <img 
-                  src={ColorUva}
-                  alt="ColorUva"
-                  className="avatar-logo"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.parentElement.innerHTML = '<div class="avatar-placeholder">ME</div>';
-                  }}
-                />
+          {testimonials.map((testimonial) => (
+            <div 
+              key={testimonial.id} 
+              className={`testimonial-card ${testimonial.featured ? 'featured' : ''}`}
+              data-index={testimonial.id}
+            >
+              {testimonial.featured && <div className="featured-badge">★ Destacado</div>}
+              
+              <div className="testimonial-header">
+                <div className="testimonial-avatar">
+                  <img 
+                    src={testimonial.logo}
+                    alt={testimonial.logoAlt}
+                    className="avatar-logo"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.parentElement.innerHTML = `<div class="avatar-placeholder">${testimonial.placeholder}</div>`;
+                    }}
+                  />
+                </div>
+                <div className="testimonial-info">
+                  <h4 className="testimonial-name">{testimonial.name}</h4>
+                  <p className="testimonial-role">{testimonial.role}</p>
+                </div>
+                <div className="testimonial-rating">
+                  <span>★★★★★</span>
+                </div>
               </div>
-              <div className="testimonial-info">
-                <h4 className="testimonial-name">Maria Emilia</h4>
-                <p className="testimonial-role">CEO, ColorUva</p>
+              
+              <blockquote className="testimonial-quote">
+                "{testimonial.quote}"
+              </blockquote>
+              
+              <div className="testimonial-metrics">
+                {testimonial.metrics.map((metric, index) => (
+                  <div key={index} className="metric">
+                    <span className="metric-value">{metric.value}</span>
+                    <span className="metric-label">{metric.label}</span>
+                  </div>
+                ))}
               </div>
-              <div className="testimonial-rating">
-                <span>★★★★★</span>
-              </div>
+              
+              {/* Botón para visitar la página del cliente */}
+              <a 
+                href={testimonial.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="testimonial-link"
+              >
+                {testimonial.icon}
+                <span>{testimonial.urlLabel}</span>
+              </a>
             </div>
-            <blockquote className="testimonial-quote">
-              "Empezamos de cero sin ventas en la web y ahora facturamos de
-              forma estable. Ordenaron nuestro contenido y nos guiaron paso a
-              paso en la creacion de contenido. Son muy atentos de todo lo que
-              pasa en mi local."
-            </blockquote>
-            <div className="testimonial-metrics">
-              <div className="metric">
-                <span className="metric-value">68%</span>
-                <span className="metric-label">Tasa Conv.</span>
-              </div>
-              <div className="metric">
-                <span className="metric-value">5.8x</span>
-                <span className="metric-label">ROAS</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="testimonial-card featured" data-index="1">
-            <div className="featured-badge">★ Destacado</div>
-            <div className="testimonial-header">
-              <div className="testimonial-avatar">
-                {/* Logo Albiero Seguridad */}
-                <img 
-                  src={Albiero}
-                  alt="Albiero Seguridad"
-                  className="avatar-logo"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.parentElement.innerHTML = '<div class="avatar-placeholder">AZ</div>';
-                  }}
-                />
-              </div>
-              <div className="testimonial-info">
-                <h4 className="testimonial-name">Alejandro Zambrizzi</h4>
-                <p className="testimonial-role">Director, Albiero Seguridad</p>
-              </div>
-              <div className="testimonial-rating">
-                <span>★★★★★</span>
-              </div>
-            </div>
-            <blockquote className="testimonial-quote">
-              "Nuestra presencia online se transformó completamente con Meta Ads
-              y Google Ads. Pasamos de recibir apenas 10 consultas a más de 300
-              leads mensuales. El crecimiento ha sido exponencial y constante
-              cada mes."
-            </blockquote>
-            <div className="testimonial-metrics">
-              <div className="metric">
-                <span className="metric-value">+2900%</span>
-                <span className="metric-label">Leads</span>
-              </div>
-              <div className="metric">
-                <span className="metric-value">10 → 300</span>
-                <span className="metric-label">Mensajes/Mes</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="testimonial-card" data-index="1">
-            <div className="testimonial-header">
-              <div className="testimonial-avatar">
-                {/* Logo Canepa Peluquería */}
-                <img 
-                  src={Canepa}
-                  alt="Canepa Peluquería"
-                  className="avatar-logo"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.parentElement.innerHTML = '<div class="avatar-placeholder">AC</div>';
-                  }}
-                />
-              </div>
-              <div className="testimonial-info">
-                <h4 className="testimonial-name">Alejandro Canepa</h4>
-                <p className="testimonial-role">Dueño, Canepa Peluquería</p>
-              </div>
-              <div className="testimonial-rating">
-                <span>★★★★★</span>
-              </div>
-            </div>
-            <blockquote className="testimonial-quote">
-              "Creamos contenido desde cero logrando una presencia online
-              sólida. Los resultados son claros: pasamos de cero a generar entre
-              250 y 350 mensajes de clientas de calidad. La estrategia fue
-              impecable."
-            </blockquote>
-            <div className="testimonial-metrics">
-              <div className="metric">
-                <span className="metric-value">250-350</span>
-                <span className="metric-label">Mensajes de Clientas</span>
-              </div>
-              <div className="metric">
-                <span className="metric-value">Desde 0</span>
-                <span className="metric-label">Inicio</span>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
         <div className="testimonials-cta">
