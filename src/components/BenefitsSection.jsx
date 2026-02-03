@@ -41,9 +41,9 @@ const BenefitsSection = React.forwardRef(({ onWhatsAppClick }, ref) => {
                 <path d="M24 2C11.85 2 2 11.85 2 24s9.85 22 22 22 22-9.85 22-24S36.15 2 24 2zm0 40c-9.925 0-18-8.075-18-18S14.075 6 24 6s18 8.075 18 18-8.075 18-18 18z" fill="currentColor" opacity="0.3"/>
               </svg>
             </div>
-            <h3 className="benefit-title">Meta Ads Inteligentes</h3>
+            <h3 className="benefit-title">Facebook, Instagram y Google</h3>
             <p className="benefit-description">
-              Campañas publicitarias en Facebook e Instagram con targeting preciso, optimización diaria y estrategias probadas para maximizar tu inversión.
+              Campañas publicitarias en Facebook, Instagram y Google con targeting preciso, optimización diaria y estrategias probadas para maximizar tu inversión.
             </p>
             <button 
               className="benefit-cta"
