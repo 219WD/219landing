@@ -7,6 +7,7 @@ import {
   faHeadset 
 } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import TextFloat from './TextFloat';
 
 const BenefitsSection = React.forwardRef(({ onWhatsAppClick }, ref) => {
   return (
@@ -14,6 +15,7 @@ const BenefitsSection = React.forwardRef(({ onWhatsAppClick }, ref) => {
       <div className="container">
         <div className="section-header">
           <span className="section-label">Por qué elegirnos</span>
+          
           <h2 className="section-title">
             Tu Negocio Merece<br />
             <span className="gradient-text">Resultados Reales</span>

@@ -1,0 +1,89 @@
+/* ============================================
+   TEXT FLOAT - Animación de texto letra por letra
+   ============================================ */
+
+.text-float {
+  overflow: hidden;
+  display: inline-block;
+  font-size: clamp(1.6rem, 8vw, 10rem);
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.5;
+  font-family: var(--font-display, 'Clash Display', sans-serif);
+}
+
+.char-float {
+  display: inline-block;
+  /* Estos estilos serán sobrescritos por GSAP o JS */
+  will-change: opacity, transform;
+}
+
+/* ============================================
+   VARIANTES
+   ============================================ */
+
+/* Texto más pequeño */
+.text-float.text-float-small {
+  font-size: clamp(1.2rem, 5vw, 3rem);
+}
+
+/* Texto mediano (default para section titles) */
+.text-float.text-float-medium {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+}
+
+/* Texto grande (hero) */
+.text-float.text-float-large {
+  font-size: clamp(3rem, 10vw, 8rem);
+}
+
+/* ============================================
+   GRADIENTES (opcional)
+   ============================================ */
+
+.text-float.gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary, #00ff88) 0%, #00ffcc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-float.gradient-accent {
+  background: linear-gradient(135deg, var(--color-accent, #ff3366) 0%, #ff66cc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .text-float {
+    font-size: clamp(1.5rem, 6vw, 3rem);
+  }
+  
+  .text-float.text-float-small {
+    font-size: clamp(1rem, 4vw, 2rem);
+  }
+  
+  .text-float.text-float-medium {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+  }
+  
+  .text-float.text-float-large {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+  }
+}
+
+/* ============================================
+   FALLBACK - Si las animaciones no cargan
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .char-float {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

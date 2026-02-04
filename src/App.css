@@ -1250,3 +1250,176 @@ body {
     margin-top: var(--spacing-sm);
   }
 }
+
+/* ============================================
+   ANIMACIONES CSS PURAS - BACKUP
+   Si GSAP falla, agregar esto a App.css
+   ============================================ */
+
+/* Hero Animations */
+.hero-badge,
+.hero-title,
+.hero-subtitle,
+.hero-cta {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+.hero-badge {
+  animation-delay: 0s;
+}
+
+.hero-title {
+  animation-delay: 0.2s;
+}
+
+.hero-subtitle {
+  animation-delay: 0.5s;
+}
+
+.hero-cta {
+  animation-delay: 0.8s;
+}
+
+.stat-item {
+  animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+
+.stat-item:nth-child(1) { animation-delay: 1s; }
+.stat-item:nth-child(2) { animation-delay: 1.15s; }
+.stat-item:nth-child(3) { animation-delay: 1.3s; }
+
+/* Floating WhatsApp - CRÍTICO */
+.floating-whatsapp {
+  animation: 
+    scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.5s forwards,
+    float 2s ease-in-out 2.5s infinite;
+  opacity: 0;
+  /* Fallback en caso de que las animaciones fallen */
+  will-change: transform, opacity;
+}
+
+/* Si las animaciones fallan completamente */
+@media (prefers-reduced-motion: reduce) {
+  .floating-whatsapp {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+/* Sections - Animar al hacer scroll */
+.benefits-section,
+.testimonials-section,
+.offer-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.benefits-section.animate-in,
+.testimonials-section.animate-in,
+.offer-section.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Cards */
+.benefit-card,
+.testimonial-card,
+.price-container,
+.bonus-container {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-in .benefit-card:nth-child(1),
+.animate-in .testimonial-card:nth-child(1),
+.animate-in .price-container:nth-child(1) {
+  transition-delay: 0.1s;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-in .benefit-card:nth-child(2),
+.animate-in .testimonial-card:nth-child(2),
+.animate-in .price-container:nth-child(2) {
+  transition-delay: 0.2s;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-in .benefit-card:nth-child(3),
+.animate-in .testimonial-card:nth-child(3) {
+  transition-delay: 0.3s;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-in .benefit-card:nth-child(4) {
+  transition-delay: 0.4s;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   KEYFRAMES
+   ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ============================================
+   FALLBACK FORZADO - ÚLTIMA OPCIÓN
+   Descomentar si nada más funciona
+   ============================================ */
+
+/*
+.floating-whatsapp {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+  animation: float 2s ease-in-out infinite !important;
+}
+
+.hero-badge,
+.hero-title,
+.hero-subtitle,
+.hero-cta,
+.stat-item,
+.benefit-card,
+.testimonial-card,
+.price-container,
+.bonus-container {
+  opacity: 1 !important;
+  transform: none !important;
+}
+*/
