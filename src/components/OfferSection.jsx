@@ -66,7 +66,7 @@ const OfferSection = React.forwardRef(({ onWhatsAppClick }, ref) => {
               <span className="price-label">Inversión Total</span>
               <div className="price-wrapper">
                 <span className="price-currency">USD</span>
-                <span className="price-amount">500</span>
+                <span className="price-amount">600</span>
               </div>
               <span className="price-note">Pago único · Costo en publicidad no incluido</span>
             </div>
