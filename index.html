@@ -3,52 +3,86 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Primario -->
+    <title>219Labs | Landing Pages de Alta Conversión + Meta Ads Argentina</title>
     <meta
       name="description"
-      content="219Labs - Landing Pages de alta conversión + Meta Ads optimizados. Medición profesional con Pixel y Google Analytics 4."
+      content="219Labs: diseñamos Landing Pages de alta conversión y gestionamos Meta Ads con medición profesional. Pixel, GA4 y resultados reales para tu negocio en Argentina."
     />
     <meta
       name="keywords"
-      content="landing pages, meta ads, facebook ads, instagram ads, google analytics, conversión, marketing digital, argentina"
+      content="landing pages argentina, meta ads argentina, facebook ads, instagram ads, google analytics 4, agencia marketing digital argentina, conversión web"
     />
     <meta name="author" content="219Labs" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="canonical" href="https://219labs.com.ar/" />
+
+    <!-- Google Site Verification -->
     <meta
       name="google-site-verification"
       content="WYuqDn-lIGIwsjrbQnVmJJ8W1P5Usa2yT8TIrM7dsaU"
     />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://219labs.com/" />
+    <meta property="og:url" content="https://219labs.com.ar/" />
+    <meta property="og:site_name" content="219Labs" />
+    <meta property="og:locale" content="es_AR" />
     <meta
       property="og:title"
-      content="219Labs - Landing Pages de Alta Conversión + Meta Ads"
+      content="219Labs | Landing Pages de Alta Conversión + Meta Ads"
     />
     <meta
       property="og:description"
+      content="Convertimos visitantes en clientes. Landing Pages optimizadas + Meta Ads con medición profesional en Argentina."
+    />
+    <meta property="og:image" content="https://219labs.com.ar/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="219Labs - Marketing Digital Argentina" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://219labs.com.ar/" />
+    <meta
+      name="twitter:title"
+      content="219Labs | Landing Pages de Alta Conversión + Meta Ads"
+    />
+    <meta
+      name="twitter:description"
       content="Convertimos visitantes en clientes. Landing Pages optimizadas + Meta Ads con medición profesional."
     />
-    <meta property="og:image" content="https://219labs.com/og-image.jpg" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://219labs.com/" />
-    <meta
-      property="twitter:title"
-      content="219Labs - Landing Pages de Alta Conversión + Meta Ads"
-    />
-    <meta
-      property="twitter:description"
-      content="Convertimos visitantes en clientes. Landing Pages optimizadas + Meta Ads con medición profesional."
-    />
-    <meta property="twitter:image" content="https://219labs.com/og-image.jpg" />
-
-    <title>219Labs - Landing Pages de Alta Conversión + Meta Ads</title>
+    <meta name="twitter:image" content="https://219labs.com.ar/og-image.jpg" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/logo-blanco.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-    <!-- Meta Pixel Code -->
+    <!-- Structured Data JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "219Labs",
+      "url": "https://219labs.com.ar",
+      "logo": "https://219labs.com.ar/logo-blanco.png",
+      "description": "Agencia de marketing digital especializada en Landing Pages de alta conversión y Meta Ads con medición profesional.",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Argentina"
+      },
+      "serviceType": ["Landing Pages", "Meta Ads", "Google Analytics 4", "Marketing Digital"],
+      "sameAs": [
+        "https://www.instagram.com/219labs",
+        "https://www.facebook.com/219labs"
+      ]
+    }
+    </script>
+
+    <!-- Meta Pixel -->
     <script>
       !(function (f, b, e, v, n, t, s) {
         if (f.fbq) return;
@@ -67,43 +101,24 @@
         t.src = v;
         s = b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t, s);
-      })(
-        window,
-        document,
-        "script",
-        "https://connect.facebook.net/en_US/fbevents.js",
-      );
+      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
       fbq("init", "762982163514583");
       fbq("track", "PageView");
     </script>
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=762982163514583&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
+    <noscript>
+      <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=762982163514583&ev=PageView&noscript=1" />
+    </noscript>
 
-    <!-- Google Analytics 4 -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-5MXJ1F96MX"
-    ></script>
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-5MXJ1F96MX"
-    ></script>
+    <!-- Google Analytics 4 (sin duplicado) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5MXJ1F96MX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
+      function gtag() { dataLayer.push(arguments); }
       gtag("js", new Date());
-
       gtag("config", "G-5MXJ1F96MX");
     </script>
-    <!-- End Google Analytics 4 -->
+
   </head>
   <body>
     <div id="root"></div>

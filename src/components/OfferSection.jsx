@@ -7,7 +7,7 @@ const OfferSection = React.forwardRef(({ onWhatsAppClick }, ref) => {
         <div className="offer-content">
           <div className="offer-badge">
             <span className="badge-pulse"></span>
-            Oferta Limitada - Solo Febrero 2026
+            Oferta Limitada - Solo Marzo 2026
           </div>
           
           <h2 className="offer-title">
@@ -66,7 +66,7 @@ const OfferSection = React.forwardRef(({ onWhatsAppClick }, ref) => {
               <span className="price-label">Inversión Total</span>
               <div className="price-wrapper">
                 <span className="price-currency">USD</span>
-                <span className="price-amount">600</span>
+                <span className="price-amount">1000</span>
               </div>
               <span className="price-note">Pago único · Costo en publicidad no incluido</span>
             </div>
