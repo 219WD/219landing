@@ -254,3 +254,42 @@
     height: 80%;
   }
 }
+
+.bn-item__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--c-accent, #00cc6f);
+  text-decoration: none;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    opacity 0.3s ease 0.05s,
+    max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    gap 0.2s ease;
+}
+.bn-item:hover .bn-item__cta {
+  opacity: 1;
+  max-height: 32px;
+}
+.bn-item__cta:hover {
+  gap: 11px;
+}
+.bn-item__cta svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.bn-item__cta:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* el detail también necesita más espacio ahora que tiene más texto */
+.bn-item:hover .bn-item__detail {
+  max-height: 60px;
+}

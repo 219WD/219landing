@@ -233,3 +233,18 @@ a  { text-decoration: none; color: inherit; }
 
   .hero__subtitle-area { grid-column: 1; grid-row: 4; margin-top: 24px; max-width: 100%; }
 }
+
+/* ── Preloader: esconde contenido hasta que ready lo libere ── */
+.hero--preloading .hero-logo,
+.hero--preloading .hero__logo-labels span,
+.hero--preloading .hero-nav__link,
+.hero--preloading .hero-headline,
+.hero--preloading .hero-descriptor,
+.hero--preloading .hero-cta {
+  opacity: 0;
+}
+
+.hero-cta {
+  animation: none !important;
+  opacity: 0;
+}

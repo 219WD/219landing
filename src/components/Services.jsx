@@ -106,7 +106,7 @@ export default function Services() {
       </div>
 
       <p className="sv-closing">
-        Cada servicio está diseñado para que tu negocio venda más.
+        Cada servicio está diseñado para que <strong>tu negocio venda más</strong>.
       </p>
     </section>
   );

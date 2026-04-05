@@ -1,38 +1,44 @@
-import { useRef } from 'react';
-import ScrollOrb from './ScrollOrb';
-import { useOrbFluid } from '../hooks/useOrbFluid.js';
-import { useProblemSolutionAnimations } from '../hooks/useProblemSolutionAnimations.js';
-import './problem-solution.css';
+import { useRef } from "react";
+import ScrollOrb from "./ScrollOrb";
+import { useOrbFluid } from "../hooks/useOrbFluid.js";
+import { useProblemSolutionAnimations } from "../hooks/useProblemSolutionAnimations.js";
+import "./problem-solution.css";
 
 const problems = [
-  'Recomendaciones boca a boca',
-  'Clientes que pasan por el local',
-  'Publicaciones en redes que no venden',
+  "Recomendaciones boca a boca",
+  "Clientes que pasan por el local",
+  "Publicaciones en redes que no venden",
 ];
 
 const steps = [
-  { n: '01', text: 'Personas interesadas encuentran tu negocio online' },
-  { n: '02', text: 'Llegan a una página diseñada para convencer'       },
-  { n: '03', text: 'Un mensaje claro explica por qué elegirte'         },
-  { n: '04', text: 'El visitante se transforma en cliente'             },
+  { n: "01", text: "Personas interesadas encuentran tu negocio online" },
+  { n: "02", text: "Llegan a una página diseñada para convencer" },
+  { n: "03", text: "Un mensaje claro explica por qué elegirte" },
+  { n: "04", text: "El visitante se transforma en cliente" },
 ];
 
 // SVG timeline dimensions
-const TL_X      = 24;   // x center of the vertical line
-const STEP_H    = 88;   // vertical gap between nodes
-const TL_TOP    = 0;
+const TL_X = 24; // x center of the vertical line
+const STEP_H = 88; // vertical gap between nodes
+const TL_TOP = 0;
 const TL_BOTTOM = TL_TOP + (steps.length - 1) * STEP_H;
-const SVG_W     = 56;
-const SVG_H     = TL_BOTTOM + 1;
+const SVG_W = 56;
+const SVG_H = TL_BOTTOM + 1;
+
+const WP_URL =
+  "https://wa.me/TU_NUMERO?text=Hola%2C%20quiero%20implementar%20el%20sistema";
 
 export default function ProblemSolution() {
   const sectionRef = useRef(null);
-  const orbRef     = useOrbFluid(sectionRef);
+  const orbRef = useOrbFluid(sectionRef);
   useProblemSolutionAnimations(sectionRef);
 
   return (
-    <section className="ps-section" ref={sectionRef} aria-label="El problema y la solución">
-
+    <section
+      className="ps-section"
+      ref={sectionRef}
+      aria-label="El problema y la solución"
+    >
       {/* ── parallax orb ── */}
       <ScrollOrb orbRef={orbRef} />
 
@@ -40,7 +46,6 @@ export default function ProblemSolution() {
       <div className="ps-rail" aria-hidden="true" />
 
       <div className="ps-inner">
-
         {/* ════ PROBLEMA ════ */}
         <div className="ps-block">
           <span className="ps-eyebrow">El problema</span>
@@ -64,7 +69,9 @@ export default function ProblemSolution() {
               Eso hace que las ventas sean&nbsp;<em>impredecibles.</em>
             </p>
             <div className="ps-month-toggle" aria-hidden="true">
-              <span className="ps-month ps-month--good">Un mes vendés bien.</span>
+              <span className="ps-month ps-month--good">
+                Un mes vendés bien.
+              </span>
               <span className="ps-month ps-month--bad">Otro mes&nbsp;no.</span>
             </div>
           </div>
@@ -90,7 +97,6 @@ export default function ProblemSolution() {
 
           {/* ── Steps with SVG timeline ── */}
           <div className="ps-steps-wrap">
-
             {/* Animated SVG path running behind the steps */}
             <svg
               className="ps-timeline-svg"
@@ -126,20 +132,46 @@ export default function ProblemSolution() {
             <ol className="ps-steps" aria-label="Cómo funciona el sistema">
               {steps.map((s, i) => (
                 <li key={i} className="ps-step">
-                  <span className="ps-step__num" aria-hidden="true">{s.n}</span>
+                  <span className="ps-step__num" aria-hidden="true">
+                    {s.n}
+                  </span>
                   <p className="ps-step__text">{s.text}</p>
                 </li>
               ))}
             </ol>
-
           </div>
 
           <p className="ps-closing">
             Todo el sistema está diseñado para convertir&nbsp;
             <strong>visitas en ventas.</strong>
           </p>
-        </div>
 
+          <a
+            href={WP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ps-cta"
+          >
+            <span className="ps-cta__label">
+              Quiero implementar este sistema
+            </span>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M1 11L11 1M11 1H4M11 1V8"
+                stroke="currentColor"
+                strokeWidth="1.7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </section>
   );

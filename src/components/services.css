@@ -256,3 +256,7 @@
   .sv-card:hover .sv-card__function,
   .sv-card:focus-within .sv-card__function { max-height: 120px; }
 }
+
+.sv-closing strong {
+  color: var(--c-accent, #00cc6f);
+}
