@@ -1,0 +1,323 @@
+/* ── final-cta.css ──────────────────────────────────────────────────── */
+
+.fc-section {
+  position: relative;
+  overflow: hidden;
+  font-family: var(--f-sans, 'DM Sans', system-ui, sans-serif);
+  color: var(--c-text, #fff);
+  padding: clamp(80px, 10vw, 140px) clamp(28px, 4vw, 64px);
+  background: var(--c-bg, #080806);
+
+  /* GSAP scrubs this to shift the grid */
+  --fc-grid-offset: 0px;
+}
+
+/* ── animated grid background ── */
+.fc-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* horizontal lines */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 204, 111, 0.03) 0px,
+      rgba(0, 204, 111, 0.03) 1px,
+      transparent 1px,
+      transparent 64px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 204, 111, 0.02) 0px,
+      rgba(0, 204, 111, 0.02) 1px,
+      transparent 1px,
+      transparent 64px
+    );
+  background-position: var(--fc-grid-offset) var(--fc-grid-offset);
+  background-size: 64px 64px;
+}
+
+/* ── central radial glow — fixed, not affected by scrub ── */
+.fc-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 80%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 204, 111, 0.06) 0%,
+    rgba(0, 204, 111, 0.02) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* top separator */
+.fc-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 204, 111, 0.35) 30%,
+    rgba(0, 204, 111, 0.35) 70%,
+    transparent
+  );
+  z-index: 1;
+}
+
+/* ── inner ── */
+.fc-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(48px, 7vw, 72px);
+}
+
+/* ── horizontal divider ── */
+.fc-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 204, 111, 0.4) 20%,
+    rgba(0, 204, 111, 0.4) 80%,
+    transparent
+  );
+  transform-origin: left;
+}
+
+/* ── two column grid ── */
+.fc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 0 clamp(36px, 5vw, 72px);
+  align-items: start;
+}
+
+/* ── vertical separator ── */
+.fc-vsep {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 204, 111, 0.25) 20%,
+    rgba(0, 204, 111, 0.25) 80%,
+    transparent
+  );
+  align-self: stretch;
+}
+
+/* ════════════════════════════════════
+   LEFT — AUDIT
+   ════════════════════════════════════ */
+
+.fc-audit {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.fc-audit__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-accent, #00cc6f);
+  margin-bottom: 20px;
+}
+
+/* dot before eyebrow */
+.fc-audit__eyebrow::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-accent, #00cc6f);
+  animation: fc-pulse 2s ease-in-out infinite;
+}
+
+@keyframes fc-pulse {
+  0%, 100% { opacity: 1; transform: scale(1);    }
+  50%       { opacity: 0.5; transform: scale(1.4); }
+}
+
+.fc-audit__title {
+  font-family: var(--f-display, 'Playfair Display', Georgia, serif);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--c-text, #fff);
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+
+.fc-audit__title-accent {
+  font-style: italic;
+  color: var(--c-accent, #00cc6f);
+}
+
+.fc-audit__intro {
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.38);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 10.5px;
+  margin-bottom: 20px;
+}
+
+/* bullet list */
+.fc-audit__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 32px;
+}
+
+.fc-audit__bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  font-size: clamp(14px, 1.3vw, 17px);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.45;
+  cursor: default;
+  transition: padding-left 0.3s ease, color 0.25s ease;
+}
+.fc-audit__bullet:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.055);
+}
+.fc-audit__bullet:hover {
+  padding-left: 6px;
+  color: #fff;
+}
+
+/* animated dash */
+.fc-audit__dash {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--c-accent, #00cc6f);
+  flex-shrink: 0;
+  margin-top: 0.6em;
+  transform-origin: left;
+  opacity: 0.7;
+  transition: width 0.25s ease, opacity 0.25s ease;
+}
+.fc-audit__bullet:hover .fc-audit__dash {
+  width: 24px;
+  opacity: 1;
+}
+
+.fc-audit__note {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.28);
+  font-style: italic;
+}
+
+/* ════════════════════════════════════
+   RIGHT — CTA
+   ════════════════════════════════════ */
+
+.fc-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-top: 4px;
+}
+
+.fc-cta__headline {
+  font-family: var(--f-display, 'Playfair Display', Georgia, serif);
+  font-size: clamp(26px, 3.5vw, 48px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+  color: var(--c-text, #fff);
+  overflow: hidden;
+}
+
+.fc-cta__headline-accent {
+  font-style: italic;
+  color: var(--c-accent, #00cc6f);
+}
+
+.fc-cta__body {
+  font-size: clamp(14px, 1.2vw, 16px);
+  font-weight: 300;
+  line-height: 1.72;
+  color: rgba(255, 255, 255, 0.52);
+  max-width: 480px;
+}
+
+/* CTA button — same language as hero but bigger */
+.fc-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  align-self: flex-start;
+  background: var(--c-accent, #00cc6f);
+  color: #080806;
+  font-family: var(--f-sans, 'DM Sans', system-ui, sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  border: none;
+  padding: 18px 32px;
+  cursor: pointer;
+  transition: background 0.2s ease, gap 0.2s ease, transform 0.2s ease,
+              box-shadow 0.2s ease;
+}
+.fc-cta__btn:hover {
+  background: #00e67a;
+  gap: 18px;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 204, 111, 0.28);
+}
+.fc-cta__btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.fc-cta__sub {
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.22);
+  letter-spacing: 0.06em;
+  font-style: italic;
+}
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .fc-grid {
+    grid-template-columns: 1fr;
+    gap: clamp(40px, 7vw, 64px) 0;
+  }
+  .fc-vsep { display: none; }
+}
+
+@media (max-width: 560px) {
+  .fc-cta__btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

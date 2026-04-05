@@ -1,10 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 import HeroSection from './components/HeroSection';
-import BenefitsSection from './components/BenefitsSection';
+import Benefits from './components/Benefits';
 import TestimonialsSection from './components/TestimonialsSection';
 import OfferSection from './components/OfferSection';
 import Footer from './components/Footer';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
+import ProblemSolution from './components/ProblemSolution';
+import Services from './components/Services';
+import ForWho from './components/ForWho';
+import FinalCTA from './components/FinalCTA';
 import { useScrollAnimation } from './hooks/useScrollAnimation';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import './App.css';
@@ -65,18 +69,23 @@ const App = () => {
         ref={heroRef} 
         onWhatsAppClick={() => handleWhatsAppClick('hero')} 
       />
-      <BenefitsSection 
+      <ProblemSolution />
+      <Services />
+      <Benefits 
         ref={benefitsRef} 
         onWhatsAppClick={handleWhatsAppClick} 
       />
+      <ForWho />
       <TestimonialsSection 
         ref={testimonialsRef} 
         onWhatsAppClick={() => handleWhatsAppClick('testimonials')} 
       />
-      <OfferSection 
+      {/* <OfferSection 
         ref={offerRef} 
         onWhatsAppClick={handleWhatsAppClick} 
-      />
+      /> */}
+      <FinalCTA />
+
       <Footer 
         onWhatsAppClick={() => handleWhatsAppClick('footer')} 
       />

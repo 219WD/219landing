@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ── Tokens ──────────────────────────────────────────────────────────── */
+:root {
+  --c-bg:       #080806;
+  --c-text:     #ffffff;
+  --c-muted:    rgba(255, 255, 255, 0.50);
+  --c-nav:      rgba(255, 255, 255, 0.78);
+  --c-accent:   #00F282;
+  --c-cta-bg:   rgba(255,255,255,0.94);
+  --c-cta-fg:   #080806;
+
+  --f-display:  'Playfair Display', Georgia, serif;
+  --f-sans:     'DM Sans', system-ui, sans-serif;
+
+  --ph: clamp(28px, 4vw, 64px);
+  --pv: clamp(28px, 3.5vw, 52px);
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ul { list-style: none; }
+a  { text-decoration: none; color: inherit; }
+
+/* ── Hero shell ──────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--f-sans);
+}
+
+/* ── Vignette ────────────────────────────────────────────────────────── */
+.hero__vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom,
+      rgba(8,8,6,0.52)  0%,
+      rgba(8,8,6,0.0)  28%,
+      rgba(8,8,6,0.0)  62%,
+      rgba(8,8,6,0.68) 100%),
+    radial-gradient(ellipse 100% 80% at 50% 50%,
+      transparent 30%,
+      rgba(8,8,6,0.42) 100%);
+}
+
+/* ── Content grid ────────────────────────────────────────────────────── */
+.hero__grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  padding: var(--pv) var(--ph);
+}
+
+/* ── Logo (top-left) ─────────────────────────────────────────────────── */
+.hero__logo-area {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+}
+
+.hero-logo {
+  width: clamp(160px, 22vw, 150px);
+}
+.hero-logo svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* FIX: was justify-content: space-between — now flush left with small gap */
+.hero__logo-labels {
+  display: flex;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 5px 1px 0;
+  font-family: var(--f-sans);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+}
+
+/* ── Nav (top-right) ─────────────────────────────────────────────────── */
+.hero-nav {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-self: start;
+}
+
+.hero-nav__list {
+  display: flex;
+  gap: clamp(18px, 2.8vw, 48px);
+}
+
+.hero-nav__link {
+  font-family: var(--f-sans);
+  font-size: clamp(13px, 1vw, 15.5px);
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  color: var(--c-nav);
+  transition: color 0.16s ease;
+}
+.hero-nav__link:hover,
+.hero-nav__link:focus-visible {
+  color: #fff;
+  outline: none;
+}
+
+/* ── Middle spacer (row 2) ───────────────────────────────────────────── */
+.hero__spacer {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+/* ── Subtitle / descriptor (bottom-left) ─────────────────────────────── */
+.hero__subtitle-area {
+  grid-column: 1;
+  grid-row: 3;
+  align-self: end;
+  max-width: 340px;
+  padding-bottom: 2px;
+}
+
+.hero-descriptor {
+  font-family: var(--f-sans);
+  font-size: clamp(13px, 1vw, 15px);
+  font-weight: 300;
+  line-height: 1.72;
+  color: var(--c-muted);
+}
+
+/* ── Headline + CTA (bottom-right, rows 2–3) ─────────────────────────── */
+.hero__main-area {
+  grid-column: 2;
+  grid-row: 2 / 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 32px;
+  padding-bottom: 2px;
+}
+
+.hero-headline {
+  font-family: var(--f-display);
+  font-size: clamp(28px, 4.4vw, 62px);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1.09;
+  letter-spacing: -0.015em;
+  color: var(--c-text);
+  max-width: 620px;
+}
+
+.hero-headline__accent {
+  font-style: italic;
+  color: var(--c-accent);
+}
+
+/* ── CTA button — FIX: explicit flex-direction row + align-items center ── */
+.hero-cta {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 11px;
+  background: var(--c-cta-bg);
+  color: var(--c-cta-fg);
+  font-family: var(--f-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 14px 24px;
+  transition: background 0.18s ease, gap 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+  /* reset any inherited flex/block weirdness */
+  line-height: 1;
+  vertical-align: middle;
+}
+.hero-cta:hover,
+.hero-cta:focus-visible {
+  background: #fff;
+  gap: 18px;
+  outline: none;
+}
+
+.hero-cta__label {
+  display: inline;
+  line-height: 1;
+}
+
+.hero-cta__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+.hero-cta:hover .hero-cta__arrow {
+  transform: translate(2px, -2px);
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+  }
+
+  .hero__logo-area   { grid-column: 1; grid-row: 1; }
+
+  .hero-nav          { grid-column: 1; grid-row: 2; justify-content: flex-start; margin-top: 22px; }
+  .hero-nav__list    { flex-wrap: wrap; gap: 12px 20px; }
+
+  .hero__spacer      { display: none; }
+
+  .hero__main-area   { grid-column: 1; grid-row: 3; margin-top: 36px; justify-content: flex-start; gap: 28px; }
+
+  .hero__subtitle-area { grid-column: 1; grid-row: 4; margin-top: 24px; max-width: 100%; }
+}
