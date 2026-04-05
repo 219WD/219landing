@@ -46,7 +46,7 @@ export default function ProblemSolution() {
           <span className="ps-eyebrow">El problema</span>
 
           <h2 className="ps-heading">
-            La mayoría de los negocios depende&nbsp;de
+            La mayoría de los negocios dependen&nbsp;de
             <span className="ps-heading__underline" aria-hidden="true" />
           </h2>
 
