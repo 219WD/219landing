@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import ScrollOrb from "./ScrollOrb";
 import { useOrbFluid } from "../hooks/useOrbFluid.js";
 import { useProblemSolutionAnimations } from "../hooks/useProblemSolutionAnimations.js";
@@ -24,9 +25,6 @@ const TL_TOP = 0;
 const TL_BOTTOM = TL_TOP + (steps.length - 1) * STEP_H;
 const SVG_W = 56;
 const SVG_H = TL_BOTTOM + 1;
-
-const WP_URL =
-  "https://wa.me/TU_NUMERO?text=Hola%2C%20quiero%20implementar%20el%20sistema";
 
 export default function ProblemSolution() {
   const sectionRef = useRef(null);
@@ -146,14 +144,9 @@ export default function ProblemSolution() {
             <strong>visitas en ventas.</strong>
           </p>
 
-          <a
-            href={WP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ps-cta"
-          >
+          <Link to="/aplicar" className="ps-cta">
             <span className="ps-cta__label">
-              Quiero implementar este sistema
+              Aplicar para trabajar juntos
             </span>
             <svg
               width="12"
@@ -170,7 +163,7 @@ export default function ProblemSolution() {
                 strokeLinejoin="round"
               />
             </svg>
-          </a>
+          </Link>
         </div>
       </div>
     </section>

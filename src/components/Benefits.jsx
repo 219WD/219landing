@@ -1,11 +1,9 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import mockup from "../assets/mockup1.png";
 import AmbientOrb from "./AmbientOrb";
 import { useBenefitsAnimations } from "../hooks/useBenefitsAnimations.js";
 import "./benefits.css";
-
-const WP_URL =
-  "https://wa.me/5493816671884?text=Hola%2C%20quiero%20implementar%20el%20sistema";
 
 const BENEFITS = [
   {
@@ -79,12 +77,7 @@ export default function Benefits() {
                 <div className="bn-item__right">
                   <p className="bn-item__text">{b.text}</p>
                   <p className="bn-item__detail">{b.detail}</p>
-                  <a
-                    href={WP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bn-item__cta"
-                  >
+                  <Link to="/aplicar" className="bn-item__cta">
                     {b.cta}
                     <svg
                       width="10"
@@ -101,7 +94,7 @@ export default function Benefits() {
                         strokeLinejoin="round"
                       />
                     </svg>
-                  </a>
+                  </Link>
                 </div>
               </li>
             ))}

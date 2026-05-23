@@ -1,9 +1,8 @@
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import AmbientOrb from './AmbientOrb';
 import { useForWhoAnimations } from '../hooks/useForWhoAnimations.js';
 import './for-who.css';
-
-const WP_URL = 'https://wa.me/5493816671884?text=Hola%2C%20quiero%20implementar%20el%20sistema';
 
 const PROFILES = [
   {
@@ -75,18 +74,13 @@ export default function ForWho() {
               <div className="fw-card__icon">{p.icon}</div>
               <p className="fw-card__label">{p.label}</p>
               <p className="fw-card__text">{p.text}</p>
-              <a
-                href={WP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="fw-card__cta"
-              >
+              <Link to="/aplicar" className="fw-card__cta">
                 {p.cta}
                 <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                   <path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor"
                     strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              </a>
+              </Link>
               <div className="fw-card__corner" aria-hidden="true" />
             </div>
           ))}
@@ -97,18 +91,13 @@ export default function ForWho() {
             Si tu negocio necesita clientes,<br />
             <strong>este sistema es para vos.</strong>
           </p>
-          <a
-            href={WP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="fw-cta"
-          >
-            <span>Quiero implementar este sistema</span>
+          <Link to="/aplicar" className="fw-cta">
+            <span>Aplicar para trabajar juntos</span>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
               <path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor"
                 strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          </a>
+          </Link>
         </div>
 
       </div>

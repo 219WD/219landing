@@ -10,7 +10,7 @@ import { useHeroAnimations } from "./hooks/useHeroAnimations.js";
 import { COPY } from "./constants/theme";
 import "./styles/hero.css";
 
-export default function Hero219Labs() {
+export default function Hero219Labs({ onWhatsAppClick }) {
   const [ready, setReady] = useState(false);
 
   // useCallback para estabilizar la referencia (evita re-renders del preloader)
@@ -51,7 +51,7 @@ export default function Hero219Labs() {
 
           <div className="hero__main-area">
             <HeroHeadline />
-            <HeroCTA />
+            <HeroCTA onWhatsAppClick={onWhatsAppClick} />
           </div>
         </div>
       </section>

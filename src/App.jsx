@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import HeroSection from "./components/HeroSection";
 import Benefits from "./components/Benefits";
 import TestimonialsSection from "./components/TestimonialsSection";
@@ -9,21 +10,17 @@ import ProblemSolution from "./components/ProblemSolution";
 import Services from "./components/Services";
 import ForWho from "./components/ForWho";
 import FinalCTA from "./components/FinalCTA";
+import ApplicationPage from "./ApplicationPage";
 import { useScrollAnimation } from "./hooks/useScrollAnimation";
 import { useSmoothScroll } from "./hooks/useSmoothScroll";
 import "./App.css";
 
-// Configuración de WhatsApp
-const WHATSAPP_NUMBER = "5493816671884";
-const WHATSAPP_MESSAGE = encodeURIComponent(
-  "¡Hola! Me interesa saber más sobre los sistemas de captación de 219Labs.",
-);
-
-const App = () => {
+const LandingPage = () => {
   const heroRef = useRef(null);
   const benefitsRef = useRef(null);
   const testimonialsRef = useRef(null);
   const offerRef = useRef(null);
+  const navigate = useNavigate();
 
   // Log inicial
   useEffect(() => {
@@ -38,21 +35,17 @@ const App = () => {
   // Aplicar smooth scroll
   useSmoothScroll();
 
-  // Manejo de clics en WhatsApp
+  // Envia las llamadas a accion al filtro de aplicacion.
   const handleWhatsAppClick = (section) => {
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
-
-    console.log(`📱 WhatsApp click desde: ${section}`);
-
-    // Abrir WhatsApp
-    window.open(url, "_blank", "noopener,noreferrer");
+    console.log(`📱 Aplicacion click desde: ${section}`);
+    navigate("/aplicar");
 
     // Google Analytics event (si está configurado)
     if (typeof window.gtag === "function") {
       window.gtag("event", "cta_click", {
         event_category: "engagement",
         event_label: section,
-        method: "whatsapp",
+        method: "application",
       });
     }
 
@@ -60,7 +53,7 @@ const App = () => {
     if (typeof window.fbq === "function") {
       window.fbq("track", "Contact", {
         content_name: section,
-        content_category: "whatsapp_click",
+        content_category: "application_click",
       });
     }
   };
@@ -89,6 +82,15 @@ const App = () => {
         onWhatsAppClick={() => handleWhatsAppClick("floating")}
       />
     </div>
+  );
+};
+
+const App = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/aplicar" element={<ApplicationPage />} />
+    </Routes>
   );
 };
 

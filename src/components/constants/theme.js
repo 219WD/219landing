@@ -34,6 +34,6 @@ export const COPY = {
   headlinePlain:  'Conseguí más clientes para tu negocio con sistemas digitales que trabajan todos los días para ',
   headlineAccent: 'vender por vos.',
   subtitle: 'Diseñamos estrategias digitales que atraen personas interesadas en lo que vendés y las convertimos en clientes.',
-  cta:     'Quiero implementar este sistema',
-  ctaHref: '#contacto',
+  cta:     'Aplicar para trabajar juntos',
+  ctaHref: '/aplicar',
 };
