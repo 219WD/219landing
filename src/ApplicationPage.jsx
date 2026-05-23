@@ -13,8 +13,8 @@ const revenueOptions = [
 ];
 
 const budgetOptions = [
-  { value: "menos-500", label: "Menos de USD 500" },
-  { value: "500-1500", label: "USD 500-1500" },
+  { value: "menos-1000", label: "Menos de USD 1000" },
+  { value: "1000-1500", label: "USD 1000-1500" },
   { value: "1500-3000", label: "USD 1500-3000" },
   { value: "3000-plus", label: "USD 3000+" },
 ];
@@ -72,6 +72,11 @@ export default function ApplicationPage() {
     setForm((current) => ({ ...current, [field]: value }));
   };
 
+  const correctRejectedAnswer = () => {
+    setStep(status === "budget" ? 2 : 1);
+    setStatus(null);
+  };
+
   const selectRevenue = (value) => {
     updateField("revenue", value);
     if (value === "menos-3k") {
@@ -86,7 +91,7 @@ export default function ApplicationPage() {
 
   const selectBudget = (value) => {
     updateField("budget", value);
-    if (value === "menos-500" || value === "500-1500") {
+    if (value === "menos-1000") {
       setStatus("budget");
       return;
     }
@@ -139,7 +144,7 @@ export default function ApplicationPage() {
             Trabajamos con <em>empresas</em> que buscan construir sistemas reales de <em>crecimiento y adquisición de clientes.</em>
           </h1>
           <p>
-            Nuestros proyectos suelen comenzar desde USD 1.500 mensuales + inversión publicitaria.
+            Nuestros proyectos suelen comenzar desde USD 1.000 mensuales + inversión publicitaria.
           </p>
           <p>
             Si tu objetivo es una página económica o soluciones rápidas, probablemente no seamos el mejor fit.
@@ -154,6 +159,9 @@ export default function ApplicationPage() {
               <a href="https://instagram.com/219labs" target="_blank" rel="noopener noreferrer">
                 Ver recursos gratuitos
               </a>
+              <button type="button" className="application-restart" onClick={correctRejectedAnswer}>
+                Fue un error, quiero corregirlo
+              </button>
             </div>
           )}
 
@@ -164,6 +172,9 @@ export default function ApplicationPage() {
               <a href="https://instagram.com/219labs" target="_blank" rel="noopener noreferrer">
                 Ver recursos gratuitos
               </a>
+              <button type="button" className="application-restart" onClick={correctRejectedAnswer}>
+                Fue un error, quiero corregirlo
+              </button>
             </div>
           )}
 
