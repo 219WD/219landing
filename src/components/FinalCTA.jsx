@@ -4,9 +4,9 @@ import { useFinalCTAAnimations } from '../hooks/useFinalCTAAnimations.js';
 import './final-cta.css';
 
 const AUDIT_POINTS = [
-  'Qué está frenando tus ventas online',
-  'Qué oportunidades estás perdiendo',
-  'Qué sistema podrías implementar para crecer',
+  'Qué necesita hoy tu negocio',
+  'Qué conviene resolver primero',
+  'Qué camino tiene más sentido para empezar',
 ];
 
 const ApplyIcon = () => (
@@ -23,6 +23,7 @@ export default function FinalCTA({ onWhatsAppClick }) {
   return (
     <section
       className="fc-section"
+      id="contacto"
       ref={sectionRef}
       aria-label="Sección final de contacto"
     >
@@ -53,8 +54,8 @@ export default function FinalCTA({ onWhatsAppClick }) {
             <span className="fc-audit__eyebrow">Gratis</span>
 
             <h2 className="fc-audit__title">
-              Auditoría<br />
-              <em className="fc-audit__title-accent">gratuita</em>
+              Primera<br />
+              <em className="fc-audit__title-accent">revisión</em>
             </h2>
 
             <p className="fc-audit__intro">
@@ -71,7 +72,7 @@ export default function FinalCTA({ onWhatsAppClick }) {
             </ul>
 
             <p className="fc-audit__note">
-              Sin compromiso. Sin costo. Solo claridad.
+              Sin vueltas. Si no somos el camino correcto, también te lo vamos a decir.
             </p>
           </div>
 
@@ -81,25 +82,25 @@ export default function FinalCTA({ onWhatsAppClick }) {
           {/* RIGHT — Main CTA */}
           <div className="fc-cta">
             <h3 className="fc-cta__headline">
-              Tu negocio puede vender
-              <em className="fc-cta__headline-accent"> mucho más online.</em>
+              Una web, una campaña, un sistema o una idea.
+              <em className="fc-cta__headline-accent"> Empecemos por entender qué necesitás.</em>
             </h3>
 
             <p className="fc-cta__body">
-              Si querés entender qué está frenando el crecimiento de tu empresa y cómo solucionarlo, podemos analizar tu caso.
+              No hace falta que vengas con todo resuelto. Contanos dónde estás parado y vemos qué puede hacer 219Labs por tu negocio.
             </p>
 
             <button
               className="fc-cta__btn"
               onClick={onWhatsAppClick}
-              aria-label="Aplicar para que revisen mi negocio"
+              aria-label="Contar qué necesita mi negocio"
             >
               <ApplyIcon />
-              <span>Quiero que revisen mi negocio</span>
+              <span>Contanos qué necesitás</span>
             </button>
 
             <p className="fc-cta__sub">
-              Respondemos en menos de 24&nbsp;hs.
+              Respondemos en menos de 24 hs hábiles.
             </p>
           </div>
 

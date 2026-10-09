@@ -20,8 +20,9 @@ export function useHeroAnimations(ready) {
         '.hero-headline',
         '.hero-headline__accent',
         '.hero-descriptor',
+        '.hero-choice',
         '.hero-cta',
-        '.hero__logo-labels span',
+        '.site-header__labels span',
         '.hero-logo',
       ], { opacity: 0 });
 
@@ -31,7 +32,7 @@ export function useHeroAnimations(ready) {
         duration: 0.4,
       }, 0);
 
-      tl.to('.hero__logo-labels span', {
+      tl.to('.site-header__labels span', {
         opacity: 1,
         y: 0,
         duration: 0.35,
@@ -65,8 +66,8 @@ export function useHeroAnimations(ready) {
         0.35
       );
 
-      // CTA
-      tl.fromTo('.hero-cta',
+      // Caminos principales
+      tl.fromTo('.hero-choice',
         { y: 14, opacity: 0, scale: 0.94 },
         { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.4)' },
         0.5

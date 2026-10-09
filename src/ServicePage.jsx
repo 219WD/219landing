@@ -1,0 +1,1213 @@
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Footer from "./components/Footer";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
+import "./service-page.css";
+
+const DEVELOPMENT_SERVICE_PAGES = {
+  "paginas-web-landing-pages": {
+    type: "paginas-web-landing-pages",
+    eyebrow: "Desarrollo / Web y landing pages",
+    title: "Páginas claras para negocios que necesitan generar consultas.",
+    accent: "Sin vueltas.",
+    intro:
+      "Desarrollamos sitios web y landing pages rápidas, ordenadas y pensadas para explicar tu oferta, generar confianza y llevar al visitante al próximo paso.",
+    cta: "Quiero mi página",
+    sections: [
+      {
+        title: "Landing pages comerciales",
+        text: "Una página enfocada en una oferta, servicio, campaña o rubro puntual, con estructura preparada para convertir visitas en consultas.",
+      },
+      {
+        title: "Sitios web institucionales",
+        text: "Una presencia completa para presentar marca, servicios, casos, equipo, contacto y todo lo que un cliente necesita ver antes de escribir.",
+      },
+      {
+        title: "Plantilla o a medida",
+        text: "Podemos partir de una base profesional para ir más rápido o diseñar desde cero cuando el proyecto necesita diferenciación real.",
+      },
+      {
+        title: "Publicación y medición",
+        text: "Dejamos la web lista para usar, compartir, recibir consultas y medir eventos importantes cuando haya campañas activas.",
+      },
+    ],
+    detail: {
+      eyebrow: "Qué resolvemos",
+      title: "Una página no debería ser decoración. Tiene que vender, explicar o destrabar una decisión.",
+      text: "Ordenamos el mensaje, diseñamos la experiencia y construimos una web que acompañe el objetivo real: conseguir consultas, presentar servicios, validar una idea o darle seriedad a la marca.",
+      items: [
+        {
+          title: "Estructura comercial",
+          text: "Definimos qué tiene que ver primero el visitante, qué dudas aparecen y qué CTA conviene usar.",
+        },
+        {
+          title: "Copy y diseño",
+          text: "Trabajamos textos, jerarquías, secciones, imágenes y ritmo visual para que la página se entienda rápido.",
+        },
+        {
+          title: "Responsive real",
+          text: "La experiencia se piensa para celular y escritorio, cuidando lectura, velocidad y botones fáciles de tocar.",
+        },
+        {
+          title: "Conexión a contacto",
+          text: "WhatsApp, formularios, analítica, píxeles o herramientas necesarias para que cada consulta llegue ordenada.",
+        },
+      ],
+    },
+    onboarding: {
+      eyebrow: "Onboarding",
+      title: "Para arrancar te pedimos lo justo, no una carpeta eterna.",
+      text: "Con una primera conversación podemos definir si conviene plantilla, diseño a medida o una web más completa.",
+      items: [
+        ["01", "Objetivo", "Qué tiene que lograr la página: consultas, ventas, turnos, presentación o validación."],
+        ["02", "Oferta", "Qué vendés, para quién, qué diferencia al negocio y qué objeciones suelen aparecer."],
+        ["03", "Material", "Logo, colores, fotos, referencias, redes y cualquier contenido que ya exista."],
+        ["04", "Próximo paso", "Definimos estructura, alcance, tiempos y forma de publicación."],
+      ],
+    },
+    workflow: {
+      eyebrow: "Proceso",
+      title: "Primero ordenamos el mensaje. Después lo convertimos en una página usable.",
+      steps: [
+        ["01", "Brief comercial", "Entendemos negocio, público, oferta y objetivo principal."],
+        ["02", "Arquitectura", "Definimos secciones, recorrido, CTAs y contenido necesario."],
+        ["03", "Diseño y desarrollo", "Armamos la experiencia visual y la dejamos funcionando."],
+        ["04", "Publicación", "Conectamos dominio, contacto, medición y ajustes finales."],
+      ],
+    },
+    faq: [
+      ["¿Puede ser económica?", "Sí. Si el objetivo lo permite, podemos partir de una base profesional y adaptarla a tu marca."],
+      ["¿También hacen los textos?", "Sí. El copy forma parte del trabajo porque una página linda sin mensaje claro no alcanza."],
+      ["¿Puedo usar mi propio dominio?", "Sí. Podemos conectarlo o ayudarte a gestionarlo si todavía no lo tenés."],
+      ["¿Sirve para campañas?", "Sí. Podemos dejarla lista para Meta Ads, Google Ads, píxeles, eventos y formularios."],
+    ],
+    proofTitle: "La web tiene que trabajar para el negocio.",
+    proofText:
+      "No buscamos llenar secciones porque sí. Cada bloque tiene que ayudar a entender, confiar o avanzar.",
+  },
+  "software-a-medida": {
+    type: "software-a-medida",
+    eyebrow: "Desarrollo / Software a medida",
+    title: "Cuando tu operación no entra en una herramienta genérica.",
+    accent: "La construimos.",
+    intro:
+      "Creamos sistemas propios para ordenar clientes, reservas, pedidos, procesos internos, reportes o tareas que hoy dependen de planillas y mensajes sueltos.",
+    cta: "Quiero evaluar un sistema",
+    sections: [
+      {
+        title: "Gestión interna",
+        text: "Paneles para administrar clientes, turnos, pedidos, presupuestos, tareas, estados y responsables.",
+      },
+      {
+        title: "Procesos propios",
+        text: "Flujos adaptados a la forma real en la que trabaja tu equipo, sin forzar el negocio a una app genérica.",
+      },
+      {
+        title: "Usuarios y permisos",
+        text: "Accesos diferenciados para dueños, equipo, clientes o áreas internas según lo que necesite la operación.",
+      },
+      {
+        title: "Reportes y control",
+        text: "Información ordenada para tomar decisiones sin buscar datos en veinte lugares distintos.",
+      },
+    ],
+    detail: {
+      eyebrow: "Qué resolvemos",
+      title: "El software a medida tiene sentido cuando el desorden ya cuesta tiempo, plata o oportunidades.",
+      text: "No se trata de construir por construir. Primero detectamos qué parte del negocio está trabada y después diseñamos una herramienta que resuelva eso con la menor complejidad posible.",
+      items: [
+        {
+          title: "Operación diaria",
+          text: "Automatizamos y ordenamos tareas repetidas para que el equipo trabaje con menos fricción.",
+        },
+        {
+          title: "Información centralizada",
+          text: "Clientes, pedidos, reservas, estados y notas dejan de vivir desperdigados entre chats y planillas.",
+        },
+        {
+          title: "Escalabilidad",
+          text: "Construimos pensando en lo que necesitás ahora y en cómo puede crecer el sistema después.",
+        },
+        {
+          title: "Experiencia simple",
+          text: "Un sistema interno tiene que ser claro para el equipo, no una herramienta que nadie quiere abrir.",
+        },
+      ],
+    },
+    onboarding: {
+      eyebrow: "Onboarding",
+      title: "Antes de hablar de tecnología, mapeamos cómo trabaja el negocio.",
+      text: "Ese mapa define qué conviene construir primero y qué puede esperar.",
+      items: [
+        ["01", "Proceso actual", "Cómo se hace hoy la tarea, quién participa y dónde se pierde tiempo."],
+        ["02", "Datos importantes", "Qué información hay que guardar, consultar, modificar o reportar."],
+        ["03", "Roles", "Quién usa el sistema y qué puede ver o hacer cada perfil."],
+        ["04", "Primera versión", "Definimos un MVP útil para salir con algo concreto y mejorarlo con uso real."],
+      ],
+    },
+    workflow: {
+      eyebrow: "Proceso",
+      title: "Construimos por etapas para no convertir una buena idea en un monstruo inmanejable.",
+      steps: [
+        ["01", "Diagnóstico operativo", "Detectamos el problema central y el costo real de seguir igual."],
+        ["02", "Alcance funcional", "Definimos módulos, pantallas, datos, permisos e integraciones necesarias."],
+        ["03", "Desarrollo iterativo", "Entregamos avances visibles para validar antes de cerrar todo."],
+        ["04", "Soporte y evolución", "Acompañamos uso, mejoras, correcciones y nuevas funciones."],
+      ],
+    },
+    faq: [
+      ["¿Cuándo conviene software a medida?", "Cuando las herramientas existentes no resuelven bien tu proceso o te obligan a trabajar incómodo."],
+      ["¿Puede empezar chico?", "Sí. De hecho suele ser lo mejor: una primera versión concreta, útil y preparada para crecer."],
+      ["¿También diseñan la interfaz?", "Sí. Diseñamos pantallas y flujos para que el sistema sea usable por personas reales."],
+      ["¿Lo mantienen después?", "Sí. Podemos seguir corrigiendo, midiendo y sumando funciones según el uso."],
+    ],
+    proofTitle: "Un sistema propio tiene que simplificar, no sumar burocracia.",
+    proofText:
+      "Por eso priorizamos claridad operativa, módulos útiles y una evolución controlada.",
+  },
+  "tiendas-online-plataformas": {
+    type: "tiendas-online-plataformas",
+    eyebrow: "Desarrollo / Tiendas online",
+    title: "Tiendas y plataformas para vender sin perder el control.",
+    accent: "Ni la operación.",
+    intro:
+      "Creamos soluciones comerciales para mostrar productos, recibir pedidos, gestionar stock, cobrar, ordenar clientes y conectar mejor el negocio.",
+    cta: "Quiero vender online",
+    sections: [
+      {
+        title: "Catálogo y productos",
+        text: "Estructura para mostrar productos, variantes, precios, imágenes, categorías y disponibilidad.",
+      },
+      {
+        title: "Pedidos y clientes",
+        text: "Flujo claro para recibir consultas, ventas o solicitudes sin que todo dependa de mensajes sueltos.",
+      },
+      {
+        title: "Pagos y envíos",
+        text: "Conectamos medios de pago, métodos de entrega y herramientas necesarias según el modelo de venta.",
+      },
+      {
+        title: "Plataforma propia",
+        text: "Cuando una tienda estándar queda corta, podemos pensar una experiencia comercial a medida.",
+      },
+    ],
+    detail: {
+      eyebrow: "Qué resolvemos",
+      title: "Vender online no es solo subir productos. Es ordenar una operación comercial.",
+      text: "La tienda tiene que ser fácil de navegar para el cliente y fácil de administrar para el negocio. Si no, termina siendo una vidriera linda que nadie mantiene.",
+      items: [
+        {
+          title: "Experiencia de compra",
+          text: "Organizamos el recorrido para que el cliente encuentre, entienda y avance sin fricción.",
+        },
+        {
+          title: "Administración",
+          text: "Preparamos la gestión para cargar productos, revisar pedidos y mantener la tienda viva.",
+        },
+        {
+          title: "Integraciones comerciales",
+          text: "Pagos, envíos, WhatsApp, analítica o herramientas externas según lo que el negocio necesite.",
+        },
+        {
+          title: "Escala",
+          text: "La solución puede empezar simple y crecer hacia una plataforma más completa.",
+        },
+      ],
+    },
+    onboarding: {
+      eyebrow: "Onboarding",
+      title: "Para armar una tienda bien, necesitamos entender cómo vendés hoy.",
+      text: "No todos los negocios necesitan el mismo checkout, catálogo o panel.",
+      items: [
+        ["01", "Tipo de productos", "Cantidad, variantes, categorías, precios y cambios frecuentes."],
+        ["02", "Forma de venta", "Si se cobra online, por WhatsApp, por reserva, con envío o retiro."],
+        ["03", "Operación", "Quién carga productos, quién responde pedidos y cómo se administra stock."],
+        ["04", "Integraciones", "Pagos, envíos, analítica, CRM, sistemas internos o herramientas existentes."],
+      ],
+    },
+    workflow: {
+      eyebrow: "Proceso",
+      title: "Diseñamos la tienda alrededor de la compra y de la gestión diaria.",
+      steps: [
+        ["01", "Mapa comercial", "Entendemos productos, clientes, precios, logística y canales actuales."],
+        ["02", "Arquitectura", "Definimos catálogo, navegación, checkout, contacto y administración."],
+        ["03", "Implementación", "Construimos la tienda o plataforma, cargamos base inicial y conectamos herramientas."],
+        ["04", "Lanzamiento", "Probamos compra, consultas, pagos, envíos y medición."],
+      ],
+    },
+    faq: [
+      ["¿Usan 219Shops?", "Puede ser una opción según el caso. También podemos desarrollar una solución personalizada."],
+      ["¿Puedo vender sin pago online?", "Sí. Algunos negocios prefieren catálogo con consulta por WhatsApp o pedido asistido."],
+      ["¿Conectan medios de pago?", "Sí. Evaluamos la herramienta más conveniente según país, operación y modelo de venta."],
+      ["¿Me ayudan a ordenar productos?", "Sí. La estructura del catálogo es parte clave de que la tienda funcione."],
+    ],
+    proofTitle: "Una tienda bien hecha vende mejor porque se entiende mejor.",
+    proofText:
+      "La tecnología importa, pero la claridad comercial y operativa es lo que hace que la tienda se use todos los días.",
+  },
+  automatizaciones: {
+    type: "automatizaciones",
+    eyebrow: "Desarrollo / Automatizaciones",
+    title: "Menos tareas repetidas. Más seguimiento real.",
+    accent: "Más orden.",
+    intro:
+      "Armamos flujos para responder consultas, ordenar datos, conectar formularios, avisar al equipo y reducir trabajo manual innecesario.",
+    cta: "Quiero automatizar",
+    sections: [
+      {
+        title: "Formularios conectados",
+        text: "Cada consulta puede llegar a una planilla, CRM, correo, WhatsApp o tablero de seguimiento.",
+      },
+      {
+        title: "Avisos internos",
+        text: "Notificaciones automáticas para que el equipo no se entere tarde de una venta, pedido o solicitud.",
+      },
+      {
+        title: "Datos ordenados",
+        text: "Recolectamos y normalizamos información para evitar copiar y pegar entre herramientas.",
+      },
+      {
+        title: "Flujos comerciales",
+        text: "Seguimiento de leads, respuestas iniciales, recordatorios y pasos simples para no perder oportunidades.",
+      },
+    ],
+    detail: {
+      eyebrow: "Qué resolvemos",
+      title: "La automatización buena no reemplaza criterio. Saca del medio tareas que no deberían consumir energía.",
+      text: "Buscamos puntos concretos donde el negocio pierde tiempo, olvida respuestas o duplica trabajo, y diseñamos flujos simples que sostengan mejor la operación.",
+      items: [
+        {
+          title: "Captación",
+          text: "Consultas de web, formularios o campañas ingresan ordenadas al canal correcto.",
+        },
+        {
+          title: "Seguimiento",
+          text: "Recordatorios y estados ayudan a que ningún lead quede perdido.",
+        },
+        {
+          title: "Comunicación interna",
+          text: "El equipo recibe avisos claros cuando hay algo que requiere acción.",
+        },
+        {
+          title: "Ahorro operativo",
+          text: "Menos carga manual y menos errores repetidos por mover datos a mano.",
+        },
+      ],
+    },
+    onboarding: {
+      eyebrow: "Onboarding",
+      title: "Empezamos detectando dónde se repite la misma tarea todos los días.",
+      text: "Ahí suele estar la primera automatización útil.",
+      items: [
+        ["01", "Tarea repetida", "Qué se copia, avisa, responde, clasifica o revisa manualmente."],
+        ["02", "Herramientas actuales", "Qué usan hoy: formularios, WhatsApp, Sheets, CRM, correo, sistema o panel."],
+        ["03", "Reglas", "Qué tiene que pasar en cada caso y qué excepciones existen."],
+        ["04", "Prueba controlada", "Implementamos primero un flujo pequeño, lo probamos y lo ajustamos."],
+      ],
+    },
+    workflow: {
+      eyebrow: "Proceso",
+      title: "Automatizamos lo que ya tiene sentido operativo, no lo que todavía está confuso.",
+      steps: [
+        ["01", "Mapa del flujo", "Vemos qué dispara la acción, qué datos entran y cuál es el resultado esperado."],
+        ["02", "Diseño de reglas", "Definimos condiciones, mensajes, destinos y responsables."],
+        ["03", "Implementación", "Conectamos herramientas y probamos casos reales."],
+        ["04", "Monitoreo", "Revisamos errores, tiempos y oportunidades de mejora."],
+      ],
+    },
+    faq: [
+      ["¿Necesito tener CRM?", "No necesariamente. Podemos empezar con herramientas simples y después escalar."],
+      ["¿Automatizan WhatsApp?", "Podemos conectar flujos relacionados a WhatsApp según el caso y las herramientas disponibles."],
+      ["¿Esto reemplaza al equipo?", "No. La idea es que el equipo tenga menos tareas repetitivas y más foco en responder mejor."],
+      ["¿Puede ser una automatización chica?", "Sí. Muchas veces una automatización pequeña mejora muchísimo el orden diario."],
+    ],
+    proofTitle: "Automatizar bien es ordenar antes de acelerar.",
+    proofText:
+      "Si el proceso está mal pensado, automatizar solo hace que el desorden viaje más rápido. Primero lo entendemos.",
+  },
+  integraciones: {
+    type: "integraciones",
+    eyebrow: "Desarrollo / Integraciones",
+    title: "Conectamos herramientas para que la información no quede desperdigada.",
+    accent: "Ni duplicada.",
+    intro:
+      "Integramos pagos, analítica, formularios, campañas, sistemas, tiendas y herramientas internas para que el negocio trabaje con datos más conectados.",
+    cta: "Quiero integrar herramientas",
+    sections: [
+      {
+        title: "Pagos y ventas",
+        text: "Conectamos medios de pago, tiendas, pedidos, formularios y sistemas comerciales.",
+      },
+      {
+        title: "Analítica y campañas",
+        text: "Eventos, píxeles, conversiones y medición para entender qué acciones generan resultados.",
+      },
+      {
+        title: "Formularios y CRM",
+        text: "Los leads pueden entrar ordenados a una base, pipeline, planilla o herramienta de seguimiento.",
+      },
+      {
+        title: "Sistemas existentes",
+        text: "Evaluamos APIs, exportaciones o conexiones posibles para no depender siempre de carga manual.",
+      },
+    ],
+    detail: {
+      eyebrow: "Qué resolvemos",
+      title: "Cuando cada herramienta guarda una parte de la verdad, el negocio empieza a perder control.",
+      text: "Las integraciones ayudan a que los datos viajen mejor: consultas, pagos, pedidos, clientes, métricas y operaciones conectadas donde realmente hacen falta.",
+      items: [
+        {
+          title: "Menos duplicación",
+          text: "Evitamos cargar la misma información en varios lugares.",
+        },
+        {
+          title: "Mejor medición",
+          text: "Conectamos eventos y conversiones para que marketing no trabaje a ciegas.",
+        },
+        {
+          title: "Flujos entre áreas",
+          text: "Ventas, administración y operación pueden recibir la información que necesitan.",
+        },
+        {
+          title: "Base para escalar",
+          text: "Una integración bien pensada prepara el camino para automatizaciones y sistemas más sólidos.",
+        },
+      ],
+    },
+    onboarding: {
+      eyebrow: "Onboarding",
+      title: "Para integrar bien, primero revisamos qué herramientas hablan entre sí.",
+      text: "No todas las plataformas permiten lo mismo, por eso evaluamos posibilidades reales antes de prometer.",
+      items: [
+        ["01", "Herramientas", "Qué sistemas, webs, tiendas, formularios, pagos o planillas usan hoy."],
+        ["02", "Dato clave", "Qué información tiene que moverse y hacia dónde."],
+        ["03", "Frecuencia", "Si el dato debe viajar en tiempo real, por lote o bajo demanda."],
+        ["04", "Accesos", "Revisamos APIs, credenciales, permisos, documentación o alternativas."],
+      ],
+    },
+    workflow: {
+      eyebrow: "Proceso",
+      title: "Conectamos solo lo necesario, con pruebas antes de dejarlo en producción.",
+      steps: [
+        ["01", "Relevamiento", "Identificamos herramientas, datos, permisos y limitaciones."],
+        ["02", "Diseño de integración", "Definimos origen, destino, reglas, seguridad y manejo de errores."],
+        ["03", "Implementación", "Conectamos, probamos y documentamos el flujo."],
+        ["04", "Validación", "Revisamos casos reales y dejamos listo el seguimiento."],
+      ],
+    },
+    faq: [
+      ["¿Pueden integrar cualquier herramienta?", "Depende de si la herramienta ofrece API, exportación, webhooks o alguna forma segura de conexión."],
+      ["¿También configuran píxeles?", "Sí. Podemos configurar medición de eventos para campañas y landings."],
+      ["¿Necesito compartir accesos?", "En algunos casos sí, pero se hace de forma controlada y solo para lo necesario."],
+      ["¿Puede conectarse con un sistema viejo?", "Lo evaluamos. A veces hay API, a veces exportaciones, y a veces conviene otro camino."],
+    ],
+    proofTitle: "Integrar es hacer que la operación tenga una sola conversación.",
+    proofText:
+      "Cuando los datos están conectados, las decisiones son más rápidas y los errores más fáciles de detectar.",
+  },
+  "mantenimiento-mejoras": {
+    type: "mantenimiento-mejoras",
+    eyebrow: "Desarrollo / Mantenimiento",
+    title: "No dejamos la tecnología tirada después de publicarla.",
+    accent: "La acompañamos.",
+    intro:
+      "Podemos seguir midiendo, corrigiendo, optimizando y sumando funciones cuando el negocio cambia o crece.",
+    cta: "Necesito mantenimiento",
+    sections: [
+      {
+        title: "Correcciones",
+        text: "Ajustes técnicos, errores, problemas visuales, formularios, enlaces, performance o comportamiento inesperado.",
+      },
+      {
+        title: "Mejoras evolutivas",
+        text: "Nuevas secciones, funciones, pantallas, módulos o cambios que acompañan el crecimiento del negocio.",
+      },
+      {
+        title: "Optimización",
+        text: "Revisión de velocidad, claridad, conversión, experiencia mobile y puntos que frenan consultas.",
+      },
+      {
+        title: "Soporte continuo",
+        text: "Un esquema de seguimiento para que la web, sistema o plataforma no dependa de apagar incendios.",
+      },
+    ],
+    detail: {
+      eyebrow: "Qué resolvemos",
+      title: "Publicar no es terminar. Es empezar a ver cómo se comporta la herramienta en la vida real.",
+      text: "El mantenimiento evita que la tecnología envejezca mal, se rompa en silencio o quede desactualizada frente a nuevas necesidades del negocio.",
+      items: [
+        {
+          title: "Estabilidad",
+          text: "Revisamos errores, formularios, integraciones y puntos críticos.",
+        },
+        {
+          title: "Mejoras por uso",
+          text: "Sumamos cambios basados en lo que pasa realmente, no en suposiciones eternas.",
+        },
+        {
+          title: "Contenido y secciones",
+          text: "Actualizamos textos, servicios, productos, fotos o páginas internas.",
+        },
+        {
+          title: "Evolución técnica",
+          text: "Preparamos la base para nuevas funciones sin romper lo que ya funciona.",
+        },
+      ],
+    },
+    onboarding: {
+      eyebrow: "Onboarding",
+      title: "Primero hacemos una revisión honesta del estado actual.",
+      text: "Necesitamos entender qué existe, qué falla y qué nivel de acompañamiento tiene sentido.",
+      items: [
+        ["01", "Acceso y contexto", "Qué plataforma, hosting, dominio, repositorio o panel existe hoy."],
+        ["02", "Problemas actuales", "Qué falla, qué molesta o qué está trabando al negocio."],
+        ["03", "Prioridades", "Separar urgencias reales de mejoras deseables."],
+        ["04", "Plan", "Definimos si conviene trabajo puntual, bolsa de horas o mantenimiento mensual."],
+      ],
+    },
+    workflow: {
+      eyebrow: "Proceso",
+      title: "Priorizamos estabilidad, después mejora.",
+      steps: [
+        ["01", "Auditoría rápida", "Revisamos estado técnico, visual y funcional."],
+        ["02", "Lista de prioridades", "Ordenamos impacto, urgencia y esfuerzo."],
+        ["03", "Ejecución", "Aplicamos correcciones y mejoras con control."],
+        ["04", "Seguimiento", "Dejamos un esquema claro para futuros ajustes."],
+      ],
+    },
+    faq: [
+      ["¿Mantienen webs que no hicieron ustedes?", "Podemos evaluarlo. Primero necesitamos revisar tecnología, accesos y estado general."],
+      ["¿Puede ser un arreglo puntual?", "Sí. No todo tiene que ser mensual. Depende del caso."],
+      ["¿Incluye nuevas funciones?", "Puede incluirlas si se define dentro del alcance o como mejora evolutiva."],
+      ["¿También actualizan contenido?", "Sí. Textos, secciones, enlaces, imágenes y pequeños cambios pueden entrar en mantenimiento."],
+    ],
+    proofTitle: "La tecnología útil necesita cuidado, no abandono.",
+    proofText:
+      "Un buen mantenimiento evita urgencias, mejora rendimiento y mantiene la herramienta alineada al negocio.",
+  },
+  dominios: {
+    type: "dominios",
+    eyebrow: "Desarrollo / Dominios",
+    title: "Gestionamos tu dominio para que tu marca tenga casa propia.",
+    accent: "Y orden.",
+    intro:
+      "Vendemos, configuramos y administramos dominios con servicio de marca blanca para que tu web, correo y presencia digital queden bien resueltos.",
+    cta: "Quiero gestionar mi dominio",
+    sections: [
+      {
+        title: "Venta de dominios",
+        text: "Te ayudamos a elegir, registrar y dejar activo el dominio adecuado para tu marca o proyecto.",
+      },
+      {
+        title: "Gestión técnica",
+        text: "Configuramos DNS, conexión con web, correos, verificaciones y herramientas necesarias.",
+      },
+      {
+        title: "Marca blanca",
+        text: "Podemos operar la gestión de dominios bajo una modalidad prolija para clientes y proyectos comerciales.",
+      },
+      {
+        title: "Renovaciones",
+        text: "Acompañamos vencimientos, cambios y continuidad para evitar que el dominio quede perdido o caído.",
+      },
+    ],
+    detail: {
+      eyebrow: "Qué resolvemos",
+      title: "El dominio parece chico hasta que algo no funciona.",
+      text: "Un dominio mal gestionado puede dejar caída una web, cortar correos o complicar campañas. Por eso lo tratamos como parte real de la infraestructura del negocio.",
+      items: [
+        {
+          title: "Registro",
+          text: "Buscamos disponibilidad y gestionamos el alta según la extensión que convenga.",
+        },
+        {
+          title: "DNS",
+          text: "Configuramos registros para web, email, verificaciones, herramientas y servicios externos.",
+        },
+        {
+          title: "Conexión con web",
+          text: "Dejamos el dominio apuntando correctamente al sitio, landing o plataforma.",
+        },
+        {
+          title: "Administración",
+          text: "Ordenamos renovaciones, accesos y cambios futuros para que no dependa de la memoria de nadie.",
+        },
+      ],
+    },
+    onboarding: {
+      eyebrow: "Onboarding",
+      title: "Para empezar, revisamos si ya existe dominio o si hay que registrarlo desde cero.",
+      text: "Con eso definimos el camino técnico y administrativo correcto.",
+      items: [
+        ["01", "Nombre", "Marca, dominio deseado y alternativas si no está disponible."],
+        ["02", "Uso", "Web, landing, tienda, correo, campañas o plataforma."],
+        ["03", "Accesos", "Si ya existe, revisamos proveedor actual, DNS y titularidad."],
+        ["04", "Configuración", "Dejamos registros, conexión y renovaciones ordenadas."],
+      ],
+    },
+    workflow: {
+      eyebrow: "Proceso",
+      title: "Dominio registrado, configurado y listo para usar.",
+      steps: [
+        ["01", "Búsqueda", "Revisamos disponibilidad y alternativas."],
+        ["02", "Registro o traspaso", "Gestionamos alta, compra o revisión del dominio existente."],
+        ["03", "Configuración DNS", "Conectamos web, correos y herramientas."],
+        ["04", "Entrega ordenada", "Dejamos claro qué se configuró y cómo se administra."],
+      ],
+    },
+    faq: [
+      ["¿Venden dominios?", "Sí. Podemos vender y gestionar dominios para proyectos web y marcas."],
+      ["¿Qué significa marca blanca?", "Que podemos gestionar dominios de forma prolija para proyectos donde el cliente no necesita ver toda la operación técnica."],
+      ["¿Pueden conectar un dominio que ya tengo?", "Sí. Revisamos accesos, DNS y proveedor actual."],
+      ["¿También configuran correos?", "Podemos configurar registros necesarios para correo o conectar el dominio con la herramienta que uses."],
+    ],
+    proofTitle: "El dominio es infraestructura, no un detalle administrativo.",
+    proofText:
+      "Cuando está bien gestionado, nadie lo nota. Cuando está mal, todo se frena.",
+  },
+  crm: {
+    type: "crm",
+    eyebrow: "Desarrollo / CRM",
+    title: "Estamos preparando soluciones CRM para ordenar clientes y oportunidades.",
+    accent: "Próximamente.",
+    intro:
+      "Vamos a sumar CRM para negocios que necesitan registrar contactos, seguir oportunidades, medir estados comerciales y no perder consultas por falta de orden.",
+    cta: "Quiero que me avisen",
+    sections: [
+      {
+        title: "Leads ordenados",
+        text: "Consultas, contactos y oportunidades en un flujo claro para saber qué responder y cuándo seguir.",
+      },
+      {
+        title: "Estados comerciales",
+        text: "Pipeline simple para entender en qué etapa está cada oportunidad y qué acción falta.",
+      },
+      {
+        title: "Seguimiento",
+        text: "Recordatorios, notas y tareas para que las ventas no dependan solo de memoria o chats.",
+      },
+      {
+        title: "Conexiones futuras",
+        text: "Base preparada para integrarse con formularios, campañas, automatizaciones y herramientas internas.",
+      },
+    ],
+    detail: {
+      eyebrow: "Qué viene",
+      title: "Un CRM tiene sentido cuando el problema no es conseguir consultas, sino no perderlas.",
+      text: "Estamos preparando una línea de trabajo para ordenar leads, ventas y relaciones comerciales sin volver complejo lo simple.",
+      items: [
+        {
+          title: "Contactos",
+          text: "Base limpia de clientes, prospectos, conversaciones y datos importantes.",
+        },
+        {
+          title: "Oportunidades",
+          text: "Estados para saber qué está frío, qué está caliente y qué necesita seguimiento.",
+        },
+        {
+          title: "Equipo",
+          text: "Responsables, tareas y notas para que ventas no sea una caja negra.",
+        },
+        {
+          title: "Medición",
+          text: "Datos para entender cuántas consultas entran, cuántas avanzan y dónde se caen.",
+        },
+      ],
+    },
+    onboarding: {
+      eyebrow: "Onboarding",
+      title: "Mientras preparamos CRM, podemos relevar tu proceso comercial.",
+      text: "Eso nos permite saber si necesitás CRM, automatización, formulario, landing o una mezcla.",
+      items: [
+        ["01", "Entrada de leads", "De dónde llegan hoy las consultas."],
+        ["02", "Seguimiento", "Cómo registran respuestas, estados y próximas acciones."],
+        ["03", "Equipo", "Quién vende, quién responde y quién necesita ver información."],
+        ["04", "Prioridad", "Qué habría que ordenar primero para no perder oportunidades."],
+      ],
+    },
+    workflow: {
+      eyebrow: "Próximo paso",
+      title: "Podemos dejarte en lista para CRM o resolver ahora el problema de captación y seguimiento.",
+      steps: [
+        ["01", "Consulta", "Nos contás cómo llegan y cómo se siguen los leads hoy."],
+        ["02", "Diagnóstico", "Vemos si el cuello de botella es CRM, web, campaña o proceso interno."],
+        ["03", "Camino posible", "Definimos una solución simple para empezar a ordenar."],
+        ["04", "CRM", "Cuando la línea esté lista, ya tenemos contexto para implementarla mejor."],
+      ],
+    },
+    faq: [
+      ["¿Ya está disponible?", "Está en preparación. Podemos relevar tu caso y avisarte cuando tenga sentido avanzar."],
+      ["¿Puede integrarse con una web?", "Esa es la idea: formularios, campañas y consultas deberían entrar ordenadas."],
+      ["¿Sirve para negocios chicos?", "Sí, si ya hay consultas o clientes que necesitan seguimiento."],
+      ["¿Pueden armar algo antes?", "Sí. Podemos resolver captación, formularios, automatizaciones o seguimiento simple mientras tanto."],
+    ],
+    proofTitle: "CRM no es tener una base de datos. Es no perder oportunidades.",
+    proofText:
+      "La herramienta vale cuando el equipo la usa y cuando ayuda a vender mejor.",
+  },
+};
+
+const PAGE_DATA = {
+  desarrollo: {
+    type: "desarrollo",
+    eyebrow: "Desarrollo y tecnología",
+    title: "Creamos la herramienta digital que tu negocio necesita.",
+    accent: "No al revés.",
+    intro:
+      "Páginas web, landing pages, tiendas online, sistemas internos y software a medida para empresas que necesitan ordenar, vender o trabajar mejor.",
+    cta: "Contar qué quiero desarrollar",
+    sections: [
+      {
+        title: "Páginas web y landing pages",
+        text: "Una presencia clara, rápida y preparada para generar consultas. Puede ser con plantilla o completamente a medida.",
+        href: "/desarrollo/paginas-web-landing-pages",
+        cta: "Ver webs y landings",
+      },
+      {
+        title: "Software a medida",
+        text: "Sistemas de gestión, reservas, clientes, operaciones internas o procesos que hoy se hacen manualmente.",
+        href: "/desarrollo/software-a-medida",
+        cta: "Ver software",
+      },
+      {
+        title: "Tiendas online y plataformas",
+        text: "Soluciones comerciales para vender, administrar productos y conectar mejor la operación del negocio.",
+        href: "/desarrollo/tiendas-online-plataformas",
+        cta: "Ver tiendas",
+      },
+      {
+        title: "Automatizaciones",
+        text: "Flujos para responder consultas, ordenar datos, conectar formularios, avisar al equipo o evitar tareas repetidas.",
+        href: "/desarrollo/automatizaciones",
+        cta: "Ver automatizaciones",
+      },
+      {
+        title: "Integraciones",
+        text: "Conectamos herramientas, pagos, analítica, formularios y sistemas para que la información no quede desperdigada.",
+        href: "/desarrollo/integraciones",
+        cta: "Ver integraciones",
+      },
+      {
+        title: "Mantenimiento y mejoras",
+        text: "No dejamos la tecnología tirada. Podemos seguir midiendo, corrigiendo y sumando funciones cuando el negocio crece.",
+        href: "/desarrollo/mantenimiento-mejoras",
+        cta: "Ver mantenimiento",
+      },
+      {
+        title: "Dominios",
+        text: "Vendemos, configuramos y gestionamos tu dominio. También contamos con servicio de marca blanca.",
+        href: "/desarrollo/dominios",
+        cta: "Ver dominios",
+      },
+      {
+        title: "CRM",
+        text: "Estamos preparando soluciones para ordenar clientes, oportunidades, seguimiento comercial y consultas entrantes.",
+        href: "/desarrollo/crm",
+        cta: "Ver CRM",
+      },
+    ],
+    detail: {
+      eyebrow: "Qué desarrollamos",
+      title: "Tecnología para negocios que necesitan algo más que una página linda.",
+      text: "A veces alcanza con una landing clara. Otras veces hace falta un sistema, una tienda, un panel interno o una herramienta que acompañe cómo trabaja la empresa. Lo importante es no empezar por la tecnología: empezamos por el problema.",
+      items: [
+        {
+          title: "Webs comerciales",
+          text: "Para presentar servicios, generar confianza y recibir consultas sin explicar todo por WhatsApp.",
+        },
+        {
+          title: "Sistemas internos",
+          text: "Para ordenar clientes, turnos, pedidos, procesos, reservas, presupuestos o tareas del equipo.",
+        },
+        {
+          title: "Productos digitales",
+          text: "Para negocios que quieren lanzar una plataforma propia o validar una idea con una primera versión usable.",
+        },
+        {
+          title: "E-commerce",
+          text: "Para vender online con catálogo, stock, pedidos, cobros, envíos y clientes mejor conectados.",
+        },
+      ],
+    },
+    workflow: {
+      eyebrow: "Proceso",
+      title: "Primero entendemos el negocio. Después escribimos código.",
+      steps: [
+        ["01", "Diagnóstico", "Vemos qué querés lograr, qué ya existe y qué está trabando la operación."],
+        ["02", "Alcance", "Definimos qué conviene hacer ahora, qué puede esperar y qué no tiene sentido construir."],
+        ["03", "Diseño y desarrollo", "Armamos estructura, pantallas, lógica, contenido y funcionalidades con entregas claras."],
+        ["04", "Lanzamiento y mejora", "Probamos, publicamos, medimos y dejamos preparado el camino para futuras mejoras."],
+      ],
+    },
+    faq: [
+      ["¿Tengo que saber qué tecnología necesito?", "No. De hecho, es mejor que vengas con el problema. Nosotros definimos si conviene una landing, una web, un sistema o algo más simple."],
+      ["¿Hacen páginas con plantilla y también a medida?", "Sí. Si necesitás algo accesible, podemos partir de una base. Si el proyecto requiere diferenciación o funciones propias, lo hacemos desde cero."],
+      ["¿Pueden desarrollar un sistema para mi forma de trabajar?", "Sí. Justamente el software a medida sirve cuando tu negocio no encaja bien en herramientas genéricas."],
+      ["¿También se encargan del diseño y el copy?", "Sí. No entregamos solo código. La estructura, los textos y la experiencia forman parte del trabajo."],
+    ],
+    proofTitle: "También construimos nuestras propias plataformas.",
+    proofText:
+      "219Shops y 219Meds funcionan como prueba concreta de nuestra capacidad para pensar producto, diseño, operación y tecnología.",
+  },
+  ...DEVELOPMENT_SERVICE_PAGES,
+  marketing: {
+    type: "marketing",
+    eyebrow: "Marketing y contenido",
+    title: "Tu negocio puede tener un gran producto.",
+    accent: "Pero si nadie lo entiende, cuesta vender.",
+    intro:
+      "Creamos campañas, contenido, piezas visuales y estrategias para que tu marca llegue a las personas correctas con un mensaje claro.",
+    cta: "Quiero mejorar mi marketing",
+    sections: [
+      {
+        title: "Publicidad digital",
+        text: "Campañas en Meta, Google y otros canales para llegar a personas con intención real de comprar o consultar.",
+      },
+      {
+        title: "Contenido y creatividad",
+        text: "Videos, reels, diseños, fotografías y mensajes que hacen que tu marca se vea profesional y cercana.",
+      },
+      {
+        title: "Estrategia y seguimiento",
+        text: "Planificación, medición y ajustes para que la inversión tenga una dirección y no sea publicar por publicar.",
+      },
+      {
+        title: "Gestión de redes",
+        text: "Calendario, publicaciones, mensajes y presencia constante para que la marca no dependa de inspiración de último momento.",
+      },
+      {
+        title: "Diseño gráfico",
+        text: "Piezas visuales para redes, campañas, promociones, lanzamientos y comunicación diaria.",
+      },
+      {
+        title: "Producción audiovisual",
+        text: "Contenido real para marcas que necesitan mostrar personas, productos, espacios, procesos y resultados.",
+      },
+    ],
+    detail: {
+      eyebrow: "Cómo lo pensamos",
+      title: "Marketing no es hacer ruido. Es ayudar a que el cliente entienda por qué elegirte.",
+      text: "El problema de muchos negocios no es que no publican. Es que publican sin una idea clara, sin oferta, sin seguimiento y sin una página o canal que convierta ese interés en consulta.",
+      items: [
+        {
+          title: "Mensaje",
+          text: "Aclaramos qué vendés, para quién, por qué importa y qué tiene que hacer la persona después.",
+        },
+        {
+          title: "Contenido",
+          text: "Creamos piezas que muestran el negocio de forma profesional, cercana y fácil de entender.",
+        },
+        {
+          title: "Tráfico",
+          text: "Usamos publicidad para llegar a personas que pueden tener interés real en tu producto o servicio.",
+        },
+        {
+          title: "Medición",
+          text: "Miramos qué funciona, qué no y dónde conviene ajustar antes de seguir gastando.",
+        },
+      ],
+    },
+    workflow: {
+      eyebrow: "Proceso",
+      title: "Dejamos de improvisar y armamos un sistema comercial simple.",
+      steps: [
+        ["01", "Diagnóstico comercial", "Entendemos qué vendés, quién compra, qué objeciones aparecen y qué canales usás hoy."],
+        ["02", "Plan de contenido y campañas", "Definimos mensajes, piezas, frecuencia, inversión y objetivos de cada acción."],
+        ["03", "Producción y lanzamiento", "Creamos contenido, configuramos campañas y conectamos la medición necesaria."],
+        ["04", "Optimización", "Revisamos consultas, anuncios, contenido y conversiones para mejorar el rendimiento."],
+      ],
+    },
+    faq: [
+      ["¿Trabajan solo redes sociales?", "No. Podemos trabajar redes, anuncios, contenido, diseño, landing pages y medición. La idea es que todo tenga una dirección."],
+      ["¿Necesito invertir en publicidad?", "No siempre, pero si querés acelerar resultados, la pauta ayuda. Lo importante es no pautar sin una oferta y una página preparadas."],
+      ["¿Pueden producir contenido real?", "Sí. Podemos trabajar piezas de diseño, reels, videos, fotos y contenido humanizado según el tipo de negocio."],
+      ["¿Prometen resultados exactos?", "No inventamos promesas. Trabajamos con estrategia, medición y mejora, pero no vendemos números imposibles sin contexto."],
+    ],
+    proofTitle: "Marketing que se ve y se mide.",
+    proofText:
+      "Trabajamos con casos reales, métricas y aprendizaje continuo. Cuando no hay datos suficientes, no inventamos resultados.",
+  },
+  "landing-pages": {
+    type: "landing-pages",
+    eyebrow: "Landing pages",
+    title: "Tu negocio necesita una buena página web.",
+    accent: "No necesariamente una cara.",
+    intro:
+      "Tenemos dos formas de trabajar: partir de un diseño profesional para hacerlo más accesible o crear una página desde cero para una necesidad específica.",
+    cta: "Consultar por mi página",
+    sections: [
+      {
+        title: "Con plantilla",
+        text: "Una opción más económica para tener presencia profesional, explicar tus servicios y empezar a recibir consultas.",
+      },
+      {
+        title: "A medida",
+        text: "Diseño, estructura y funciones pensadas desde cero según tu marca, tus objetivos y tu forma de vender.",
+      },
+      {
+        title: "Preparada para convertir",
+        text: "Copy claro, secciones ordenadas, CTA visibles y una experiencia simple para que el visitante entienda qué hacer.",
+      },
+    ],
+    detail: {
+      eyebrow: "Qué incluye",
+      title: "Una landing no es una portada. Es una conversación ordenada.",
+      text: "La página tiene que explicar rápido qué ofrecés, generar confianza, resolver dudas y llevar a la persona al próximo paso sin hacerla pensar de más.",
+      items: [
+        {
+          title: "Estructura comercial",
+          text: "Secciones pensadas para que el visitante entienda la oferta, el valor y el próximo paso.",
+        },
+        {
+          title: "Copy claro",
+          text: "Textos simples, directos y sin tecnicismos innecesarios para que cualquier persona entienda qué vendés.",
+        },
+        {
+          title: "Diseño responsive",
+          text: "La página se adapta a celular y escritorio, porque la mayoría de las consultas llegan desde el teléfono.",
+        },
+        {
+          title: "CTA y contacto",
+          text: "Botones, WhatsApp o formulario conectados con la intención real del visitante.",
+        },
+      ],
+    },
+    workflow: {
+      eyebrow: "Proceso",
+      title: "Elegimos la forma de trabajo según tu presupuesto y tu necesidad.",
+      steps: [
+        ["01", "Definimos objetivo", "No es lo mismo vender servicios, mostrar un catálogo, captar turnos o validar una idea."],
+        ["02", "Elegimos camino", "Vemos si conviene partir de un diseño existente o crear una página completamente a medida."],
+        ["03", "Adaptamos o diseñamos", "Trabajamos textos, estructura, imágenes, colores, secciones y llamados a la acción."],
+        ["04", "Publicamos y medimos", "Dejamos la página lista para recibir visitas, consultas y futuras campañas."],
+      ],
+    },
+    faq: [
+      ["¿Puedo elegir una base del catálogo?", "Sí. Podés usar los diseños de 219Shops como referencia y después adaptarlos a tu marca, rubro y contenido."],
+      ["¿Una plantilla sirve para cualquier negocio?", "Sirve si el objetivo es tener una página profesional, clara y accesible. Si necesitás algo muy específico, conviene ir a medida."],
+      ["¿La página puede conectarse con campañas?", "Sí. Podemos prepararla para recibir tráfico de anuncios y medir eventos importantes."],
+      ["¿Me ayudan con los textos?", "Sí. La idea es que no tengas que inventar todo. Nosotros ordenamos el mensaje y lo llevamos a una página concreta."],
+    ],
+    proofTitle: "La opción accesible no tiene que verse barata.",
+    proofText:
+      "La diferencia está en el nivel de personalización, no en hacer algo improvisado. La idea es que cada cliente entienda qué está comprando.",
+    comparison: [
+      {
+        label: "Opción accesible",
+        title: "Partimos de una base real",
+        price: "Más rápida y económica",
+        text: "Elegís una referencia navegable y la adaptamos con tu marca, textos, imágenes, colores, secciones y llamados a la acción.",
+        bullets: ["Ideal para empezar", "Diseños por rubro", "Menos tiempo de producción"],
+        cta: "Ver diseños disponibles",
+        href: "https://www.219shops.com.ar/disenos",
+        external: true,
+      },
+      {
+        label: "Opción personalizada",
+        title: "Diseñamos desde cero",
+        price: "Presupuesto a medida",
+        text: "Pensamos la estructura completa según tu negocio, tu oferta, tu forma de vender y las funciones que necesitás.",
+        bullets: ["Mayor diferenciación", "Arquitectura propia", "Funciones específicas"],
+        cta: "Consultar desarrollo a medida",
+        href: "/aplicar?servicio=landing-pages",
+      },
+    ],
+    catalog: {
+      eyebrow: "Catálogo de referencias",
+      title: "Ya tenemos bases navegables para distintos rubros.",
+      text: "En 219Shops podés explorar diseños reales para servicios profesionales, arquitectura, belleza, gastronomía, coaching, energía, turismo, salud, inmobiliaria y eventos. El cliente no tiene que imaginar la página: puede verla funcionando.",
+      href: "https://www.219shops.com.ar/disenos",
+      cta: "Explorar catálogo de diseños",
+      items: ["16 experiencias navegables", "Vistas escritorio y celular", "Adaptables a cualquier rubro"],
+    },
+  },
+  productos: {
+    type: "productos",
+    eyebrow: "Plataformas propias",
+    title: "Creamos productos digitales.",
+    accent: "No solo servicios para clientes.",
+    intro:
+      "219Shops, 219Meds y las próximas plataformas muestran cómo 219Labs convierte problemas concretos en soluciones digitales completas.",
+    cta: "Hablar sobre plataformas",
+    sections: [
+      {
+        title: "219Shops",
+        text: "Tienda online, productos, stock, pedidos, cobros, envíos y clientes conectados para administrar mejor un negocio.",
+      },
+      {
+        title: "219Meds",
+        text: "Tecnología orientada al sector salud, con comunicación comercial pendiente de validar módulo por módulo.",
+      },
+      {
+        title: "Nuevos productos",
+        text: "La estructura queda preparada para incorporar futuras plataformas sin tener que rediseñar la web cada vez.",
+      },
+    ],
+    detail: {
+      eyebrow: "Productos",
+      title: "Cada plataforma nace de un problema concreto.",
+      text: "Nos interesa construir tecnología que el dueño de un negocio pueda usar sin sentirse perdido. Por eso nuestros productos priorizan claridad, operación y control.",
+      items: [
+        {
+          title: "219Shops",
+          text: "Tienda online para reunir productos, pedidos, cobros, stock, envíos y clientes en una misma plataforma.",
+          href: "https://www.219shops.com.ar/",
+          cta: "Visitar 219Shops",
+        },
+        {
+          title: "Diseños 219Shops",
+          text: "Catálogo de bases navegables para que una marca pueda elegir una referencia y adaptarla sin empezar de cero.",
+          href: "https://www.219shops.com.ar/disenos",
+          cta: "Ver diseños",
+        },
+        {
+          title: "219Meds",
+          text: "Plataforma orientada al sector salud, con comunicación y módulos a validar antes de venderla fuerte.",
+          href: "https://219meds.vercel.app/",
+          cta: "Visitar 219Meds",
+        },
+        {
+          title: "Próximas plataformas",
+          text: "La estructura queda preparada para sumar nuevos productos sin que 219Labs pierda claridad comercial.",
+        },
+      ],
+    },
+    workflow: {
+      eyebrow: "Cómo nacen",
+      title: "No hacemos productos para sonar tecnológicos. Los hacemos para resolver operaciones reales.",
+      steps: [
+        ["01", "Problema repetido", "Detectamos una necesidad que aparece en varios negocios o rubros."],
+        ["02", "Producto usable", "Diseñamos una primera versión que resuelva lo esencial sin volver complejo lo simple."],
+        ["03", "Uso real", "Probamos con negocios concretos, escuchamos fricción y mejoramos la experiencia."],
+        ["04", "Evolución", "Sumamos funciones cuando aportan valor, no solo porque quedan bien en una lista."],
+      ],
+    },
+    faq: [
+      ["¿219Shops es parte de 219Labs?", "Sí. Es una plataforma propia desarrollada por el equipo para ayudar a negocios a vender y administrarse mejor."],
+      ["¿Las plataformas reemplazan los servicios a medida?", "No. Algunas empresas pueden usar un producto existente. Otras necesitan desarrollo personalizado."],
+      ["¿Puedo pedir una plataforma parecida para mi rubro?", "Sí. Si tenés una necesidad específica, podemos evaluar si conviene adaptar algo existente o crear una solución propia."],
+      ["¿Por qué mostrar productos en la web de 219Labs?", "Porque demuestra capacidad real: diseño, software, operación, soporte, contenido y visión comercial trabajando juntos."],
+    ],
+    proofTitle: "Una agencia que también construye producto entiende distinto.",
+    proofText:
+      "Porque no solo diseñamos pantallas. Pensamos experiencia, operación, soporte, escalabilidad y ventas.",
+  },
+};
+
+export default function ServicePage({ type }) {
+  const navigate = useNavigate();
+  const page = PAGE_DATA[type] || PAGE_DATA.desarrollo;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [type]);
+
+  const goApply = () => {
+    navigate(`/aplicar?servicio=${page.type}`);
+  };
+
+  return (
+    <main className={`sp-page sp-page--${page.type}`}>
+      <section className="sp-hero">
+        <div className="sp-orb" aria-hidden="true" />
+        <div className="sp-hero__content">
+          <span className="sp-eyebrow">{page.eyebrow}</span>
+          <h1>
+            {page.title} <em>{page.accent}</em>
+          </h1>
+          <p>{page.intro}</p>
+          <button type="button" className="sp-cta" onClick={goApply}>
+            <span>{page.cta}</span>
+            <Arrow />
+          </button>
+        </div>
+      </section>
+
+      <section className="sp-grid" aria-label="Servicios">
+        {page.sections.map((section, index) => {
+          const content = (
+            <>
+            <span>0{index + 1}</span>
+            <h2>{section.title}</h2>
+            <p>{section.text}</p>
+              {section.href && (
+                <span className="sp-card__cta">
+                  {section.cta || "Ver servicio"}
+                  <Arrow />
+                </span>
+              )}
+            </>
+          );
+
+          return section.href ? (
+            <Link className="sp-card sp-card--link" to={section.href} key={section.title}>
+              {content}
+            </Link>
+          ) : (
+            <article className="sp-card" key={section.title}>
+              {content}
+            </article>
+          );
+        })}
+      </section>
+
+      {page.detail && (
+        <section className="sp-detail" aria-label={page.detail.eyebrow}>
+          <div className="sp-detail__intro">
+            <span className="sp-eyebrow">{page.detail.eyebrow}</span>
+            <h2>{page.detail.title}</h2>
+            <p>{page.detail.text}</p>
+          </div>
+          <div className="sp-detail__list">
+            {page.detail.items.map((item, index) => (
+              <article className="sp-detail__item" key={item.title}>
+                <span>0{index + 1}</span>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                {item.href && (
+                  <a href={item.href} target="_blank" rel="noopener noreferrer" className="sp-link">
+                    <span>{item.cta || "Conocer más"}</span>
+                    <Arrow />
+                  </a>
+                )}
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {page.onboarding && (
+        <section className="sp-onboarding" aria-label={page.onboarding.eyebrow}>
+          <div className="sp-onboarding__intro">
+            <span className="sp-eyebrow">{page.onboarding.eyebrow}</span>
+            <h2>{page.onboarding.title}</h2>
+            <p>{page.onboarding.text}</p>
+          </div>
+          <div className="sp-onboarding__steps">
+            {page.onboarding.items.map(([num, title, text]) => (
+              <article key={num}>
+                <span>{num}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {page.comparison && (
+        <section className="sp-compare" aria-label="Opciones de landing pages">
+          <div className="sp-compare__header">
+            <span className="sp-eyebrow">Dos caminos</span>
+            <h2>Plantilla cuando conviene. A medida cuando hace falta.</h2>
+          </div>
+          <div className="sp-compare__grid">
+            {page.comparison.map((item) => (
+              <article className="sp-compare__card" key={item.title}>
+                <p className="sp-compare__label">{item.label}</p>
+                <h3>{item.title}</h3>
+                <strong>{item.price}</strong>
+                <p>{item.text}</p>
+                <ul>
+                  {item.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+                {item.external ? (
+                  <a href={item.href} target="_blank" rel="noopener noreferrer" className="sp-link">
+                    <span>{item.cta}</span>
+                    <Arrow />
+                  </a>
+                ) : (
+                  <Link to={item.href} className="sp-link">
+                    <span>{item.cta}</span>
+                    <Arrow />
+                  </Link>
+                )}
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {page.catalog && (
+        <section className="sp-catalog" aria-label="Catálogo de diseños de landing pages">
+          <div>
+            <span className="sp-eyebrow">{page.catalog.eyebrow}</span>
+            <h2>{page.catalog.title}</h2>
+            <p>{page.catalog.text}</p>
+            <a href={page.catalog.href} target="_blank" rel="noopener noreferrer" className="sp-cta sp-cta--dark">
+              <span>{page.catalog.cta}</span>
+              <Arrow />
+            </a>
+          </div>
+          <ul>
+            {page.catalog.items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {page.workflow && (
+        <section className="sp-workflow" aria-label={page.workflow.eyebrow}>
+          <div className="sp-workflow__header">
+            <span className="sp-eyebrow">{page.workflow.eyebrow}</span>
+            <h2>{page.workflow.title}</h2>
+          </div>
+          <ol className="sp-workflow__steps">
+            {page.workflow.steps.map(([num, title, text]) => (
+              <li key={num}>
+                <span>{num}</span>
+                <div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      <section className="sp-proof">
+        <div>
+          <span className="sp-eyebrow">Por qué importa</span>
+          <h2>{page.proofTitle}</h2>
+        </div>
+        <p>{page.proofText}</p>
+      </section>
+
+      {page.faq && (
+        <section className="sp-page-faq" aria-label="Preguntas frecuentes">
+          <div className="sp-page-faq__header">
+            <span className="sp-eyebrow">Preguntas frecuentes</span>
+            <h2>Dudas normales antes de avanzar.</h2>
+          </div>
+          <div className="sp-page-faq__list">
+            {page.faq.map(([question, answer]) => (
+              <details key={question}>
+                <summary>{question}</summary>
+                <p>{answer}</p>
+              </details>
+            ))}
+          </div>
+          <button type="button" className="sp-cta" onClick={goApply}>
+            <span>{page.cta}</span>
+            <Arrow />
+          </button>
+        </section>
+      )}
+
+      <Footer onWhatsAppClick={goApply} />
+      <FloatingWhatsApp onWhatsAppClick={goApply} />
+    </main>
+  );
+}
+
+function Arrow() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}

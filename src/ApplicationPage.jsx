@@ -1,22 +1,25 @@
-import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import LogoFooter from "./assets/logo-blanco.png";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import "./application.css";
 
 const WHATSAPP_NUMBER = "5493816671884";
 
 const revenueOptions = [
-  { value: "menos-3k", label: "Menos de USD 3k/mes" },
-  { value: "3k-10k", label: "USD 3k-10k" },
-  { value: "10k-30k", label: "USD 10k-30k" },
-  { value: "30k-plus", label: "USD 30k+" },
+  { value: "idea", label: "Estoy ordenando una idea" },
+  { value: "emprendimiento", label: "Emprendimiento activo" },
+  { value: "empresa", label: "Empresa en funcionamiento" },
+  { value: "escala", label: "Empresa buscando escalar" },
 ];
 
 const budgetOptions = [
-  { value: "menos-1000", label: "Menos de USD 1000" },
-  { value: "1000-1500", label: "USD 1000-1500" },
-  { value: "1500-3000", label: "USD 1500-3000" },
-  { value: "3000-plus", label: "USD 3000+" },
+  { value: "plantilla", label: "Web con plantilla" },
+  { value: "medida", label: "Web o sistema a medida" },
+  { value: "tienda", label: "Tienda online o plataforma" },
+  { value: "automatizacion", label: "Automatización o integración" },
+  { value: "dominio", label: "Dominio" },
+  { value: "crm", label: "CRM" },
+  { value: "marketing", label: "Marketing y contenido" },
+  { value: "no-se", label: "No sé qué necesito todavía" },
 ];
 
 const channelOptions = [
@@ -30,9 +33,14 @@ const channelOptions = [
 
 const problemOptions = [
   "Más clientes",
-  "Mejor conversión",
-  "Automatización",
-  "Escalar",
+  "Página web",
+  "Sistema propio",
+  "Tienda online",
+  "Automatizaciones",
+  "Integraciones",
+  "Dominio",
+  "CRM",
+  "Contenido y redes",
   "Otro",
 ];
 
@@ -46,6 +54,81 @@ const initialForm = {
   why219: "",
 };
 
+const serviceDefaults = {
+  "landing-pages": {
+    budget: "plantilla",
+    problems: ["Página web"],
+    label: "Landing pages",
+    intro: "Venís por una página web. Te vamos a ayudar a definir si conviene partir de una base o hacer algo a medida.",
+  },
+  desarrollo: {
+    budget: "medida",
+    problems: ["Sistema propio"],
+    label: "Desarrollo",
+    intro: "Venís por desarrollo. Te vamos a ayudar a ordenar si necesitás web, sistema, tienda o una herramienta a medida.",
+  },
+  "paginas-web-landing-pages": {
+    budget: "plantilla",
+    problems: ["Página web"],
+    label: "Páginas web y landing pages",
+    intro: "Venís por una web o landing. Te vamos a ayudar a definir si conviene partir de una base o hacer una página completamente a medida.",
+  },
+  "software-a-medida": {
+    budget: "medida",
+    problems: ["Sistema propio"],
+    label: "Software a medida",
+    intro: "Venís por software a medida. Te vamos a ayudar a ordenar proceso, alcance y primera versión posible.",
+  },
+  "tiendas-online-plataformas": {
+    budget: "tienda",
+    problems: ["Tienda online"],
+    label: "Tiendas online y plataformas",
+    intro: "Venís por una tienda o plataforma. Te vamos a ayudar a entender catálogo, operación, pagos, pedidos e integraciones necesarias.",
+  },
+  automatizaciones: {
+    budget: "automatizacion",
+    problems: ["Automatizaciones"],
+    label: "Automatizaciones",
+    intro: "Venís por automatizaciones. Te vamos a ayudar a detectar qué tarea repetida conviene ordenar primero.",
+  },
+  integraciones: {
+    budget: "automatizacion",
+    problems: ["Integraciones"],
+    label: "Integraciones",
+    intro: "Venís por integraciones. Te vamos a ayudar a revisar herramientas, datos y conexiones posibles.",
+  },
+  "mantenimiento-mejoras": {
+    budget: "medida",
+    problems: ["Sistema propio"],
+    label: "Mantenimiento y mejoras",
+    intro: "Venís por mantenimiento o mejoras. Te vamos a ayudar a revisar qué existe, qué falla y qué conviene priorizar.",
+  },
+  dominios: {
+    budget: "dominio",
+    problems: ["Dominio"],
+    label: "Dominios",
+    intro: "Venís por dominios. Te vamos a ayudar a registrar, conectar o gestionar tu dominio de forma ordenada.",
+  },
+  crm: {
+    budget: "crm",
+    problems: ["CRM"],
+    label: "CRM",
+    intro: "Venís por CRM. La línea está en preparación, pero podemos relevar tu proceso comercial y avisarte el mejor camino.",
+  },
+  marketing: {
+    budget: "marketing",
+    problems: ["Más clientes", "Contenido y redes"],
+    label: "Marketing",
+    intro: "Venís por marketing. Te vamos a ayudar a ordenar campañas, contenido y próximos pasos comerciales.",
+  },
+  productos: {
+    budget: "no-se",
+    problems: ["Sistema propio"],
+    label: "Productos",
+    intro: "Venís por plataformas propias. Te vamos a ayudar a entender si alguna solución existente o una a medida tiene sentido.",
+  },
+};
+
 function toggleValue(list, value) {
   return list.includes(value)
     ? list.filter((item) => item !== value)
@@ -53,9 +136,23 @@ function toggleValue(list, value) {
 }
 
 export default function ApplicationPage() {
+  const [searchParams] = useSearchParams();
+  const service = searchParams.get("servicio");
+  const serviceContext = serviceDefaults[service];
   const [form, setForm] = useState(initialForm);
   const [step, setStep] = useState(1);
   const [status, setStatus] = useState(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (!serviceContext) return;
+
+    setForm((current) => ({
+      ...current,
+      budget: serviceContext.budget,
+      problems: serviceContext.problems,
+    }));
+  }, [serviceContext]);
 
   const canContinueFromBudget = form.revenue && form.budget;
   const canSubmit = useMemo(() => {
@@ -109,15 +206,16 @@ export default function ApplicationPage() {
       .join(", ");
 
     const message = [
-      "Hola 219Labs, quiero que revisen mi negocio.",
+      "Hola 219Labs, quiero contarles qué necesito.",
       "",
-      `Facturación actual: ${revenueOptions.find((item) => item.value === form.revenue)?.label}`,
-      `Presupuesto mensual para crecimiento: ${budgetOptions.find((item) => item.value === form.budget)?.label}`,
-      `Clientes generados por mes hoy: ${form.clientsPerMonth}`,
+      `Situación actual: ${revenueOptions.find((item) => item.value === form.revenue)?.label}`,
+      serviceContext ? `Consulta originada en: ${serviceContext.label}` : null,
+      `Estoy buscando: ${budgetOptions.find((item) => item.value === form.budget)?.label}`,
+      `Consultas/clientes generados por mes hoy: ${form.clientsPerMonth}`,
       `Canales actuales: ${form.channels.join(", ")}`,
       `Problema a resolver: ${selectedProblems}`,
-      `Por qué quiero trabajar con 219Labs: ${form.why219}`,
-    ].join("\n");
+      `Qué necesito lograr: ${form.why219}`,
+    ].filter(Boolean).join("\n");
 
     window.open(
       `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
@@ -129,33 +227,29 @@ export default function ApplicationPage() {
   return (
     <main className="application-page">
       <div className="application-shell">
-        <header className="application-header">
-          <Link to="/" className="application-logo" aria-label="Volver al inicio">
-            <img src={LogoFooter} alt="219Labs" />
-          </Link>
-          <Link to="/" className="application-back">
-            Volver
-          </Link>
-        </header>
-
         <section className="application-intro" aria-labelledby="application-title">
-          <p className="application-kicker">Aplicación</p>
+          <p className="application-kicker">Consulta</p>
           <h1 id="application-title">
-            Trabajamos con <em>empresas</em> que buscan construir sistemas reales de <em>crecimiento y adquisición de clientes.</em>
+            Contanos qué necesitás y vemos si 219Labs puede ayudarte a resolverlo.
           </h1>
+          {serviceContext && (
+            <p className="application-context">
+              {serviceContext.intro}
+            </p>
+          )}
           <p>
-            Nuestros proyectos suelen comenzar desde USD 1.000 mensuales + inversión publicitaria.
+            Puede ser una página web, una campaña, contenido, un sistema a medida o una idea que todavía necesita orden.
           </p>
           <p>
-            Si tu objetivo es una página económica o soluciones rápidas, probablemente no seamos el mejor fit.
+            No hace falta que sepas el nombre técnico del servicio. Con que nos cuentes el objetivo, alcanza para empezar.
           </p>
         </section>
 
         <form className="application-form" onSubmit={submitApplication}>
           {status === "early" && (
             <div className="application-result" role="status">
-              <h2>Posiblemente todavía no sea el momento ideal para trabajar juntos.</h2>
-              <p>Seguinos y aprendé gratis hasta que tu negocio esté listo para construir un sistema de adquisición más serio.</p>
+              <h2>Podemos orientarte, aunque quizá convenga empezar simple.</h2>
+              <p>Si estás recién ordenando la idea, tal vez una primera web o una consulta puntual sea mejor que un proyecto grande.</p>
               <a href="https://instagram.com/219labs" target="_blank" rel="noopener noreferrer">
                 Ver recursos gratuitos
               </a>
@@ -167,8 +261,8 @@ export default function ApplicationPage() {
 
           {status === "budget" && (
             <div className="application-result" role="status">
-              <h2>Hoy trabajamos con empresas con presupuestos mayores.</h2>
-              <p>Te dejamos recursos gratuitos para que puedas seguir mejorando tu adquisición sin iniciar un proyecto todavía.</p>
+              <h2>Perfecto. Entonces vamos a entender mejor qué necesitás.</h2>
+              <p>Podemos revisar si conviene empezar por una web, marketing, contenido o desarrollo a medida.</p>
               <a href="https://instagram.com/219labs" target="_blank" rel="noopener noreferrer">
                 Ver recursos gratuitos
               </a>
@@ -189,7 +283,7 @@ export default function ApplicationPage() {
               <section className="application-step" aria-labelledby="revenue-title">
                 <div className="application-step__header">
                   <span>Paso 1</span>
-                  <h2 id="revenue-title">¿Tu empresa factura actualmente?</h2>
+                  <h2 id="revenue-title">¿En qué etapa está tu negocio?</h2>
                 </div>
                 <div className="application-options">
                   {revenueOptions.map((option) => (
@@ -209,7 +303,7 @@ export default function ApplicationPage() {
                 <section className="application-step" aria-labelledby="budget-title">
                   <div className="application-step__header">
                     <span>Paso 2</span>
-                    <h2 id="budget-title">¿Cuál es tu presupuesto mensual disponible para crecimiento?</h2>
+                    <h2 id="budget-title">¿Qué estás buscando principalmente?</h2>
                   </div>
                   <div className="application-options">
                     {budgetOptions.map((option) => (
@@ -234,7 +328,7 @@ export default function ApplicationPage() {
                   </div>
 
                   <label className="application-field">
-                    <span>¿Cuántos clientes generan por mes hoy?</span>
+                    <span>¿Cuántas consultas o clientes generan por mes hoy?</span>
                     <input
                       value={form.clientsPerMonth}
                       onChange={(event) => updateField("clientsPerMonth", event.target.value)}
@@ -259,7 +353,7 @@ export default function ApplicationPage() {
                   </fieldset>
 
                   <fieldset className="application-fieldset">
-                    <legend>¿Qué problema querés resolver?</legend>
+                    <legend>¿Qué querés resolver?</legend>
                     <div className="application-checks">
                       {problemOptions.map((problem) => (
                         <label key={problem}>
@@ -286,23 +380,22 @@ export default function ApplicationPage() {
                   )}
 
                   <label className="application-field">
-                    <span>¿Por qué querés trabajar con 219Labs específicamente?</span>
+                    <span>Contanos brevemente qué necesitás lograr.</span>
                     <textarea
                       value={form.why219}
                       onChange={(event) => updateField("why219", event.target.value)}
-                      placeholder="Queremos entender si hay fit real antes de hablar."
+                      placeholder="Ej: necesito una landing para mi negocio y empezar a generar consultas por Instagram."
                       rows="5"
                     />
                   </label>
 
                   <div className="application-note">
-                    <p>No trabajamos con todas las empresas.</p>
-                    <p>Buscamos negocios que ya validaron su oferta y quieran construir un sistema escalable de adquisición.</p>
-                    <p>Revisamos cada solicitud manualmente.</p>
+                    <p>Leemos cada solicitud manualmente.</p>
+                    <p>Si vemos un camino claro, te respondemos con el próximo paso.</p>
                   </div>
 
                   <button className="application-submit" type="submit" disabled={!canSubmit}>
-                    Quiero que revisen mi negocio
+                    Enviar consulta
                   </button>
                 </section>
               )}

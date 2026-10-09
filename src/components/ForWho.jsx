@@ -8,8 +8,8 @@ const PROFILES = [
   {
     id: '01',
     label: 'Empresas',
-    text: 'Empresas que quieren vender más online',
-    cta: 'Quiero vender más',
+    text: 'Empresas que necesitan marketing y tecnología trabajando juntos',
+    cta: 'Hablar con 219Labs',
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <rect x="2" y="7" width="16" height="11" rx="1" stroke="currentColor" strokeWidth="1.4"/>
@@ -21,8 +21,8 @@ const PROFILES = [
   {
     id: '02',
     label: 'Negocios',
-    text: 'Negocios que quieren atraer clientes nuevos',
-    cta: 'Quiero atraer clientes',
+    text: 'Negocios que quieren una web clara y campañas mejor pensadas',
+    cta: 'Ordenar mi presencia online',
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path d="M3 8.5L10 3l7 5.5V17a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5z" stroke="currentColor" strokeWidth="1.4"/>
@@ -33,8 +33,8 @@ const PROFILES = [
   {
     id: '03',
     label: 'Emprendedores',
-    text: 'Emprendedores que quieren escalar su negocio',
-    cta: 'Quiero escalar',
+    text: 'Emprendedores con una idea que necesita estructura para crecer',
+    cta: 'Contar mi idea',
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path d="M10 2L12.5 7.5H18L13.5 11l2 6L10 14l-5.5 3 2-6L2 7.5h5.5L10 2z"
@@ -63,7 +63,7 @@ export default function ForWho() {
         <div className="fw-header">
           <span className="fw-eyebrow">Para quién es</span>
           <h2 className="fw-title">
-            Este sistema es <em className="fw-title__accent">ideal para</em>
+            Esto es <em className="fw-title__accent">para negocios que quieren moverse</em>
           </h2>
         </div>
 
@@ -89,10 +89,10 @@ export default function ForWho() {
         <div className="fw-closing-wrap">
           <p className="fw-closing">
             Si tu negocio necesita clientes,<br />
-            <strong>este sistema es para vos.</strong>
+            <strong>también necesita herramientas para conseguirlos.</strong>
           </p>
           <Link to="/aplicar" className="fw-cta">
-            <span>Aplicar para trabajar juntos</span>
+            <span>Contanos qué necesitás</span>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
               <path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor"
                 strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>

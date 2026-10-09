@@ -1,17 +1,16 @@
 import { useState, useCallback } from "react";
 import FluidBackground from "./components/FluidBackground";
-import Logo219 from "./components/Logo219";
-import HeroNav from "./components/HeroNav";
 import HeroHeadline from "./components/HeroHeadline";
 import HeroDescriptor from "./components/HeroDescriptor";
 import HeroCTA from "./components/HeroCTA";
 import HeroPreloader from "./HeroPreloader.jsx";
 import { useHeroAnimations } from "./hooks/useHeroAnimations.js";
-import { COPY } from "./constants/theme";
 import "./styles/hero.css";
 
+const ENABLE_HERO_PRELOADER = false;
+
 export default function Hero219Labs({ onWhatsAppClick }) {
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(!ENABLE_HERO_PRELOADER);
 
   // useCallback para estabilizar la referencia (evita re-renders del preloader)
   const handlePreloaderDone = useCallback(() => setReady(true), []);
@@ -21,8 +20,9 @@ export default function Hero219Labs({ onWhatsAppClick }) {
 
   return (
     <>
-      {/* Telón — se monta encima de todo y sube solo */}
-      <HeroPreloader onDone={handlePreloaderDone} />
+      {ENABLE_HERO_PRELOADER && (
+        <HeroPreloader onDone={handlePreloaderDone} />
+      )}
 
       <section
         className={`hero${ready ? "" : " hero--preloading"}`}
@@ -33,16 +33,6 @@ export default function Hero219Labs({ onWhatsAppClick }) {
         <div className="hero__vignette" aria-hidden="true" />
 
         <div className="hero__grid">
-          <div className="hero__logo-area">
-            <Logo219 />
-            <div className="hero__logo-labels" aria-hidden="true">
-              <span>{COPY.metaLeft}</span>
-              <span>{COPY.metaRight}</span>
-            </div>
-          </div>
-
-          <HeroNav />
-
           <div className="hero__spacer" aria-hidden="true" />
 
           <div className="hero__subtitle-area">

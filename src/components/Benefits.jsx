@@ -8,31 +8,31 @@ import "./benefits.css";
 const BENEFITS = [
   {
     id: "01",
-    text: "Atraer más clientes",
+    text: "Que más personas entiendan qué ofrecés",
     detail:
-      "Tu negocio aparece donde tu cliente ya está buscando. Sin esperar, sin depender del algoritmo de turno.",
-    cta: "Quiero más clientes",
+      "Una comunicación más clara hace que tu negocio deje de depender de explicaciones eternas por mensaje.",
+    cta: "Ordenar mi comunicación",
   },
   {
     id: "02",
-    text: "Vender cuando el local está cerrado",
+    text: "Recibir consultas con una web preparada",
     detail:
-      "El sistema trabaja 24/7. A las 2am, un domingo, en feriado. Vos no tenés que estar presente para cerrar una venta.",
-    cta: "Quiero vender sin parar",
+      "Una página bien hecha muestra servicios, genera confianza y deja listo el próximo paso.",
+    cta: "Quiero una web",
   },
   {
     id: "03",
-    text: "Flujo de consultas constante",
+    text: "Tener campañas y contenido con dirección",
     detail:
-      "Nada de meses buenos y meses muertos. Un sistema predecible que trae consultas todos los días.",
-    cta: "Quiero consistencia",
+      "No se trata de subir cosas por subir. Se trata de publicar, medir y mejorar con un objetivo.",
+    cta: "Mejorar mi marketing",
   },
   {
     id: "04",
-    text: "Dejar de depender del boca a boca",
+    text: "Crear herramientas para trabajar mejor",
     detail:
-      "Crecé sin esperar que alguien te recomiende. Tomá el control de cómo y cuántos clientes entran a tu negocio.",
-    cta: "Quiero tomar el control",
+      "Si tu operación necesita un sistema propio, lo podemos diseñar alrededor de tus procesos reales.",
+    cta: "Desarrollar mi sistema",
   },
 ];
 
@@ -61,9 +61,9 @@ export default function Benefits() {
         <div className="bn-content">
           <span className="bn-eyebrow">Beneficios</span>
           <h2 className="bn-title">
-            Con este sistema
+            Con 219Labs
             <br />
-            tu negocio <em className="bn-title__accent">puede.</em>
+            tu negocio <em className="bn-title__accent">ordena y avanza.</em>
           </h2>
           <ul className="bn-list" aria-label="Beneficios del sistema">
             {BENEFITS.map((b) => (

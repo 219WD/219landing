@@ -6,40 +6,12 @@
     var(--color-bg-dark);
   color: var(--color-text-primary);
   font-family: var(--f-sans);
-  padding: 28px;
+  padding: 118px 28px 28px;
 }
 
 .application-shell {
   width: min(1080px, 100%);
   margin: 0 auto;
-}
-
-.application-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 72px;
-}
-
-.application-logo img {
-  width: 132px;
-  height: auto;
-  display: block;
-}
-
-.application-back {
-  color: var(--color-text-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--border-radius-sm);
-  padding: 10px 16px;
-  text-decoration: none;
-  transition: color var(--transition-fast), border-color var(--transition-fast);
-}
-
-.application-back:hover {
-  color: var(--color-primary);
-  border-color: rgba(0, 255, 136, 0.45);
 }
 
 .application-intro {
@@ -83,6 +55,15 @@
 
 .application-intro p + p {
   margin-top: 12px;
+}
+
+.application-context {
+  border-left: 3px solid var(--color-primary);
+  background: rgba(0, 255, 136, 0.06);
+  padding: 16px 18px;
+  margin-bottom: 18px;
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: clamp(0.95rem, 1.5vw, 1.08rem) !important;
 }
 
 .application-form {
@@ -327,11 +308,7 @@
 
 @media (max-width: 860px) {
   .application-page {
-    padding: 20px;
-  }
-
-  .application-header {
-    margin-bottom: 46px;
+    padding: 134px 20px 20px;
   }
 
   .application-options,
@@ -342,15 +319,7 @@
 
 @media (max-width: 560px) {
   .application-page {
-    padding: 16px;
-  }
-
-  .application-header {
-    margin-bottom: 36px;
-  }
-
-  .application-logo img {
-    width: 104px;
+    padding: 142px 16px 16px;
   }
 
   .application-options,

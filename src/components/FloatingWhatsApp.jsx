@@ -5,7 +5,7 @@ const FloatingWhatsApp = ({ onWhatsAppClick }) => {
     <button 
       className="floating-whatsapp"
       onClick={onWhatsAppClick}
-      aria-label="Aplicar para trabajar juntos"
+      aria-label="Contanos qué necesitás"
     >
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
         <path d="M7 3h7l4 4v14H7V3Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />

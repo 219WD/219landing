@@ -4,7 +4,7 @@ const SERVICES_TAGS = [
   'Marketing',
   'Desarrollo Web',
   'Software',
-  'Automatización',
+  'Productos',
 ];
 
 const Footer = ({ onWhatsAppClick }) => {
@@ -25,8 +25,7 @@ const Footer = ({ onWhatsAppClick }) => {
               />
             </div>
 
-            {/* Sistemas de captación */}
-            <p className="footer-sistema">Sistemas de Captación</p>
+            <p className="footer-sistema">Marketing y Desarrollo</p>
 
             {/* Tags de servicios */}
             <div className="footer-tags">
@@ -36,8 +35,8 @@ const Footer = ({ onWhatsAppClick }) => {
             </div>
 
             <p className="footer-tagline">
-              Diseñamos sistemas digitales que atraen personas<br />
-              interesadas en lo que vendés y las convertimos en clientes.<br />
+              Creamos páginas, sistemas, campañas y contenido<br />
+              para que tu negocio tenga herramientas reales para crecer.<br />
               Desde Tucumán para todo el país.
             </p>
 
@@ -71,7 +70,7 @@ const Footer = ({ onWhatsAppClick }) => {
                   <path d="M14 3v5h5M9.5 14l2 2 4-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </span>
-              Aplicar para trabajar juntos
+              Contanos qué necesitás
             </button>
           </div>
 
@@ -80,7 +79,7 @@ const Footer = ({ onWhatsAppClick }) => {
         {/* ── Bottom bar ── */}
         <div className="footer-bottom">
           <p className="copyright">© 2026 219Labs. Todos los derechos reservados.</p>
-          <p className="legal">Desarrollado con ❤️ en Argentina</p>
+          <p className="legal">Desarrollado en Argentina</p>
         </div>
 
       </div>

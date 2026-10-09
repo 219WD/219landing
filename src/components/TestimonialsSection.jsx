@@ -95,6 +95,7 @@ export default function Testimonials({ onWhatsAppClick }) {
   return (
     <section
       className="tm-section"
+      id="casos"
       ref={sectionRef}
       aria-label="Casos de éxito"
     >
@@ -189,9 +190,9 @@ export default function Testimonials({ onWhatsAppClick }) {
         {/* ── CTA ── */}
         <div className="tm-cta">
           <p className="tm-cta__text">¿Listo para resultados como estos?</p>
-          <button className="tm-cta__btn" onClick={onWhatsAppClick} aria-label="Aplicar para trabajar juntos">
+          <button className="tm-cta__btn" onClick={onWhatsAppClick} aria-label="Contar qué necesita mi negocio">
             <ApplyIcon />
-            <span>Sí, quiero estos resultados</span>
+            <span>Quiero hablar con 219Labs</span>
           </button>
         </div>
 

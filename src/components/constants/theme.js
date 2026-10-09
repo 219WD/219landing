@@ -19,21 +19,14 @@ export const FLUID_CONFIG = {
   autoRampDuration: 0.6,
 };
 
-export const NAV_LINKS = [
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Casos',     href: '#casos'     },
-  { label: 'Nosotros',  href: '#nosotros'  },
-  { label: 'Contacto',  href: '#contacto'  },
-];
-
 export const COPY = {
-  logoLeft:   'Sistemas',
-  logoRight:  'De Conversión',
-  metaLeft:   'Sistemas',
-  metaRight:  'De Conversión',
-  headlinePlain:  'Conseguí más clientes para tu negocio con sistemas digitales que trabajan todos los días para ',
-  headlineAccent: 'vender por vos.',
-  subtitle: 'Diseñamos estrategias digitales que atraen personas interesadas en lo que vendés y las convertimos en clientes.',
-  cta:     'Aplicar para trabajar juntos',
+  logoLeft:   'Marketing',
+  logoRight:  'Y Desarrollo',
+  metaLeft:   'Marketing',
+  metaRight:  'Desarrollo',
+  headlinePlain:  'Tu negocio tiene objetivos. Nosotros tenemos cómo ayudarte a ',
+  headlineAccent: 'cumplirlos.',
+  subtitle: 'Creamos páginas web, sistemas, campañas publicitarias y contenido para que tu negocio tenga herramientas reales para crecer.',
+  cta:     'Contanos qué necesitás',
   ctaHref: '/aplicar',
 };

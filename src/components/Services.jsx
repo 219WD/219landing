@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import AmbientOrb from './AmbientOrb';
 import { useServicesAnimations } from '../hooks/useServicesAnimation.js';
 import './services.css';
@@ -6,43 +7,43 @@ import './services.css';
 const SERVICES = [
   {
     id: '01',
-    title: 'Sistemas de Captación de Clientes',
-    function: 'Estrategias digitales y campañas publicitarias para atraer personas interesadas y convertirlas en clientes. Incluye contenido, publicidad, páginas web, embudos y tiendas online.',
-    tag: 'Captación',
-    cta: 'Quiero más clientes',
-    href: '#contacto',
+    title: 'Marketing y Contenido',
+    function: 'Publicidad, redes sociales, reels, diseño y mensajes claros para que más personas conozcan tu negocio y entiendan por qué elegirte.',
+    tag: 'Marketing',
+    cta: 'Ver marketing',
+    href: '/marketing',
   },
   {
     id: '02',
-    title: 'Desarrollo de Software a Medida',
-    function: 'Si tu negocio necesita una herramienta específica, la creamos. Gestión de clientes, plataformas internas, sistemas de reservas y herramientas digitales diseñadas exactamente para vos.',
-    tag: 'Software',
-    cta: 'Desarrollar mi sistema',
-    href: '#contacto',
+    title: 'Desarrollo y Tecnología',
+    function: 'Páginas web, tiendas online, sistemas internos y herramientas digitales creadas para la forma real en la que trabaja tu empresa.',
+    tag: 'Desarrollo',
+    cta: 'Ver desarrollo',
+    href: '/desarrollo',
   },
   {
     id: '03',
-    title: 'Automatizaciones con IA',
-    function: 'Automatizamos tareas para que tu empresa trabaje de forma más eficiente. Respuestas automáticas, clasificación de consultas, procesos de ventas y tareas repetitivas.',
-    tag: 'Automatización',
-    cta: 'Automatizar mi negocio',
-    href: '#contacto',
+    title: 'Landing Pages',
+    function: 'Páginas pensadas para presentar tu negocio, explicar tu oferta y recibir consultas. Con plantilla o totalmente a medida.',
+    tag: 'Webs',
+    cta: 'Ver opciones',
+    href: '/landing-pages',
   },
   {
     id: '04',
-    title: 'Creación de Contenido con IA',
-    function: 'Contenido digital optimizado para redes sociales, campañas y páginas web usando IA. Producción más rápida, presencia constante y mensajes optimizados para captar clientes.',
-    tag: 'Contenido IA',
-    cta: 'Crear contenido',
-    href: '#contacto',
+    title: 'Software a Medida',
+    function: 'Cuando necesitás una herramienta que no existe lista para usar, la pensamos y la desarrollamos con el alcance justo.',
+    tag: 'Sistemas',
+    cta: 'Hablar de mi sistema',
+    href: '/desarrollo',
   },
   {
     id: '05',
-    title: 'Contenido Real',
-    function: 'Equipo de marketing que produce contenido real para empresas en Tucumán. Grabación de videos, fotografía profesional y piezas humanizadas para redes y campañas.',
-    tag: 'Tucumán',
-    cta: 'Quiero contenido real',
-    href: '#contacto',
+    title: 'Plataformas Propias',
+    function: '219Shops, 219Meds y nuevos productos creados por nuestro equipo para resolver problemas concretos de distintos negocios.',
+    tag: 'Productos',
+    cta: 'Ver productos',
+    href: '/productos',
   },
 ];
 
@@ -61,7 +62,7 @@ export default function Services() {
   useServicesAnimations(sectionRef);
 
   return (
-    <section className="sv-section" ref={sectionRef} aria-label="Qué incluye el servicio">
+    <section className="sv-section" id="servicios" ref={sectionRef} aria-label="Qué hace 219Labs">
 
       {/* Ambient orb — left side, different position from the PS orb */}
       <AmbientOrb side="left" top="20%" parallaxY={32} size="clamp(280px, 38vw, 520px)" />
@@ -69,11 +70,11 @@ export default function Services() {
       <div className="sv-header">
         <span className="sv-eyebrow">Lo que hacemos</span>
         <h2 className="sv-title">
-          Soluciones digitales que<br />
-          <em className="sv-title__accent">generan resultados.</em>
+          Dos especialidades.<br />
+          <em className="sv-title__accent">Un mismo objetivo.</em>
         </h2>
         <p className="sv-subtitle">
-          Trabajamos con negocios que quieren crecer online — desde captar clientes hasta automatizar procesos.
+          Hay empresas que necesitan vender más. Otras necesitan organizar mejor su trabajo. Muchas necesitan las dos cosas.
         </p>
       </div>
 
@@ -95,10 +96,10 @@ export default function Services() {
             <h3 className="sv-card__title">{s.title}</h3>
             <p className="sv-card__function">{s.function}</p>
 
-            <a href={s.href} className="sv-card__cta" tabIndex={-1} aria-label={s.cta}>
+            <Link to={s.href} className="sv-card__cta" tabIndex={-1} aria-label={s.cta}>
               <span>{s.cta}</span>
               <ArrowRight />
-            </a>
+            </Link>
 
             <div className="sv-card__line" aria-hidden="true" />
           </article>
@@ -106,7 +107,7 @@ export default function Services() {
       </div>
 
       <p className="sv-closing">
-        Cada servicio está diseñado para que <strong>tu negocio venda más</strong>.
+        Todo se ordena alrededor de algo simple: <strong>que tu negocio avance.</strong>
       </p>
     </section>
   );

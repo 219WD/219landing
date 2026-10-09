@@ -1,0 +1,130 @@
+.pf-section {
+  position: relative;
+  background: var(--c-bg, #080806);
+  color: var(--c-text, #fff);
+  font-family: var(--f-sans, 'DM Sans', system-ui, sans-serif);
+  padding: clamp(80px, 10vw, 140px) clamp(28px, 4vw, 64px);
+}
+
+.pf-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(46px, 7vw, 100px);
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.pf-eyebrow {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: rgba(255,255,255,0.35);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.pf-process h2,
+.pf-faq h2 {
+  margin-bottom: 34px;
+  font-family: var(--f-display, 'Playfair Display', Georgia, serif);
+  font-size: clamp(32px, 4vw, 58px);
+  line-height: 1.09;
+  letter-spacing: -0.02em;
+}
+
+.pf-steps {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(255,255,255,0.065);
+}
+
+.pf-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 18px;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.065);
+}
+
+.pf-step span {
+  color: var(--c-accent, #00cc6f);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.pf-step h3 {
+  margin-bottom: 7px;
+  font-size: clamp(17px, 1.5vw, 22px);
+}
+
+.pf-step p,
+.pf-faq p {
+  color: rgba(255,255,255,0.52);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.72;
+}
+
+.pf-faq__list {
+  border-top: 1px solid rgba(255,255,255,0.065);
+}
+
+.pf-faq details {
+  border-bottom: 1px solid rgba(255,255,255,0.065);
+  padding: 20px 0;
+}
+
+.pf-faq summary {
+  cursor: pointer;
+  font-size: clamp(16px, 1.35vw, 19px);
+  font-weight: 500;
+  list-style: none;
+}
+
+.pf-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.pf-faq summary::after {
+  content: '+';
+  float: right;
+  color: var(--c-accent, #00cc6f);
+}
+
+.pf-faq details[open] summary::after {
+  content: '-';
+}
+
+.pf-faq details p {
+  max-width: 520px;
+  padding-top: 14px;
+}
+
+.pf-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 32px;
+  background: rgba(255,255,255,0.94);
+  color: #080806;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  line-height: 1;
+  padding: 16px 24px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: gap 0.2s ease;
+}
+
+.pf-cta:hover {
+  gap: 16px;
+}
+
+@media (max-width: 860px) {
+  .pf-inner {
+    grid-template-columns: 1fr;
+  }
+}
