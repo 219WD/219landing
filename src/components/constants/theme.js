@@ -1,5 +1,4 @@
 export const FLUID_COLORS = ['#09ec27', '#e0ff9e', '#7dce3b'];
-export const FLUID_MOBILE_COLORS = ['#00f282', '#0d7a25', '#021d0c'];
 
 export const FLUID_CONFIG = {
   mouseForce: 20,
@@ -18,18 +17,6 @@ export const FLUID_CONFIG = {
   takeoverDuration: 0.25,
   autoResumeDelay: 3000,
   autoRampDuration: 0.6,
-};
-
-export const FLUID_MOBILE_CONFIG = {
-  resolution: 0.42,
-  cursorSize: 150,
-  mouseForce: 24,
-  viscous: 22,
-  iterationsViscous: 22,
-  iterationsPoisson: 22,
-  autoSpeed: 0.72,
-  autoIntensity: 3.4,
-  autoResumeDelay: 250,
 };
 
 export const COPY = {
