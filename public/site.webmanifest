@@ -1,0 +1,19 @@
+{
+  "name": "219Labs",
+  "short_name": "219Labs",
+  "description": "Marketing digital, desarrollo web, software a medida y automatizaciones para negocios.",
+  "lang": "es-AR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#050807",
+  "theme_color": "#00ff88",
+  "icons": [
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

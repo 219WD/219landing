@@ -1201,7 +1201,7 @@ const PAGE_DATA = {
     title: "Creamos productos digitales.",
     accent: "No solo servicios para clientes.",
     intro:
-      "219Shops muestra cómo 219Labs convierte problemas concretos en soluciones digitales completas. Otras líneas, como 219Meds, se comunican con prudencia hasta validar alcance y estado comercial.",
+      "219Shops y 219Meds muestran cómo 219Labs convierte problemas concretos en plataformas digitales completas: comercio online, salud, gestión operativa y experiencia de usuario.",
     cta: "Hablar sobre plataformas",
     sections: [
       {
@@ -1210,7 +1210,7 @@ const PAGE_DATA = {
       },
       {
         title: "219Meds",
-        text: "Línea orientada al sector salud. Antes de presentarla comercialmente, validamos módulos, alcance y disponibilidad real.",
+        text: "Plataforma para gestión médica y farmacéutica: turnos, pacientes, historias clínicas, stock, ventas, reportes y comunicación segura.",
       },
       {
         title: "Desarrollo de producto",
@@ -1218,9 +1218,9 @@ const PAGE_DATA = {
       },
     ],
     notice: {
-      eyebrow: "Comunicación responsable",
-      title: "No presentamos productos como disponibles hasta saber exactamente qué hacen y cómo se contratan.",
-      text: "219Shops sí se puede mostrar como plataforma activa. 219Meds queda mencionado como línea de producto en evaluación, sin prometer módulos ni funcionalidades que todavía no estén confirmadas.",
+      eyebrow: "Productos en acción",
+      title: "Mostramos plataformas con uso concreto, no ideas sueltas.",
+      text: "219Shops ordena comercio online. 219Meds apunta a consultorios, profesionales y equipos de salud que necesitan centralizar agenda, pacientes, historia clínica, stock, ventas y reportes.",
     },
     detail: {
       eyebrow: "Productos",
@@ -1241,7 +1241,9 @@ const PAGE_DATA = {
         },
         {
           title: "219Meds",
-          text: "Línea orientada al sector salud, con comunicación y módulos a validar antes de presentarla como producto disponible.",
+          text: "Plataforma de gestión médica y farmacéutica para administrar turnos, pacientes, historias clínicas, stock, ventas, reportes y comunicación desde un mismo sistema.",
+          href: "https://219meds.vercel.app/",
+          cta: "Ver 219Meds",
         },
         {
           title: "Próximas plataformas",
@@ -1252,11 +1254,11 @@ const PAGE_DATA = {
     showcase: {
       eyebrow: "Prueba visible",
       title: "El producto también sirve como evidencia de cómo pensamos diseño, operación y tecnología.",
-      text: "219Shops permite mostrar una plataforma real, bases navegables y una forma concreta de resolver comercio online sin empezar siempre desde cero.",
+      text: "219Shops y 219Meds permiten mostrar plataformas reales: una orientada a comercio online y otra a gestión médica, pacientes, agenda, stock y operación de consultorio.",
       items: [
         ["01", "Producto activo", "219Shops funciona como plataforma propia para vender y administrar un negocio online."],
         ["02", "Diseños navegables", "El catálogo permite ver referencias reales antes de decidir una dirección visual."],
-        ["03", "Operación comercial", "La propuesta contempla productos, pedidos, cobros, stock, envíos y clientes."],
+        ["03", "Salud digital", "219Meds centraliza turnos, pacientes, historias clínicas, stock, ventas y reportes para equipos de salud."],
         ["04", "Base de aprendizaje", "Cada producto propio alimenta mejores decisiones para desarrollos a medida."],
       ],
     },
@@ -1268,7 +1270,7 @@ const PAGE_DATA = {
         "Capacidad para transformar una necesidad repetida en una solución reusable.",
         "Criterio para separar producto existente de desarrollo personalizado.",
         "Experiencia en diseño de pantallas, flujos y operaciones completas.",
-        "Comunicación honesta sobre productos disponibles y líneas en preparación.",
+        "Comunicación clara sobre alcance, módulos y casos donde conviene producto o desarrollo a medida.",
       ],
     },
     workflow: {
@@ -1284,7 +1286,7 @@ const PAGE_DATA = {
     faq: [
       ["¿219Shops es parte de 219Labs?", "Sí. Es una plataforma propia desarrollada por el equipo para ayudar a negocios a vender y administrarse mejor."],
       ["¿Las plataformas reemplazan los servicios a medida?", "No. Algunas empresas pueden usar un producto existente. Otras necesitan desarrollo personalizado."],
-      ["¿219Meds ya se puede contratar?", "No lo presentamos como producto comercial cerrado. Primero hay que validar módulos, alcance y disponibilidad real."],
+      ["¿219Meds ya se puede consultar?", "Sí. La plataforma ya tiene una propuesta clara para consultorios y equipos de salud. Según el caso, revisamos alcance, demo, implementación y módulos necesarios."],
       ["¿Puedo pedir una plataforma parecida para mi rubro?", "Sí. Si tenés una necesidad específica, podemos evaluar si conviene adaptar algo existente o crear una solución propia."],
       ["¿Por qué mostrar productos en la web de 219Labs?", "Porque demuestra capacidad real: diseño, software, operación, soporte, contenido y visión comercial trabajando juntos."],
     ],
@@ -1366,6 +1368,13 @@ export default function ServicePage({ type }) {
           );
         })}
       </section>
+      <ServiceCTA
+        eyebrow="Convertir intención"
+        title="Si algo de esto te suena, podemos bajarlo a un plan."
+        text="Contanos qué necesitás resolver y te respondemos con el camino más simple para avanzar."
+        label={page.cta}
+        onClick={goApply}
+      />
 
       {page.modalities && (
         <section className="sp-modes" aria-label={page.modalities.eyebrow}>
@@ -1530,6 +1539,15 @@ export default function ServicePage({ type }) {
           </div>
         </section>
       )}
+      {page.comparison && (
+        <ServiceCTA
+          eyebrow="Decidir camino"
+          title="¿Plantilla, producto o a medida? Te ayudamos a elegir sin vueltas."
+          text="La decisión correcta no siempre es la más grande. Es la que más rápido resuelve el problema real."
+          label="Elegir con ayuda"
+          onClick={goApply}
+        />
+      )}
 
       {page.catalog && (
         <section className="sp-catalog" aria-label="Catálogo de diseños de landing pages">
@@ -1554,6 +1572,15 @@ export default function ServicePage({ type }) {
             ))}
           </ul>
         </section>
+      )}
+      {page.catalog && (
+        <ServiceCTA
+          eyebrow="Después de mirar"
+          title="Si viste una referencia que te sirve, la adaptamos a tu negocio."
+          text="Pasamos de inspiración a una página concreta, con textos, estructura, marca y objetivo comercial."
+          label="Adaptar un diseño"
+          onClick={goApply}
+        />
       )}
 
       {page.workflow && (
@@ -1608,6 +1635,22 @@ export default function ServicePage({ type }) {
       <Footer onWhatsAppClick={goApply} />
       <FloatingWhatsApp onWhatsAppClick={goApply} />
     </main>
+  );
+}
+
+function ServiceCTA({ eyebrow, title, text, label, onClick }) {
+  return (
+    <section className="sp-conversion" aria-label={eyebrow}>
+      <div>
+        <span className="sp-eyebrow">{eyebrow}</span>
+        <h2>{title}</h2>
+      </div>
+      <p>{text}</p>
+      <button type="button" className="sp-cta" onClick={onClick}>
+        <span>{label}</span>
+        <Arrow />
+      </button>
+    </section>
   );
 }
 

@@ -148,6 +148,29 @@
   letter-spacing: -0.04em;
 }
 
+.pr-card__logo {
+  display: flex;
+  align-items: center;
+  min-height: clamp(76px, 8vw, 112px);
+}
+
+.pr-card__logo img {
+  display: block;
+  width: auto;
+  max-width: min(100%, 360px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.32));
+}
+
+.pr-card__logo-img--shops {
+  max-height: clamp(74px, 7.2vw, 108px);
+}
+
+.pr-card__logo-img--meds {
+  max-height: clamp(74px, 7.2vw, 108px);
+}
+
 .pr-card h4 {
   max-width: 430px;
   margin-bottom: 14px;

@@ -7,6 +7,8 @@ import "./products-section.css";
 const PRODUCTS = [
   {
     name: "219Shops",
+    logo: "https://www.219shops.com.ar/assets/logo-219shops-blanco-BecVQ_iw.png",
+    logoClass: "pr-card__logo-img--shops",
     label: "Comercio online",
     status: "Producto activo",
     title: "Tu tienda online y tu negocio, en un solo lugar.",
@@ -18,14 +20,16 @@ const PRODUCTS = [
   },
   {
     name: "219Meds",
+    logo: "https://219meds.vercel.app/assets/219Meds-CVPjGVlg.png",
+    logoClass: "pr-card__logo-img--meds",
     label: "Salud",
-    status: "Comunicación a validar",
-    title: "Tecnología para gestión médica y farmacéutica.",
-    text: "Línea de producto orientada al sector salud. La presentamos con prudencia hasta validar módulos, alcance y estado comercial.",
-    bullets: ["Sector salud", "Procesos internos", "Módulos a confirmar", "Comunicación responsable"],
-    href: "/aplicar?servicio=productos",
-    external: false,
-    cta: "Consultar estado",
+    status: "Plataforma activa",
+    title: "Gestión médica y farmacéutica en un solo sistema.",
+    text: "Plataforma para consultorios y equipos de salud con pacientes, turnos, historias clínicas, stock, ventas, reportes y comunicación ordenada.",
+    bullets: ["Turnos", "Historia clínica", "Pacientes", "Stock", "Ventas", "Reportes"],
+    href: "https://219meds.vercel.app/",
+    external: true,
+    cta: "Ver 219Meds",
   },
 ];
 
@@ -52,7 +56,7 @@ export default function ProductsSection() {
             </h2>
           </div>
           <p>
-            219Shops ya funciona como prueba concreta de producto. Otras líneas se comunican solo cuando el alcance está claro y validado.
+            219Shops y 219Meds muestran cómo convertimos necesidades reales en plataformas con operación, diseño y tecnología funcionando.
           </p>
         </div>
 
@@ -90,7 +94,14 @@ export default function ProductsSection() {
                 <span className="pr-card__index">0{index + 1}</span>
                 <p className="pr-card__label">{product.label}</p>
                 <p className="pr-card__status">{product.status}</p>
-                <h3>{product.name}</h3>
+                <h3 className="pr-card__logo">
+                  <img
+                    src={product.logo}
+                    alt={product.name}
+                    className={product.logoClass}
+                    loading="lazy"
+                  />
+                </h3>
                 <h4>{product.title}</h4>
                 <p>{product.text}</p>
                 <ul>

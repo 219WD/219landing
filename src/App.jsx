@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import HeroSection from "./components/HeroSection";
 import Benefits from "./components/Benefits";
 import TestimonialsSection from "./components/TestimonialsSection";
@@ -22,6 +22,45 @@ import { useScrollAnimation } from "./hooks/useScrollAnimation";
 import { useSmoothScroll } from "./hooks/useSmoothScroll";
 import { trackEvent } from "./utils/analytics";
 import "./App.css";
+
+const conversionBlocks = {
+  afterServices: {
+    eyebrow: "Decisión simple",
+    title: "Elegí el camino, o dejá que lo definamos juntos.",
+    text: "No necesitás llegar con el brief perfecto. Con una consulta clara podemos separar prioridad, alcance y primer movimiento.",
+    cta: "Hablar con 219Labs",
+  },
+  afterProducts: {
+    eyebrow: "Producto + servicio",
+    title: "Podemos usar lo que ya existe o construir lo que falta.",
+    text: "219Shops, desarrollo a medida y nuevas líneas propias nos permiten proponer soluciones sin inventar desde cero cuando no hace falta.",
+    cta: "Evaluar mi proyecto",
+  },
+  afterTestimonials: {
+    eyebrow: "Prueba concreta",
+    title: "Ya viste cómo trabajamos. Ahora bajémoslo a tu negocio.",
+    text: "Podemos revisar tu caso y decirte si el próximo paso es presencia digital, campañas, sistema o automatización.",
+    cta: "Aplicar con mi negocio",
+  },
+};
+
+function HomeConversionCTA({ block, onClick }) {
+  return (
+    <section className="home-conversion" aria-label={block.eyebrow}>
+      <div>
+        <span>{block.eyebrow}</span>
+        <h2>{block.title}</h2>
+      </div>
+      <p>{block.text}</p>
+      <Link to="/aplicar" className="home-conversion__cta" onClick={onClick}>
+        <span>{block.cta}</span>
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </Link>
+    </section>
+  );
+}
 
 const LandingPage = () => {
   const heroRef = useRef(null);
@@ -53,14 +92,17 @@ const LandingPage = () => {
       />
       <ProblemSolution />
       <Services />
+      <HomeConversionCTA block={conversionBlocks.afterServices} onClick={() => handleWhatsAppClick("after-services")} />
       <LandingOptions />
       <ProductsSection />
+      <HomeConversionCTA block={conversionBlocks.afterProducts} onClick={() => handleWhatsAppClick("after-products")} />
       <Benefits ref={benefitsRef} onWhatsAppClick={handleWhatsAppClick} />
       <ForWho />
       <TestimonialsSection
         ref={testimonialsRef}
         onWhatsAppClick={() => handleWhatsAppClick("testimonials")}
       />
+      <HomeConversionCTA block={conversionBlocks.afterTestimonials} onClick={() => handleWhatsAppClick("after-testimonials")} />
       <ProcessFAQ />
       <FinalCTA
         ref={testimonialsRef}

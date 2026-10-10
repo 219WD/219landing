@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /aplicar
+Disallow: /landing-pages
 
 Sitemap: https://219labs.com.ar/sitemap.xml
+Sitemap: https://219labs.com.ar/image-sitemap.xml
+Sitemap: https://219labs.com.ar/geo-sitemap.xml

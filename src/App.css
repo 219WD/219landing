@@ -105,6 +105,89 @@ body,
   padding: 0 var(--spacing-md);
 }
 
+.home-conversion {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(240px, 0.55fr) auto;
+  gap: clamp(18px, 3vw, 42px);
+  align-items: center;
+  margin: clamp(18px, 3vw, 34px) clamp(22px, 4vw, 64px);
+  padding: clamp(20px, 3vw, 34px);
+  color: var(--color-text-primary);
+  background:
+    radial-gradient(ellipse 80% 120% at 92% 0%, rgba(0, 255, 136, 0.12), transparent 62%),
+    rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(0, 255, 136, 0.16);
+  border-radius: var(--border-radius-sm);
+}
+
+.home-conversion > div > span {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--color-primary);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.home-conversion h2 {
+  max-width: 760px;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.2vw, 3.4rem);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+}
+
+.home-conversion p {
+  color: var(--color-text-secondary);
+  font-size: clamp(0.92rem, 1.08vw, 1.05rem);
+  line-height: 1.65;
+}
+
+.home-conversion__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  min-width: max-content;
+  color: #050807;
+  background: var(--color-primary);
+  border-radius: var(--border-radius-sm);
+  padding: 15px 20px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: gap var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.home-conversion__cta span {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: 1;
+  text-transform: inherit;
+}
+
+.home-conversion__cta svg {
+  flex: 0 0 auto;
+}
+
+.home-conversion__cta:hover,
+.home-conversion__cta:focus-visible {
+  gap: 15px;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 38px rgba(0, 255, 136, 0.24);
+  outline: none;
+}
+
 /* ============================================
    CTA BUTTONS
    ============================================ */
@@ -847,6 +930,14 @@ body,
   .offer-pricing {
     grid-template-columns: 1fr;
   }
+
+  .home-conversion {
+    grid-template-columns: 1fr;
+  }
+
+  .home-conversion__cta {
+    width: fit-content;
+  }
 }
 
 @media (max-width: 768px) {
@@ -898,6 +989,15 @@ body,
     right: 1.5rem;
     width: 56px;
     height: 56px;
+  }
+
+  .home-conversion {
+    margin-inline: 16px;
+    padding: 20px;
+  }
+
+  .home-conversion__cta {
+    width: 100%;
   }
   
   .urgency-footer {

@@ -1,10 +1,15 @@
 const SITE_URL = "https://219labs.com.ar";
-const DEFAULT_IMAGE = `${SITE_URL}/og-image.svg`;
+const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
+const DEFAULT_IMAGE_ALT = "219Labs - Marketing digital, desarrollo web y software en Argentina";
 
 const base = {
   title: "219Labs | Marketing Digital y Desarrollo de Software",
   description:
-    "Creamos páginas web, software a medida, campañas publicitarias y contenido para que tu negocio tenga herramientas reales para crecer.",
+    "Creamos páginas web, software a medida, campañas publicitarias, automatizaciones y contenido para que tu negocio tenga herramientas reales para crecer.",
+  keywords:
+    "219Labs, marketing digital Tucumán, desarrollo web Tucumán, software a medida Argentina, páginas web Argentina, landing pages, automatizaciones, Meta Ads, agencia digital",
+  image: DEFAULT_IMAGE,
+  imageAlt: DEFAULT_IMAGE_ALT,
 };
 
 export const SEO_BY_PATH = {
@@ -16,60 +21,80 @@ export const SEO_BY_PATH = {
     title: "Desarrollo y tecnología | 219Labs",
     description:
       "Páginas web, tiendas online, software a medida, automatizaciones, integraciones, dominios y mantenimiento para negocios.",
+    keywords:
+      "desarrollo web, software a medida, sistemas de gestión, automatizaciones, integraciones, dominios, Tucumán, Argentina",
     path: "/desarrollo",
   },
   "/desarrollo/paginas-web-landing-pages": {
     title: "Páginas web y landing pages | 219Labs",
     description:
       "Creamos páginas web y landing pages con plantillas profesionales personalizables o desarrollo completamente a medida.",
+    keywords:
+      "páginas web, landing pages, diseño web Tucumán, sitio institucional, web para empresas, Argentina",
     path: "/desarrollo/paginas-web-landing-pages",
   },
   "/desarrollo/software-a-medida": {
     title: "Software a medida | 219Labs",
     description:
       "Desarrollamos sistemas internos, paneles, herramientas y procesos digitales para la forma real en la que trabaja tu negocio.",
+    keywords:
+      "software a medida, sistemas internos, desarrollo de sistemas, panel administrativo, MERN, Argentina",
     path: "/desarrollo/software-a-medida",
   },
   "/desarrollo/tiendas-online-plataformas": {
     title: "Tiendas online y plataformas | 219Labs",
     description:
       "Soluciones comerciales para vender online, administrar productos, recibir pedidos y conectar mejor la operación del negocio.",
+    keywords:
+      "tienda online, ecommerce Argentina, catálogo online, plataforma comercial, 219Shops",
     path: "/desarrollo/tiendas-online-plataformas",
   },
   "/desarrollo/automatizaciones": {
     title: "Automatizaciones | 219Labs",
     description:
       "Automatizamos consultas, formularios, avisos, datos y tareas repetitivas para que tu equipo trabaje con más orden.",
+    keywords:
+      "automatizaciones, automatización de procesos, formularios, integraciones, WhatsApp, operaciones",
     path: "/desarrollo/automatizaciones",
   },
   "/desarrollo/integraciones": {
     title: "Integraciones | 219Labs",
     description:
       "Conectamos herramientas, pagos, formularios, analítica, tiendas y sistemas para evitar datos duplicados o dispersos.",
+    keywords:
+      "integraciones, APIs, pagos online, Google Analytics, formularios, sistemas conectados",
     path: "/desarrollo/integraciones",
   },
   "/desarrollo/mantenimiento-mejoras": {
     title: "Mantenimiento y mejoras | 219Labs",
     description:
       "Acompañamos páginas, sistemas y plataformas con correcciones, mejoras evolutivas, soporte y optimización.",
+    keywords:
+      "mantenimiento web, soporte web, mejoras de sistemas, optimización web, soporte técnico",
     path: "/desarrollo/mantenimiento-mejoras",
   },
   "/desarrollo/dominios": {
     title: "Dominios | 219Labs",
     description:
       "Vendemos, configuramos y gestionamos dominios para conectar tu web, correo y herramientas digitales de forma ordenada.",
+    keywords:
+      "dominios Argentina, gestión de dominio, configuración DNS, dominio web, correo corporativo",
     path: "/desarrollo/dominios",
   },
   "/desarrollo/crm": {
     title: "CRM para negocios | 219Labs",
     description:
       "Estamos preparando soluciones CRM y podemos relevar tu proceso comercial para ordenar leads, clientes y oportunidades.",
+    keywords:
+      "CRM, gestión de leads, clientes, oportunidades comerciales, sistema comercial",
     path: "/desarrollo/crm",
   },
   "/marketing": {
     title: "Marketing y contenido | 219Labs",
     description:
       "Campañas publicitarias, contenido, reels, diseño, gestión de redes y estrategia para que más personas entiendan tu marca.",
+    keywords:
+      "marketing digital, Meta Ads, contenido para redes, reels, campañas publicitarias, Tucumán, Argentina",
     path: "/marketing",
   },
   "/landing-pages": {
@@ -83,6 +108,8 @@ export const SEO_BY_PATH = {
     title: "Productos digitales | 219Labs",
     description:
       "Plataformas propias de 219Labs, como 219Shops, y productos digitales creados para resolver problemas concretos.",
+    keywords:
+      "productos digitales, 219Shops, plataformas propias, SaaS Argentina, ecommerce",
     path: "/productos",
   },
   "/aplicar": {
@@ -114,4 +141,12 @@ export function absoluteUrl(path) {
 
 export function getDefaultImage() {
   return DEFAULT_IMAGE;
+}
+
+export function getDefaultImageAlt() {
+  return DEFAULT_IMAGE_ALT;
+}
+
+export function getSiteUrl() {
+  return SITE_URL;
 }

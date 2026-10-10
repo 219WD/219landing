@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://219labs.com.ar/</loc>
+    <image:image>
+      <image:loc>https://219labs.com.ar/og-image.png</image:loc>
+      <image:title>219Labs - Marketing digital, desarrollo web y software</image:title>
+      <image:caption>Marketing digital, páginas web, software a medida, automatizaciones y contenido para negocios en Argentina.</image:caption>
+      <image:geo_location>San Miguel de Tucumán, Tucumán, Argentina</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://219labs.com.ar/logo-color.png</image:loc>
+      <image:title>Logo de 219Labs</image:title>
+      <image:caption>Identidad visual de 219Labs.</image:caption>
+      <image:geo_location>San Miguel de Tucumán, Tucumán, Argentina</image:geo_location>
+    </image:image>
+  </url>
+</urlset>
