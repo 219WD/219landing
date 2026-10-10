@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev:full": "npx vercel dev --listen 5173",
     "build": "vite build",
     "preview": "vite preview"
   },
