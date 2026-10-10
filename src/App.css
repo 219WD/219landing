@@ -37,6 +37,9 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-color: var(--color-primary) rgba(255, 255, 255, 0.055);
+  scrollbar-width: thin;
+  overflow-x: hidden;
 }
 
 body {
@@ -47,6 +50,47 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  scrollbar-color: rgba(0, 255, 136, 0.72) rgba(255, 255, 255, 0.055);
+  scrollbar-width: thin;
+}
+
+html,
+body,
+#root {
+  max-width: 100%;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02)),
+    rgba(0, 0, 0, 0.35);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background:
+    linear-gradient(180deg, rgba(0, 255, 136, 0.95), rgba(0, 179, 98, 0.78));
+  border: 2px solid rgba(4, 8, 6, 0.92);
+  border-radius: 999px;
+  box-shadow: 0 0 18px rgba(0, 255, 136, 0.22);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(180deg, #39ffad, var(--color-primary));
+  box-shadow: 0 0 22px rgba(0, 255, 136, 0.36);
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 .app {

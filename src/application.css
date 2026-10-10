@@ -236,8 +236,18 @@
 .application-contact-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 14px;
+  align-items: start;
+  gap: 24px 18px;
   margin-top: 6px;
+}
+
+.application-contact-grid .application-field {
+  align-self: start;
+  margin-top: 0;
+}
+
+.application-contact-grid .application-field input {
+  min-height: 70px;
 }
 
 .application-field--wide {

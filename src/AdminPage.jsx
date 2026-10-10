@@ -1,4 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faAngleDown,
+  faBars,
+  faChartLine,
+  faEnvelope,
+  faMagnifyingGlass,
+  faRotate,
+  faTrash,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import Logo219 from "./components/components/Logo219";
 import "./admin.css";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
@@ -43,6 +56,28 @@ function compactNumber(value) {
   }).format(Number(value || 0));
 }
 
+function buildDailySeries(data, days = 30) {
+  const byDate = new Map((data || []).map((item) => [item.date, item.count || 0]));
+  const today = new Date();
+  return Array.from({ length: days }, (_, index) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() - (days - 1 - index));
+    const key = date.toISOString().slice(0, 10);
+    return { date: key, count: byDate.get(key) || 0 };
+  });
+}
+
+function linePathFromPoints(points) {
+  if (!points.length) return "";
+  if (points.length === 1) return `M ${points[0].x},${points[0].y}`;
+  return points.reduce((path, point, index) => {
+    if (index === 0) return `M ${point.x},${point.y}`;
+    const previous = points[index - 1];
+    const controlX = (previous.x + point.x) / 2;
+    return `${path} C ${controlX},${previous.y} ${controlX},${point.y} ${point.x},${point.y}`;
+  }, "");
+}
+
 async function apiRequest(url, options = {}, csrf = "") {
   const method = (options.method || "GET").toUpperCase();
   const response = await fetch(url, {
@@ -80,29 +115,246 @@ function KpiCard({ label, value, hint, tone = "default" }) {
   );
 }
 
-function TinyTrend({ data }) {
-  const points = data || [];
-  const maxValue = Math.max(1, ...points.map((item) => item.count || 0));
+function AdminSelect({ label, value, options, onChange }) {
+  const [open, setOpen] = useState(false);
+  const active = options.find((option) => option.value === value) || options[0];
 
   return (
-    <article className="admin-panel">
+    <div className="admin-select">
+      <span>{label}</span>
+      <button type="button" onClick={() => setOpen((current) => !current)} aria-expanded={open}>
+        <strong>{active?.label}</strong>
+        <FontAwesomeIcon icon={faAngleDown} />
+      </button>
+      {open && (
+        <div className="admin-select__menu">
+          {options.map((option) => (
+            <button
+              type="button"
+              key={option.value}
+              className={option.value === value ? "is-selected" : ""}
+              onClick={() => {
+                onChange(option.value);
+                setOpen(false);
+              }}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function TradingTape({ analytics }) {
+  const summary = analytics?.summary || {};
+  const channels = analytics?.channels || [];
+  const devices = analytics?.devices || [];
+  const topChannel = channels[0]?.channel || "Sin dato";
+  const totalDeviceSessions = devices.reduce((sum, item) => sum + (item.sessions || 0), 0);
+  const mobile = devices.find((item) => item.device === "mobile")?.sessions || 0;
+  const mobileShare = totalDeviceSessions ? Math.round((mobile / totalDeviceSessions) * 100) : 0;
+  const sessionsPerUser = summary.activeUsers ? (summary.sessions / summary.activeUsers).toFixed(2) : "0.00";
+  const conversionRate = summary.sessions ? ((summary.conversions / summary.sessions) * 100).toFixed(1) : "0.0";
+
+  const items = [
+    { label: "SPU", value: sessionsPerUser, hint: "sesiones por usuario" },
+    { label: "CVR", value: `${conversionRate}%`, hint: "conversiones/sesiones" },
+    { label: "Canal líder", value: topChannel, hint: "mayor volumen" },
+    { label: "Mobile", value: `${mobileShare}%`, hint: "share sesiones" },
+  ];
+
+  return (
+    <div className="admin-trading-tape">
+      {items.map((item) => (
+        <article key={item.label}>
+          <span>{item.label}</span>
+          <strong>{item.value}</strong>
+          <small>{item.hint}</small>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function LeadsLineChart({ data }) {
+  const series = buildDailySeries(data, 30);
+  const width = 1280;
+  const height = 330;
+  const pad = { left: 46, right: 26, top: 18, bottom: 38 };
+  const chartWidth = width - pad.left - pad.right;
+  const chartHeight = height - pad.top - pad.bottom;
+  const maxValue = Math.max(1, ...series.map((item) => item.count || 0));
+  const xStep = series.length > 1 ? chartWidth / (series.length - 1) : 0;
+  const points = series.map((item, index) => ({
+    ...item,
+    x: Number((pad.left + index * xStep).toFixed(2)),
+    y: Number((pad.top + chartHeight - ((item.count || 0) / maxValue) * chartHeight).toFixed(2)),
+  }));
+  const linePath = linePathFromPoints(points);
+  const areaPath = points.length
+    ? `${linePath} L ${points[points.length - 1].x},${height - pad.bottom} L ${points[0].x},${height - pad.bottom} Z`
+    : "";
+  const labelIndexes = [0, 5, 10, 15, 20, 25, 29].filter((index) => points[index]);
+  const yTicks = [0, 0.25, 0.5, 0.75, 1];
+
+  return (
+    <article className="admin-leads-chart admin-panel">
       <div className="admin-panel__head">
         <div>
-          <span>Leads</span>
+          <span>Lead flow</span>
           <h2>Ingresos por día</h2>
         </div>
-        <small>Últimos 30 días</small>
+        <small>Últimos 30 días · máximo {formatNumber(maxValue)}</small>
       </div>
-      <div className="admin-trend-bars" aria-label="Leads por día">
-        {points.length ? points.map((item) => (
-          <span
-            key={item.date}
-            style={{ "--bar-height": `${Math.max(8, Math.round(((item.count || 0) / maxValue) * 100))}%` }}
-            title={`${formatShortDate(item.date)}: ${item.count}`}
-          />
-        )) : <EmptyState title="Sin datos todavía" text="Cuando entren leads, este gráfico muestra el ritmo diario." />}
+      <svg className="admin-leads-chart__svg" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Leads por día">
+        <defs>
+          <linearGradient id="leadArea" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="rgba(222, 28, 58, 0.34)" />
+            <stop offset="100%" stopColor="rgba(222, 28, 58, 0)" />
+          </linearGradient>
+        </defs>
+        {yTicks.map((ratio) => {
+          const y = pad.top + chartHeight * ratio;
+          return (
+            <g key={ratio}>
+              <line x1={pad.left} x2={width - pad.right} y1={y} y2={y} />
+              <text x={pad.left - 16} y={y + 4}>{Math.round(maxValue * (1 - ratio))}</text>
+            </g>
+          );
+        })}
+        {labelIndexes.map((index) => {
+          const point = points[index];
+          return (
+            <g key={point.date}>
+              <line className="admin-leads-chart__vline" x1={point.x} x2={point.x} y1={pad.top} y2={height - pad.bottom} />
+              <text className="admin-leads-chart__date" x={point.x} y={height - 8}>{formatShortDate(point.date)}</text>
+            </g>
+          );
+        })}
+        <path className="admin-leads-chart__area" d={areaPath} />
+        <path className="admin-leads-chart__line" d={linePath} />
+        {points.filter((item) => item.count > 0).map((point) => (
+          <circle key={point.date} cx={point.x} cy={point.y} r="4" />
+        ))}
+      </svg>
+    </article>
+  );
+}
+
+function DonutChart({ title, items, labelMap = {}, colors = [] }) {
+  const total = items.reduce((sum, item) => sum + (item.count || 0), 0);
+  const radius = 46;
+  const circumference = 2 * Math.PI * radius;
+  let offset = 0;
+
+  return (
+    <article className="admin-donut-card admin-panel">
+      <div className="admin-panel__head">
+        <div>
+          <span>Distribución</span>
+          <h2>{title}</h2>
+        </div>
+        <small>{formatNumber(total)} total</small>
+      </div>
+      {total ? (
+        <div className="admin-donut-layout">
+          <svg viewBox="0 0 120 120" className="admin-donut">
+            <circle cx="60" cy="60" r={radius} />
+            {items.map((item, index) => {
+              const value = item.count || 0;
+              const dash = (value / total) * circumference;
+              const segment = (
+                <circle
+                  key={item.key}
+                  cx="60"
+                  cy="60"
+                  r={radius}
+                  stroke={colors[index % colors.length] || "var(--color-primary)"}
+                  strokeDasharray={`${dash} ${circumference - dash}`}
+                  strokeDashoffset={-offset}
+                />
+              );
+              offset += dash;
+              return segment;
+            })}
+            <text x="60" y="56">{formatNumber(total)}</text>
+            <text x="60" y="72">leads</text>
+          </svg>
+          <div className="admin-donut-legend">
+            {items.map((item, index) => (
+              <p key={item.key}>
+                <i style={{ "--dot-color": colors[index % colors.length] || "var(--color-primary)" }} />
+                <span>{labelMap[item.key] || item.key}</span>
+                <strong>{formatNumber(item.count)}</strong>
+              </p>
+            ))}
+          </div>
+        </div>
+      ) : <EmptyState title="Sin datos" text="Todavía no hay volumen para esta torta." />}
+    </article>
+  );
+}
+
+function PipelineFunnel({ items }) {
+  const order = ["form_submitted", "whatsapp_opened", "contact_confirmed", "contacted", "qualified"];
+  const counts = new Map((items || []).map((item) => [item.key, item.count || 0]));
+  const maxValue = Math.max(1, ...order.map((key) => counts.get(key) || 0));
+
+  return (
+    <article className="admin-funnel-card admin-panel">
+      <div className="admin-panel__head">
+        <div>
+          <span>Pipeline</span>
+          <h2>Avance comercial</h2>
+        </div>
+      </div>
+      <div className="admin-funnel">
+        {order.map((key, index) => {
+          const count = counts.get(key) || 0;
+          const width = Math.max(18, Math.round((count / maxValue) * 100));
+          return (
+            <div className="admin-funnel__row" key={key}>
+              <p>
+                <span>{STATUS_LABELS[key]}</span>
+                <strong>{formatNumber(count)}</strong>
+              </p>
+              <i style={{ "--funnel-width": `${width}%`, "--funnel-alpha": 1 - index * 0.12 }} />
+            </div>
+          );
+        })}
       </div>
     </article>
+  );
+}
+
+function MetricMatrix({ metrics }) {
+  const total = metrics?.total || 0;
+  const byDay = buildDailySeries(metrics?.byDay || [], 30);
+  const activeDays = byDay.filter((item) => item.count > 0).length;
+  const avgDaily = byDay.length ? (byDay.reduce((sum, item) => sum + item.count, 0) / byDay.length).toFixed(1) : "0.0";
+  const topService = (metrics?.byService || [])[0];
+  const pending = Math.max(0, total - (metrics?.contacted || 0) - (metrics?.qualified || 0));
+  const contactRate = total ? Math.round(((metrics?.contacted || 0) / total) * 100) : 0;
+  const cards = [
+    { label: "Promedio diario", value: avgDaily, hint: "leads/día" },
+    { label: "Días activos", value: formatNumber(activeDays), hint: "con ingresos" },
+    { label: "Pendientes", value: formatNumber(pending), hint: "por revisar" },
+    { label: "Tasa contacto", value: `${contactRate}%`, hint: "contactados + calificados" },
+    { label: "Servicio líder", value: topService?.key || "Sin dato", hint: `${formatNumber(topService?.count)} leads` },
+  ];
+
+  return (
+    <section className="admin-metric-matrix">
+      {cards.map((card) => (
+        <article key={card.label}>
+          <span>{card.label}</span>
+          <strong>{card.value}</strong>
+          <small>{card.hint}</small>
+        </article>
+      ))}
+    </section>
   );
 }
 
@@ -276,6 +528,7 @@ function AnalyticsPanel({ analytics, error }) {
         <KpiCard label="Conversiones" value={formatNumber(summary.conversions)} hint="Eventos clave GA4" tone="hot" />
       </div>
 
+      <TradingTape analytics={analytics} />
       <AnalyticsLineChart data={timeline} />
 
       <div className="admin-analytics__grid">
@@ -306,6 +559,15 @@ function LeadsView({
   updateLead,
   deleteLead,
 }) {
+  const statusOptions = [{ value: "all", label: "Todos" }, ...STATUS_OPTIONS];
+  const serviceOptions = [{ value: "all", label: "Todos" }, ...services];
+  const whatsappHref = activeLead?.contact?.whatsapp
+    ? `https://wa.me/${activeLead.contact.whatsapp.replace(/\D/g, "")}`
+    : "";
+  const emailHref = activeLead?.contact?.email
+    ? `mailto:${activeLead.contact.email}?subject=Consulta%20219Labs`
+    : "";
+
   return (
     <section className="admin-view">
       <div className="admin-kpi-grid admin-kpi-grid--four">
@@ -320,30 +582,17 @@ function LeadsView({
           <div className="admin-filters">
             <label>
               Buscar
-              <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Nombre, WhatsApp, servicio..." />
+              <div className="admin-search">
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Nombre, WhatsApp, servicio..." />
+              </div>
             </label>
             <div className="admin-filter-row">
-              <label>
-                Estado
-                <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
-                  <option value="all">Todos</option>
-                  {STATUS_OPTIONS.map((status) => (
-                    <option key={status.value} value={status.value}>{status.label}</option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Servicio
-                <select value={serviceFilter} onChange={(event) => setServiceFilter(event.target.value)}>
-                  <option value="all">Todos</option>
-                  {services.map((service) => (
-                    <option key={service.value} value={service.value}>{service.label}</option>
-                  ))}
-                </select>
-              </label>
+              <AdminSelect label="Estado" value={statusFilter} options={statusOptions} onChange={setStatusFilter} />
+              <AdminSelect label="Servicio" value={serviceFilter} options={serviceOptions} onChange={setServiceFilter} />
             </div>
             <button type="button" onClick={loadAdminData} disabled={loading}>
-              {loading ? "Actualizando..." : "Actualizar"}
+              <FontAwesomeIcon icon={faRotate} /> {loading ? "Actualizando..." : "Actualizar"}
             </button>
           </div>
 
@@ -374,18 +623,25 @@ function LeadsView({
                   <p>{activeLead.service?.label} · {activeLead.service?.need}</p>
                 </div>
                 <div className="admin-detail__actions">
-                  <select
-                    value={activeLead.status}
-                    onChange={(event) => updateLead(activeLead._id, { status: event.target.value })}
-                  >
-                    {STATUS_OPTIONS.map((status) => (
-                      <option key={status.value} value={status.value}>{status.label}</option>
-                    ))}
-                  </select>
+                  <AdminSelect label="Estado comercial" value={activeLead.status} options={STATUS_OPTIONS} onChange={(status) => updateLead(activeLead._id, { status })} />
                   <button type="button" className="admin-danger" onClick={() => deleteLead(activeLead._id)}>
-                    Borrar
+                    <FontAwesomeIcon icon={faTrash} />
+                    <span className="admin-sr-only">Borrar lead</span>
                   </button>
                 </div>
+              </div>
+
+              <div className="admin-contact-actions">
+                {whatsappHref && (
+                  <a href={whatsappHref} target="_blank" rel="noreferrer">
+                    <FontAwesomeIcon icon={faWhatsapp} /> Contactar por WhatsApp
+                  </a>
+                )}
+                {emailHref && (
+                  <a href={emailHref}>
+                    <FontAwesomeIcon icon={faEnvelope} /> Enviar email
+                  </a>
+                )}
               </div>
 
               <div className="admin-grid">
@@ -469,6 +725,7 @@ export default function AdminPage() {
   const [sessionChecked, setSessionChecked] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [activeView, setActiveView] = useState("metrics");
+  const [navCollapsed, setNavCollapsed] = useState(false);
   const [metrics, setMetrics] = useState(null);
   const [analytics, setAnalytics] = useState(null);
   const [analyticsError, setAnalyticsError] = useState("");
@@ -663,19 +920,21 @@ export default function AdminPage() {
   }
 
   return (
-    <main className="admin-page">
+    <main className={`admin-page${navCollapsed ? " admin-page--nav-collapsed" : ""}`}>
       <aside className="admin-nav">
         <div className="admin-brand">
-          <strong>219</strong>
+          <Logo219 />
           <span>Labs Admin</span>
         </div>
 
         <nav aria-label="Administración">
-          <button type="button" className={activeView === "metrics" ? "is-active" : ""} onClick={() => setActiveView("metrics")}>
-            <span>01</span> Métricas
+          <button type="button" className={activeView === "metrics" ? "is-active" : ""} onClick={() => setActiveView("metrics")} title="Métricas">
+            <FontAwesomeIcon icon={faChartLine} />
+            <strong>Métricas</strong>
           </button>
-          <button type="button" className={activeView === "leads" ? "is-active" : ""} onClick={() => setActiveView("leads")}>
-            <span>02</span> Leads
+          <button type="button" className={activeView === "leads" ? "is-active" : ""} onClick={() => setActiveView("leads")} title="Leads">
+            <FontAwesomeIcon icon={faUsers} />
+            <strong>Leads</strong>
           </button>
         </nav>
 
@@ -684,6 +943,10 @@ export default function AdminPage() {
           <strong>{formatNumber(leadPulse.total)}</strong>
           <p>{formatNumber(leadPulse.pending)} pendientes · {formatNumber(leadPulse.qualified)} calificados</p>
         </div>
+
+        <button type="button" className="admin-nav__toggle" onClick={() => setNavCollapsed((current) => !current)} title="Minimizar menú">
+          <FontAwesomeIcon icon={faBars} />
+        </button>
       </aside>
 
       <section className="admin-workspace">
@@ -710,8 +973,23 @@ export default function AdminPage() {
 
             <AnalyticsPanel analytics={analytics} error={analyticsError} />
 
+            <MetricMatrix metrics={metrics} />
+
+            <LeadsLineChart data={metrics?.byDay || []} />
+
             <div className="admin-panels-grid">
-              <TinyTrend data={metrics?.byDay || []} />
+              <DonutChart
+                title="Estados"
+                items={metrics?.byStatus || []}
+                labelMap={STATUS_LABELS}
+                colors={["#00ff88", "#de1c3a", "#f7d35a", "#4bb3ff", "#8a7cff"]}
+              />
+              <DonutChart
+                title="Servicios"
+                items={(metrics?.byService || []).slice(0, 6)}
+                colors={["#de1c3a", "#00ff88", "#f7d35a", "#4bb3ff", "#c277ff", "#ffffff"]}
+              />
+              <PipelineFunnel items={metrics?.byStatus || []} />
               <BreakdownPanel title="Por estado" items={metrics?.byStatus || []} labelMap={STATUS_LABELS} />
               <BreakdownPanel title="Por servicio" items={metrics?.byService || []} />
             </div>
