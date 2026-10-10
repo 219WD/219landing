@@ -154,12 +154,14 @@
 }
 
 .site-header__link:hover,
-.site-header__link:focus-visible {
+.site-header__link:focus-visible,
+.site-header__link[aria-current="page"] {
   color: var(--c-accent, #00F282);
 }
 
 .site-header__link:hover::after,
-.site-header__link:focus-visible::after {
+.site-header__link:focus-visible::after,
+.site-header__link[aria-current="page"]::after {
   transform: scaleX(1);
 }
 
@@ -379,7 +381,8 @@
 
 .mobile-menu__link:hover,
 .mobile-menu__link:focus-visible,
-.mobile-menu__link:active {
+.mobile-menu__link:active,
+.mobile-menu__link[aria-current="page"] {
   color: var(--c-accent, #00F282);
   transform: translateX(6px);
   outline: none;

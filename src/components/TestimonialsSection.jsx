@@ -1,9 +1,11 @@
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import AmbientOrb from './AmbientOrb';
 import { useTestimonialsAnimations } from '../hooks/useTestimonialsAnimations.js';
 import ColorUva from '../assets/coloruva.jpg';
 import Albiero  from '../assets/albiero.png';
 import Canepa   from '../assets/aclogo.png';
+import { trackEvent } from '../utils/analytics.js';
 import './testimonials.css';
 
 const TESTIMONIALS = [
@@ -72,6 +74,31 @@ const TESTIMONIALS = [
       </svg>
     ),
     featured: false,
+  },
+];
+
+const DEVELOPMENT_PROOF = [
+  {
+    label: 'Producto propio',
+    title: '219Shops',
+    text: 'Tienda online y plataforma comercial propia para productos, pedidos, stock, cobros, envíos y clientes.',
+    href: 'https://www.219shops.com.ar/',
+    cta: 'Visitar plataforma',
+  },
+  {
+    label: 'Diseños navegables',
+    title: 'Catálogo 219Shops',
+    text: 'Referencias reales por rubro para que un cliente pueda ver una base de página antes de pedir presupuesto.',
+    href: 'https://www.219shops.com.ar/disenos',
+    cta: 'Ver diseños',
+  },
+  {
+    label: 'Desarrollo a medida',
+    title: 'Sistemas y automatizaciones',
+    text: 'Trabajo técnico orientado a resolver procesos internos, integraciones y herramientas que acompañan la operación.',
+    href: '/desarrollo/software-a-medida',
+    cta: 'Ver desarrollo',
+    internal: true,
   },
 ];
 
@@ -175,6 +202,11 @@ export default function Testimonials({ onWhatsAppClick }) {
                 rel="noopener noreferrer"
                 className="tm-card__link"
                 aria-label={t.urlLabel}
+                onClick={() => trackEvent('product_outbound_click', {
+                  label: t.urlLabel,
+                  href: t.url,
+                  source: 'testimonial',
+                })}
               >
                 {t.urlIcon}
                 <span>{t.urlLabel}</span>
@@ -187,9 +219,67 @@ export default function Testimonials({ onWhatsAppClick }) {
           ))}
         </div>
 
+        <div className="tm-development" aria-label="Evidencia de desarrollo">
+          <div className="tm-development__head">
+            <span className="tm-eyebrow">Desarrollo comprobable</span>
+            <h3>Además de campañas, también construimos producto y tecnología propia.</h3>
+            <p>
+              Estos no son testimonios inventados: son accesos a plataformas, diseños y líneas de desarrollo que muestran cómo trabaja 219Labs cuando el problema es técnico y operativo.
+            </p>
+          </div>
+          <div className="tm-development__grid">
+            {DEVELOPMENT_PROOF.map((item) => {
+              const trackProofClick = () => trackEvent('product_outbound_click', {
+                label: item.title,
+                href: item.href,
+                source: 'development_proof',
+                external: !item.internal,
+              });
+
+              const content = (
+                <>
+                  <span>{item.label}</span>
+                  <h4>{item.title}</h4>
+                  <p>{item.text}</p>
+                  <strong>
+                    {item.cta}
+                    <ArrowDiag />
+                  </strong>
+                </>
+              );
+
+              if (item.internal) {
+                return (
+                  <Link
+                    className="tm-development__card"
+                    key={item.title}
+                    to={item.href}
+                    onClick={trackProofClick}
+                  >
+                    {content}
+                  </Link>
+                );
+              }
+
+              return (
+                <a
+                  className="tm-development__card"
+                  key={item.title}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={trackProofClick}
+                >
+                  {content}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+
         {/* ── CTA ── */}
         <div className="tm-cta">
-          <p className="tm-cta__text">¿Listo para resultados como estos?</p>
+          <p className="tm-cta__text">¿Querés ordenar marketing, desarrollo o las dos cosas?</p>
           <button className="tm-cta__btn" onClick={onWhatsAppClick} aria-label="Contar qué necesita mi negocio">
             <ApplyIcon />
             <span>Quiero hablar con 219Labs</span>

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import HeroSection from "./components/HeroSection";
 import Benefits from "./components/Benefits";
@@ -13,10 +13,14 @@ import LandingOptions from "./components/LandingOptions";
 import ProductsSection from "./components/ProductsSection";
 import ProcessFAQ from "./components/ProcessFAQ";
 import SiteHeader from "./components/SiteHeader";
+import SEO from "./components/SEO";
 import ApplicationPage from "./ApplicationPage";
+import AdminPage from "./AdminPage";
 import ServicePage from "./ServicePage";
+import NotFoundPage from "./NotFoundPage";
 import { useScrollAnimation } from "./hooks/useScrollAnimation";
 import { useSmoothScroll } from "./hooks/useSmoothScroll";
+import { trackEvent } from "./utils/analytics";
 import "./App.css";
 
 const LandingPage = () => {
@@ -24,13 +28,6 @@ const LandingPage = () => {
   const benefitsRef = useRef(null);
   const testimonialsRef = useRef(null);
   const navigate = useNavigate();
-
-  // Log inicial
-  useEffect(() => {
-    console.log("🚀 App montada - 219Labs Landing Page");
-    console.log("📱 User Agent:", navigator.userAgent);
-    console.log("📐 Viewport:", window.innerWidth, "x", window.innerHeight);
-  }, []);
 
   // Aplicar animaciones de scroll
   useScrollAnimation([heroRef, benefitsRef, testimonialsRef]);
@@ -40,25 +37,12 @@ const LandingPage = () => {
 
   // Envia las llamadas a accion al filtro de aplicacion.
   const handleWhatsAppClick = (section) => {
-    console.log(`📱 Aplicacion click desde: ${section}`);
+    trackEvent("cta_click", {
+      event_category: "engagement",
+      event_label: section,
+      destination: "/aplicar",
+    });
     navigate("/aplicar");
-
-    // Google Analytics event (si está configurado)
-    if (typeof window.gtag === "function") {
-      window.gtag("event", "cta_click", {
-        event_category: "engagement",
-        event_label: section,
-        method: "application",
-      });
-    }
-
-    // Facebook Pixel event (si está configurado)
-    if (typeof window.fbq === "function") {
-      window.fbq("track", "Contact", {
-        content_name: section,
-        content_category: "application_click",
-      });
-    }
   };
 
   return (
@@ -94,6 +78,7 @@ const LandingPage = () => {
 const App = () => {
   return (
     <>
+      <SEO />
       <SiteHeader />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -110,6 +95,8 @@ const App = () => {
         <Route path="/landing-pages" element={<ServicePage type="landing-pages" />} />
         <Route path="/productos" element={<ServicePage type="productos" />} />
         <Route path="/aplicar" element={<ApplicationPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

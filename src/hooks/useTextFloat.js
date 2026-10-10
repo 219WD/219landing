@@ -1,4 +1,8 @@
 import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const useTextFloat = (options = {}) => {
   const {
@@ -15,26 +19,7 @@ export const useTextFloat = (options = {}) => {
   useEffect(() => {
     const element = elementRef.current;
     if (!element) return;
-
-    // Variable para GSAP
-    let gsap = null;
-    let ScrollTrigger = null;
-    let hasGSAP = false;
-
-    // Intentar cargar GSAP
-    try {
-      gsap = require('gsap').gsap;
-      ScrollTrigger = require('gsap/ScrollTrigger').ScrollTrigger;
-      
-      if (gsap && ScrollTrigger) {
-        gsap.registerPlugin(ScrollTrigger);
-        hasGSAP = true;
-        console.log('✅ TextFloat con GSAP');
-      }
-    } catch (error) {
-      console.warn('⚠️ TextFloat usando CSS fallback');
-      hasGSAP = false;
-    }
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // ============================================
     // SPLIT TEXT - Separar en caracteres
@@ -55,7 +40,7 @@ export const useTextFloat = (options = {}) => {
     // ============================================
     // ANIMACIÓN CON GSAP
     // ============================================
-    if (hasGSAP && gsap && ScrollTrigger) {
+    if (!prefersReducedMotion) {
       // Configurar estado inicial y animación
       gsap.fromTo(
         chars,
@@ -85,7 +70,6 @@ export const useTextFloat = (options = {}) => {
         }
       );
 
-      // Cleanup
       return () => {
         ScrollTrigger.getAll().forEach(trigger => {
           if (trigger.trigger === element) {
@@ -99,43 +83,14 @@ export const useTextFloat = (options = {}) => {
     // ============================================
     // FALLBACK CON CSS + INTERSECTION OBSERVER
     // ============================================
-    else {
-      // Estilo inicial
-      chars.forEach(char => {
-        char.style.opacity = '0';
-        char.style.transform = 'translateY(100%) scaleY(2) scaleX(0.7)';
-        char.style.transition = `all ${animationDuration}s cubic-bezier(0.68, -0.55, 0.265, 1.55)`;
-      });
+    chars.forEach(char => {
+      char.style.opacity = '1';
+      char.style.transform = 'none';
+    });
 
-      // Observer para detectar cuando entra en viewport
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              chars.forEach((char, index) => {
-                setTimeout(() => {
-                  char.style.opacity = '1';
-                  char.style.transform = 'translateY(0) scaleY(1) scaleX(1)';
-                }, index * (stagger * 1000));
-              });
-              observer.unobserve(element);
-            }
-          });
-        },
-        {
-          threshold: 0.2,
-          rootMargin: '0px 0px -15% 0px'
-        }
-      );
-
-      observer.observe(element);
-
-      // Cleanup
-      return () => {
-        observer.disconnect();
-        element.textContent = originalText;
-      };
-    }
+    return () => {
+      element.textContent = originalText;
+    };
   }, [animationDuration, ease, scrollStart, scrollEnd, stagger, scrub]);
 
   return elementRef;

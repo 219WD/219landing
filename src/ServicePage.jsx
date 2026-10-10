@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./components/Footer";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
+import { trackEvent } from "./utils/analytics";
 import "./service-page.css";
 
 const DEVELOPMENT_SERVICE_PAGES = {
@@ -54,6 +55,28 @@ const DEVELOPMENT_SERVICE_PAGES = {
         },
       ],
     },
+    showcase: {
+      eyebrow: "Casos típicos",
+      title: "No todas las páginas tienen que hacer lo mismo.",
+      text: "Definimos el formato según el objetivo del negocio, no según una plantilla fija que intenta servir para todo.",
+      items: [
+        ["01", "Página para servicio", "Presentar qué hacés, para quién, cómo trabajás y por qué deberían escribirte."],
+        ["02", "Landing de campaña", "Una oferta concreta, pocos desvíos y CTA preparado para tráfico pago o acciones comerciales."],
+        ["03", "Sitio institucional", "Una presencia más completa con servicios, marca, confianza, contacto y secciones internas."],
+        ["04", "Página de validación", "Una versión rápida para probar una idea, nuevo servicio o rubro antes de invertir de más."],
+      ],
+    },
+    deliverables: {
+      eyebrow: "Qué queda listo",
+      title: "Una página publicada, entendible y preparada para recibir consultas.",
+      text: "El alcance exacto depende del proyecto, pero la entrega se arma para que puedas usarla de verdad desde el primer día.",
+      items: [
+        "Estructura de secciones y recorrido comercial.",
+        "Diseño responsive adaptado a marca y objetivo.",
+        "Textos base o copy completo según alcance.",
+        "Conexión a WhatsApp, formulario, dominio y medición cuando corresponda.",
+      ],
+    },
     onboarding: {
       eyebrow: "Onboarding",
       title: "Para arrancar te pedimos lo justo, no una carpeta eterna.",
@@ -84,6 +107,37 @@ const DEVELOPMENT_SERVICE_PAGES = {
     proofTitle: "La web tiene que trabajar para el negocio.",
     proofText:
       "No buscamos llenar secciones porque sí. Cada bloque tiene que ayudar a entender, confiar o avanzar.",
+    comparisonEyebrow: "Dos formas de crearla",
+    comparisonTitle: "Plantilla profesional cuando conviene. A medida cuando la página necesita algo propio.",
+    comparison: [
+      {
+        label: "Base profesional",
+        title: "Elegís una referencia y la adaptamos",
+        price: "Más simple de presupuestar",
+        text: "Partimos de diseños navegables para acelerar el proyecto sin que la web se vea improvisada.",
+        bullets: ["Ideal para empezar", "Menos tiempo", "Adaptada a tu marca"],
+        cta: "Ver diseños disponibles",
+        href: "https://www.219shops.com.ar/disenos",
+        external: true,
+      },
+      {
+        label: "Desarrollo a medida",
+        title: "Diseñamos desde cero",
+        price: "Alcance personalizado",
+        text: "Conviene cuando la marca, el contenido, la estructura o las funciones necesitan una solución más específica.",
+        bullets: ["Mayor diferenciación", "Estructura propia", "Funciones específicas"],
+        cta: "Consultar a medida",
+        href: "/aplicar?servicio=paginas-web-landing-pages",
+      },
+    ],
+    catalog: {
+      eyebrow: "Referencias navegables",
+      title: "Podés mirar diseños reales antes de decidir.",
+      text: "El catálogo de 219Shops ayuda a elegir dirección visual, entender posibilidades y bajar a tierra una página sin depender solo de imaginarla.",
+      href: "https://www.219shops.com.ar/disenos",
+      cta: "Explorar catálogo de diseños",
+      items: ["Diseños por rubro", "Adaptables a marca", "Base para cotizar mejor"],
+    },
   },
   "software-a-medida": {
     type: "software-a-medida",
@@ -132,6 +186,28 @@ const DEVELOPMENT_SERVICE_PAGES = {
           title: "Experiencia simple",
           text: "Un sistema interno tiene que ser claro para el equipo, no una herramienta que nadie quiere abrir.",
         },
+      ],
+    },
+    showcase: {
+      eyebrow: "Ejemplos prácticos",
+      title: "Sistemas internos para procesos que ya existen, pero funcionan a fuerza de paciencia.",
+      text: "No vendemos software por moda. Lo pensamos cuando hay una operación real que necesita orden, trazabilidad o velocidad.",
+      items: [
+        ["01", "Reservas y turnos", "Calendarios, estados, responsables, clientes y recordatorios en un flujo propio."],
+        ["02", "Pedidos y presupuestos", "Alta de solicitudes, seguimiento, aprobación, cambios y comunicación interna."],
+        ["03", "Clientes y operaciones", "Historial, notas, archivos, permisos y tareas para que nada dependa solo de un chat."],
+        ["04", "Paneles de control", "Vistas para entender qué está pendiente, qué avanzó y dónde se traba el trabajo."],
+      ],
+    },
+    deliverables: {
+      eyebrow: "Qué queda listo",
+      title: "Una primera versión usable, no una idea eterna en un documento.",
+      text: "Bajamos el sistema a módulos concretos para que el negocio pueda probar, usar y decidir mejoras con información real.",
+      items: [
+        "Mapa funcional con módulos, roles y datos principales.",
+        "Interfaz diseñada para el equipo que realmente la va a usar.",
+        "Primera versión operativa con funciones priorizadas.",
+        "Base preparada para soporte, mejoras e integraciones futuras.",
       ],
     },
     onboarding: {
@@ -214,6 +290,51 @@ const DEVELOPMENT_SERVICE_PAGES = {
         },
       ],
     },
+    showcase: {
+      eyebrow: "Casos de uso",
+      title: "La tienda correcta depende de cómo vendés, cómo cobrás y cómo entregás.",
+      text: "Puede ser catálogo simple, tienda completa o plataforma comercial a medida. La decisión sale de la operación.",
+      items: [
+        ["01", "Catálogo con consulta", "Productos ordenados y CTA a WhatsApp cuando la venta necesita conversación."],
+        ["02", "Tienda con checkout", "Carrito, pagos, envíos o retiro para vender con un flujo más automatizado."],
+        ["03", "Pedidos B2B", "Listas, solicitudes, estados y gestión para clientes frecuentes o ventas mayoristas."],
+        ["04", "Plataforma propia", "Una experiencia comercial con reglas, paneles o funciones que una tienda común no cubre."],
+      ],
+    },
+    deliverables: {
+      eyebrow: "Qué queda listo",
+      title: "Una experiencia de venta que el cliente entiende y el negocio puede administrar.",
+      text: "La tienda se entrega con estructura comercial y criterios operativos, no como un catálogo suelto sin mantenimiento posible.",
+      items: [
+        "Arquitectura de categorías, productos, variantes y recorrido de compra.",
+        "Configuración de contacto, pagos, envíos o consulta según el modelo.",
+        "Panel o base de administración según la solución elegida.",
+        "Medición y pruebas de flujo antes de lanzar.",
+      ],
+    },
+    comparisonEyebrow: "Dos caminos posibles",
+    comparisonTitle: "219Shops cuando necesitás salir ordenado. Desarrollo propio cuando la operación pide más.",
+    comparison: [
+      {
+        label: "Base comercial",
+        title: "Tienda con 219Shops",
+        price: "Más directa de lanzar",
+        text: "Conviene cuando el objetivo es tener catálogo, diseño profesional y venta online sin construir una plataforma desde cero.",
+        bullets: ["Catálogo claro", "Menor complejidad inicial", "Diseños disponibles"],
+        cta: "Ver diseños",
+        href: "https://www.219shops.com.ar/disenos",
+        external: true,
+      },
+      {
+        label: "A medida",
+        title: "Plataforma personalizada",
+        price: "Alcance personalizado",
+        text: "Conviene cuando hay reglas comerciales, usuarios, paneles, integraciones o procesos que una tienda estándar no resuelve.",
+        bullets: ["Reglas propias", "Paneles internos", "Integraciones específicas"],
+        cta: "Consultar plataforma",
+        href: "/aplicar?servicio=tiendas-online-plataformas",
+      },
+    ],
     onboarding: {
       eyebrow: "Onboarding",
       title: "Para armar una tienda bien, necesitamos entender cómo vendés hoy.",
@@ -292,6 +413,28 @@ const DEVELOPMENT_SERVICE_PAGES = {
           title: "Ahorro operativo",
           text: "Menos carga manual y menos errores repetidos por mover datos a mano.",
         },
+      ],
+    },
+    showcase: {
+      eyebrow: "Ejemplos prácticos",
+      title: "Automatizaciones chicas pueden ordenar problemas grandes.",
+      text: "Priorizamos flujos concretos, fáciles de probar y con impacto visible en la rutina del equipo.",
+      items: [
+        ["01", "Consulta a registro", "Un formulario entra en planilla, tablero o CRM con datos limpios."],
+        ["02", "Pedido a aviso", "Cuando entra una venta o solicitud, el equipo recibe una notificación accionable."],
+        ["03", "Estado a seguimiento", "Cada cambio dispara una tarea, recordatorio o mensaje interno."],
+        ["04", "Reporte automático", "Datos de campañas, formularios o ventas se consolidan sin copiar y pegar."],
+      ],
+    },
+    deliverables: {
+      eyebrow: "Qué queda listo",
+      title: "Un flujo probado, documentado y conectado a las herramientas reales del negocio.",
+      text: "La entrega busca que el equipo entienda qué dispara la automatización, qué hace y cómo detectar si algo necesita ajuste.",
+      items: [
+        "Mapa del flujo con disparador, condiciones, destino y excepciones.",
+        "Automatización configurada en las herramientas definidas.",
+        "Pruebas con casos reales antes de dejarla activa.",
+        "Documentación simple para operar y pedir mejoras.",
       ],
     },
     onboarding: {
@@ -374,6 +517,28 @@ const DEVELOPMENT_SERVICE_PAGES = {
         },
       ],
     },
+    showcase: {
+      eyebrow: "Ejemplos prácticos",
+      title: "Integrar es hacer que el dato llegue donde se usa.",
+      text: "Cada integración se define por necesidad real, permisos disponibles y nivel de confiabilidad que requiere la operación.",
+      items: [
+        ["01", "Formulario a CRM", "Las consultas entran con origen, datos y estado inicial para seguimiento comercial."],
+        ["02", "Pago a pedido", "Una venta o cobro puede actualizar un pedido, avisar al equipo o registrar una operación."],
+        ["03", "Web a analítica", "Eventos y conversiones quedan preparados para leer campañas con más claridad."],
+        ["04", "Sistema a planilla", "Cuando no hay API completa, buscamos caminos controlados para ordenar datos exportables."],
+      ],
+    },
+    deliverables: {
+      eyebrow: "Qué queda listo",
+      title: "Una conexión útil, con límites claros y pruebas antes de depender de ella.",
+      text: "No todas las herramientas permiten lo mismo. Por eso dejamos explícito qué se conecta, qué no y cómo se monitorea.",
+      items: [
+        "Relevamiento de APIs, permisos, webhooks o alternativas posibles.",
+        "Diseño del flujo de datos entre origen y destino.",
+        "Implementación y pruebas con casos reales.",
+        "Notas de operación, accesos necesarios y puntos de control.",
+      ],
+    },
     onboarding: {
       eyebrow: "Onboarding",
       title: "Para integrar bien, primero revisamos qué herramientas hablan entre sí.",
@@ -452,6 +617,28 @@ const DEVELOPMENT_SERVICE_PAGES = {
           title: "Evolución técnica",
           text: "Preparamos la base para nuevas funciones sin romper lo que ya funciona.",
         },
+      ],
+    },
+    showcase: {
+      eyebrow: "Tipos de mejora",
+      title: "A veces hace falta apagar un incendio. Otras, evolucionar con calma.",
+      text: "Separar urgencias de mejoras evita gastar energía en cambios que no mueven nada importante.",
+      items: [
+        ["01", "Correcciones críticas", "Formularios, enlaces, errores visuales, integraciones o partes que dejaron de funcionar."],
+        ["02", "Contenido y secciones", "Nuevos servicios, textos, imágenes, páginas internas o ajustes de comunicación."],
+        ["03", "Performance y mobile", "Revisión de carga, lectura, botones, jerarquías y puntos que traban consultas."],
+        ["04", "Nuevas funciones", "Módulos, pantallas o conexiones que la operación necesita después del lanzamiento."],
+      ],
+    },
+    deliverables: {
+      eyebrow: "Qué queda listo",
+      title: "Un plan de acción claro antes de tocar cosas a ciegas.",
+      text: "La entrega puede ser puntual o continua, pero siempre arranca por entender estado, prioridad y riesgo.",
+      items: [
+        "Revisión inicial de estado técnico, visual y funcional.",
+        "Lista priorizada de correcciones y mejoras.",
+        "Ejecución de ajustes definidos y pruebas básicas.",
+        "Recomendaciones para continuidad, soporte o próximas etapas.",
       ],
     },
     onboarding: {
@@ -534,6 +721,28 @@ const DEVELOPMENT_SERVICE_PAGES = {
         },
       ],
     },
+    showcase: {
+      eyebrow: "Casos habituales",
+      title: "Dominio, DNS y correo tienen que estar ordenados antes de que el negocio los necesite urgente.",
+      text: "La gestión prolija evita pérdidas de acceso, configuraciones duplicadas y lanzamientos frenados por detalles técnicos.",
+      items: [
+        ["01", "Registro nuevo", "Buscamos disponibilidad, alternativas y extensión conveniente para la marca."],
+        ["02", "Dominio existente", "Revisamos proveedor, titularidad, vencimiento y registros activos."],
+        ["03", "Conexión web", "Apuntamos dominio y subdominios a landing, tienda, web o plataforma."],
+        ["04", "Correo y verificaciones", "Configuramos registros necesarios para email, herramientas, campañas o servicios externos."],
+      ],
+    },
+    deliverables: {
+      eyebrow: "Qué queda listo",
+      title: "Dominio operativo, configurado y con administración más clara.",
+      text: "Buscamos que el dominio no sea una caja negra: se registra, se conecta y se deja ordenado para futuros cambios.",
+      items: [
+        "Registro, revisión o gestión del dominio según el caso.",
+        "Configuración DNS para web, correo y verificaciones necesarias.",
+        "Conexión con landing, sitio, tienda o plataforma.",
+        "Resumen de configuración, vencimientos y próximos cuidados.",
+      ],
+    },
     onboarding: {
       eyebrow: "Onboarding",
       title: "Para empezar, revisamos si ya existe dominio o si hay que registrarlo desde cero.",
@@ -612,6 +821,33 @@ const DEVELOPMENT_SERVICE_PAGES = {
           title: "Medición",
           text: "Datos para entender cuántas consultas entran, cuántas avanzan y dónde se caen.",
         },
+      ],
+    },
+    notice: {
+      eyebrow: "Estado actual",
+      title: "CRM está en preparación, pero el problema de seguimiento se puede empezar a ordenar ahora.",
+      text: "Si hoy perdés consultas, no hace falta esperar a una suite completa. Podemos relevar el proceso, conectar formularios, ordenar una base inicial o preparar automatizaciones simples mientras la línea CRM termina de tomar forma.",
+    },
+    showcase: {
+      eyebrow: "Qué estamos preparando",
+      title: "Una solución para seguir oportunidades sin volver pesado el trabajo comercial.",
+      text: "La idea es que el CRM ayude a responder mejor, priorizar y entender qué pasa con cada oportunidad.",
+      items: [
+        ["01", "Entrada de leads", "Consultas desde web, campañas, formularios o canales comerciales en un lugar más ordenado."],
+        ["02", "Pipeline simple", "Estados claros para saber qué está nuevo, en conversación, pendiente o cerrado."],
+        ["03", "Tareas y notas", "Próximas acciones, responsables y contexto para que el seguimiento no dependa de memoria."],
+        ["04", "Base para integrar", "Preparado para conectarse con automatizaciones, campañas y herramientas internas."],
+      ],
+    },
+    deliverables: {
+      eyebrow: "Qué se puede avanzar ahora",
+      title: "Diagnóstico comercial y base de orden antes de implementar CRM.",
+      text: "Aunque la línea CRM esté en preparación, podemos dejar listo el terreno para que la adopción sea más simple.",
+      items: [
+        "Mapa de entrada de consultas y seguimiento actual.",
+        "Definición de estados comerciales y datos mínimos necesarios.",
+        "Recomendación de camino: CRM, automatización, formulario o integración.",
+        "Lista de espera contextualizada para avanzar cuando corresponda.",
       ],
     },
     onboarding: {
@@ -747,7 +983,7 @@ const PAGE_DATA = {
     ],
     proofTitle: "También construimos nuestras propias plataformas.",
     proofText:
-      "219Shops y 219Meds funcionan como prueba concreta de nuestra capacidad para pensar producto, diseño, operación y tecnología.",
+      "219Shops funciona como prueba concreta de nuestra capacidad para pensar producto, diseño, operación y tecnología. Las líneas en evaluación se comunican solo con alcance validado.",
   },
   ...DEVELOPMENT_SERVICE_PAGES,
   marketing: {
@@ -756,8 +992,8 @@ const PAGE_DATA = {
     title: "Tu negocio puede tener un gran producto.",
     accent: "Pero si nadie lo entiende, cuesta vender.",
     intro:
-      "Creamos campañas, contenido, piezas visuales y estrategias para que tu marca llegue a las personas correctas con un mensaje claro.",
-    cta: "Quiero mejorar mi marketing",
+      "Creamos campañas publicitarias, contenido y estrategias para que más personas descubran tu marca, entiendan qué ofrecés y tengan motivos para elegirte.",
+    cta: "Consultar marketing",
     sections: [
       {
         title: "Publicidad digital",
@@ -807,6 +1043,40 @@ const PAGE_DATA = {
         },
       ],
     },
+    modalities: {
+      eyebrow: "Modalidades",
+      title: "Trabajá con nosotros como lo necesites.",
+      text: "Algunos negocios necesitan acompañamiento mensual. Otros llegan con una necesidad concreta. Las dos formas son válidas si el objetivo está claro.",
+      items: [
+        {
+          label: "Plan mensual",
+          title: "Estrategia y acompañamiento continuo",
+          text: "Para marcas que necesitan planificación, producción de contenido, campañas, seguimiento y mejoras mes a mes.",
+          bullets: ["Campañas", "Contenido", "Seguimiento"],
+          cta: "Consultar plan mensual",
+          href: "/aplicar?servicio=marketing",
+        },
+        {
+          label: "Trabajo puntual",
+          title: "Una necesidad concreta, bien resuelta",
+          text: "Para quienes necesitan un reel, una campaña, piezas de diseño, producción audiovisual o una acción específica.",
+          bullets: ["Reels", "Diseños", "Campañas puntuales"],
+          cta: "Solicitar trabajo puntual",
+          href: "/aplicar?servicio=marketing",
+        },
+      ],
+    },
+    showcase: {
+      eyebrow: "Qué podemos mostrar",
+      title: "Marketing se entiende mejor cuando ves las piezas, no solo la explicación.",
+      text: "En una consulta podemos revisar ejemplos reales disponibles, el tipo de contenido que necesita tu marca y qué formato conviene producir. No usamos métricas ni casos que no estén verificados.",
+      items: [
+        ["01", "Reels y producción", "Videos cortos, contenido humanizado y piezas audiovisuales para mostrar personas, productos, espacios o procesos."],
+        ["02", "Diseños y piezas", "Creatividades para redes, promociones, campañas, lanzamientos y comunicación diaria."],
+        ["03", "Campañas", "Anuncios con objetivo, mensaje, segmentación y seguimiento para no pautar por inercia."],
+        ["04", "Calendario", "Planificación de publicaciones y acciones para sostener presencia sin depender de inspiración de último momento."],
+      ],
+    },
     workflow: {
       eyebrow: "Proceso",
       title: "Dejamos de improvisar y armamos un sistema comercial simple.",
@@ -819,6 +1089,8 @@ const PAGE_DATA = {
     },
     faq: [
       ["¿Trabajan solo redes sociales?", "No. Podemos trabajar redes, anuncios, contenido, diseño, landing pages y medición. La idea es que todo tenga una dirección."],
+      ["¿Puedo contratar un plan mensual?", "Sí. Es la modalidad recomendada cuando necesitás estrategia continua, producción de contenido, campañas y seguimiento."],
+      ["¿Puedo contratar un trabajo puntual?", "Sí. También podemos resolver una campaña, reel, diseño, producción audiovisual o necesidad concreta."],
       ["¿Necesito invertir en publicidad?", "No siempre, pero si querés acelerar resultados, la pauta ayuda. Lo importante es no pautar sin una oferta y una página preparadas."],
       ["¿Pueden producir contenido real?", "Sí. Podemos trabajar piezas de diseño, reels, videos, fotos y contenido humanizado según el tipo de negocio."],
       ["¿Prometen resultados exactos?", "No inventamos promesas. Trabajamos con estrategia, medición y mejora, pero no vendemos números imposibles sin contexto."],
@@ -830,8 +1102,8 @@ const PAGE_DATA = {
   "landing-pages": {
     type: "landing-pages",
     eyebrow: "Landing pages",
-    title: "Tu negocio necesita una buena página web.",
-    accent: "No necesariamente una cara.",
+    title: "Tu negocio necesita una página profesional.",
+    accent: "Adaptada a lo que querés lograr.",
     intro:
       "Tenemos dos formas de trabajar: partir de un diseño profesional para hacerlo más accesible o crear una página desde cero para una necesidad específica.",
     cta: "Consultar por mi página",
@@ -891,6 +1163,8 @@ const PAGE_DATA = {
     proofTitle: "La opción accesible no tiene que verse barata.",
     proofText:
       "La diferencia está en el nivel de personalización, no en hacer algo improvisado. La idea es que cada cliente entienda qué está comprando.",
+    comparisonEyebrow: "Dos caminos",
+    comparisonTitle: "Plantilla cuando conviene. A medida cuando hace falta.",
     comparison: [
       {
         label: "Opción accesible",
@@ -927,7 +1201,7 @@ const PAGE_DATA = {
     title: "Creamos productos digitales.",
     accent: "No solo servicios para clientes.",
     intro:
-      "219Shops, 219Meds y las próximas plataformas muestran cómo 219Labs convierte problemas concretos en soluciones digitales completas.",
+      "219Shops muestra cómo 219Labs convierte problemas concretos en soluciones digitales completas. Otras líneas, como 219Meds, se comunican con prudencia hasta validar alcance y estado comercial.",
     cta: "Hablar sobre plataformas",
     sections: [
       {
@@ -936,13 +1210,18 @@ const PAGE_DATA = {
       },
       {
         title: "219Meds",
-        text: "Tecnología orientada al sector salud, con comunicación comercial pendiente de validar módulo por módulo.",
+        text: "Línea orientada al sector salud. Antes de presentarla comercialmente, validamos módulos, alcance y disponibilidad real.",
       },
       {
-        title: "Nuevos productos",
-        text: "La estructura queda preparada para incorporar futuras plataformas sin tener que rediseñar la web cada vez.",
+        title: "Desarrollo de producto",
+        text: "Diseñamos interfaces, flujos, paneles, lógica operativa y recorridos comerciales para convertir una necesidad repetida en una herramienta usable.",
       },
     ],
+    notice: {
+      eyebrow: "Comunicación responsable",
+      title: "No presentamos productos como disponibles hasta saber exactamente qué hacen y cómo se contratan.",
+      text: "219Shops sí se puede mostrar como plataforma activa. 219Meds queda mencionado como línea de producto en evaluación, sin prometer módulos ni funcionalidades que todavía no estén confirmadas.",
+    },
     detail: {
       eyebrow: "Productos",
       title: "Cada plataforma nace de un problema concreto.",
@@ -962,14 +1241,34 @@ const PAGE_DATA = {
         },
         {
           title: "219Meds",
-          text: "Plataforma orientada al sector salud, con comunicación y módulos a validar antes de venderla fuerte.",
-          href: "https://219meds.vercel.app/",
-          cta: "Visitar 219Meds",
+          text: "Línea orientada al sector salud, con comunicación y módulos a validar antes de presentarla como producto disponible.",
         },
         {
           title: "Próximas plataformas",
           text: "La estructura queda preparada para sumar nuevos productos sin que 219Labs pierda claridad comercial.",
         },
+      ],
+    },
+    showcase: {
+      eyebrow: "Prueba visible",
+      title: "El producto también sirve como evidencia de cómo pensamos diseño, operación y tecnología.",
+      text: "219Shops permite mostrar una plataforma real, bases navegables y una forma concreta de resolver comercio online sin empezar siempre desde cero.",
+      items: [
+        ["01", "Producto activo", "219Shops funciona como plataforma propia para vender y administrar un negocio online."],
+        ["02", "Diseños navegables", "El catálogo permite ver referencias reales antes de decidir una dirección visual."],
+        ["03", "Operación comercial", "La propuesta contempla productos, pedidos, cobros, stock, envíos y clientes."],
+        ["04", "Base de aprendizaje", "Cada producto propio alimenta mejores decisiones para desarrollos a medida."],
+      ],
+    },
+    deliverables: {
+      eyebrow: "Qué demuestra",
+      title: "Producto propio significa experiencia real construyendo algo que tiene que sostenerse.",
+      text: "No es solo una pieza visual. Una plataforma exige decisiones de interfaz, administración, soporte y evolución.",
+      items: [
+        "Capacidad para transformar una necesidad repetida en una solución reusable.",
+        "Criterio para separar producto existente de desarrollo personalizado.",
+        "Experiencia en diseño de pantallas, flujos y operaciones completas.",
+        "Comunicación honesta sobre productos disponibles y líneas en preparación.",
       ],
     },
     workflow: {
@@ -985,6 +1284,7 @@ const PAGE_DATA = {
     faq: [
       ["¿219Shops es parte de 219Labs?", "Sí. Es una plataforma propia desarrollada por el equipo para ayudar a negocios a vender y administrarse mejor."],
       ["¿Las plataformas reemplazan los servicios a medida?", "No. Algunas empresas pueden usar un producto existente. Otras necesitan desarrollo personalizado."],
+      ["¿219Meds ya se puede contratar?", "No lo presentamos como producto comercial cerrado. Primero hay que validar módulos, alcance y disponibilidad real."],
       ["¿Puedo pedir una plataforma parecida para mi rubro?", "Sí. Si tenés una necesidad específica, podemos evaluar si conviene adaptar algo existente o crear una solución propia."],
       ["¿Por qué mostrar productos en la web de 219Labs?", "Porque demuestra capacidad real: diseño, software, operación, soporte, contenido y visión comercial trabajando juntos."],
     ],
@@ -1000,10 +1300,26 @@ export default function ServicePage({ type }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    trackEvent("service_view", {
+      service: page.type,
+      path: window.location.pathname,
+    });
   }, [type]);
 
   const goApply = () => {
+    trackEvent("cta_click", {
+      service: page.type,
+      destination: "/aplicar",
+    });
     navigate(`/aplicar?servicio=${page.type}`);
+  };
+
+  const trackOutbound = (label, href) => {
+    trackEvent("product_outbound_click", {
+      service: page.type,
+      label,
+      href,
+    });
   };
 
   return (
@@ -1051,6 +1367,34 @@ export default function ServicePage({ type }) {
         })}
       </section>
 
+      {page.modalities && (
+        <section className="sp-modes" aria-label={page.modalities.eyebrow}>
+          <div className="sp-modes__header">
+            <span className="sp-eyebrow">{page.modalities.eyebrow}</span>
+            <h2>{page.modalities.title}</h2>
+            <p>{page.modalities.text}</p>
+          </div>
+          <div className="sp-modes__grid">
+            {page.modalities.items.map((item) => (
+              <article className="sp-modes__card" key={item.title}>
+                <p className="sp-compare__label">{item.label}</p>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                <ul>
+                  {item.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+                <Link to={item.href} className="sp-link">
+                  <span>{item.cta}</span>
+                  <Arrow />
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
       {page.detail && (
         <section className="sp-detail" aria-label={page.detail.eyebrow}>
           <div className="sp-detail__intro">
@@ -1065,7 +1409,13 @@ export default function ServicePage({ type }) {
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
                 {item.href && (
-                  <a href={item.href} target="_blank" rel="noopener noreferrer" className="sp-link">
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="sp-link"
+                    onClick={() => trackOutbound(item.title, item.href)}
+                  >
                     <span>{item.cta || "Conocer más"}</span>
                     <Arrow />
                   </a>
@@ -1073,6 +1423,51 @@ export default function ServicePage({ type }) {
               </article>
             ))}
           </div>
+        </section>
+      )}
+
+      {page.notice && (
+        <section className="sp-note" aria-label={page.notice.eyebrow}>
+          <span className="sp-eyebrow">{page.notice.eyebrow}</span>
+          <h2>{page.notice.title}</h2>
+          <p>{page.notice.text}</p>
+        </section>
+      )}
+
+      {page.showcase && (
+        <section className="sp-showcase" aria-label={page.showcase.eyebrow}>
+          <div className="sp-showcase__intro">
+            <span className="sp-eyebrow">{page.showcase.eyebrow}</span>
+            <h2>{page.showcase.title}</h2>
+            <p>{page.showcase.text}</p>
+          </div>
+          <div className="sp-showcase__grid">
+            {page.showcase.items.map(([num, title, text]) => (
+              <article key={num}>
+                <span>{num}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {page.deliverables && (
+        <section className="sp-deliverables" aria-label={page.deliverables.eyebrow}>
+          <div className="sp-deliverables__header">
+            <span className="sp-eyebrow">{page.deliverables.eyebrow}</span>
+            <h2>{page.deliverables.title}</h2>
+            <p>{page.deliverables.text}</p>
+          </div>
+          <ul className="sp-deliverables__list">
+            {page.deliverables.items.map((item, index) => (
+              <li key={item}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <p>{item}</p>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 
@@ -1096,10 +1491,10 @@ export default function ServicePage({ type }) {
       )}
 
       {page.comparison && (
-        <section className="sp-compare" aria-label="Opciones de landing pages">
+        <section className="sp-compare" aria-label={page.comparisonEyebrow || "Opciones del servicio"}>
           <div className="sp-compare__header">
-            <span className="sp-eyebrow">Dos caminos</span>
-            <h2>Plantilla cuando conviene. A medida cuando hace falta.</h2>
+            <span className="sp-eyebrow">{page.comparisonEyebrow || "Dos caminos"}</span>
+            <h2>{page.comparisonTitle || "Plantilla cuando conviene. A medida cuando hace falta."}</h2>
           </div>
           <div className="sp-compare__grid">
             {page.comparison.map((item) => (
@@ -1114,7 +1509,13 @@ export default function ServicePage({ type }) {
                   ))}
                 </ul>
                 {item.external ? (
-                  <a href={item.href} target="_blank" rel="noopener noreferrer" className="sp-link">
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="sp-link"
+                    onClick={() => trackOutbound(item.title, item.href)}
+                  >
                     <span>{item.cta}</span>
                     <Arrow />
                   </a>
@@ -1136,7 +1537,13 @@ export default function ServicePage({ type }) {
             <span className="sp-eyebrow">{page.catalog.eyebrow}</span>
             <h2>{page.catalog.title}</h2>
             <p>{page.catalog.text}</p>
-            <a href={page.catalog.href} target="_blank" rel="noopener noreferrer" className="sp-cta sp-cta--dark">
+            <a
+              href={page.catalog.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="sp-cta sp-cta--dark"
+              onClick={() => trackOutbound(page.catalog.title, page.catalog.href)}
+            >
               <span>{page.catalog.cta}</span>
               <Arrow />
             </a>

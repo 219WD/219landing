@@ -6,16 +6,16 @@ import { useProblemSolutionAnimations } from "../hooks/useProblemSolutionAnimati
 import "./problem-solution.css";
 
 const problems = [
-  "Redes que no traen consultas",
-  "Páginas que no explican bien lo que vendés",
-  "Procesos internos que dependen de mil cosas manuales",
+  "Tu publicidad no genera las consultas que esperabas",
+  "Tus clientes no encuentran información clara sobre tu negocio",
+  "Tu equipo pierde tiempo repitiendo tareas que podrían simplificarse",
 ];
 
 const steps = [
-  { n: "01", text: "Entendemos qué necesita lograr tu negocio" },
-  { n: "02", text: "Definimos si conviene marketing, desarrollo o ambas cosas" },
-  { n: "03", text: "Creamos las piezas, campañas o herramientas necesarias" },
-  { n: "04", text: "Medimos, ajustamos y seguimos mejorando" },
+  { n: "01", text: "Entendemos dónde se están perdiendo oportunidades" },
+  { n: "02", text: "Definimos si conviene marketing, desarrollo o una combinación" },
+  { n: "03", text: "Creamos campañas, contenido, páginas o herramientas concretas" },
+  { n: "04", text: "Medimos, ajustamos y dejamos el próximo paso claro" },
 ];
 
 // SVG timeline dimensions
@@ -49,7 +49,7 @@ export default function ProblemSolution() {
           <span className="ps-eyebrow">El problema</span>
 
           <h2 className="ps-heading">
-            Muchos negocios tienen potencial, pero todo está&nbsp;desordenado.
+            Tu negocio puede tener un gran producto y aun así estar perdiendo&nbsp;oportunidades.
             <span className="ps-heading__underline" aria-hidden="true" />
           </h2>
 
@@ -64,13 +64,13 @@ export default function ProblemSolution() {
 
           <div className="ps-consequence">
             <p className="ps-consequence__main">
-              Entonces crecer se vuelve&nbsp;<em>más difícil de lo necesario.</em>
+              A veces el problema no es el producto.&nbsp;<em>Es cómo se lo muestra, se lo vende o se lo sostiene.</em>
             </p>
             <div className="ps-month-toggle" aria-hidden="true">
               <span className="ps-month ps-month--good">
-                Un mes aparece trabajo.
+                Puede faltar llegada.
               </span>
-              <span className="ps-month ps-month--bad">Otro mes hay que salir a perseguirlo.</span>
+              <span className="ps-month ps-month--bad">O puede sobrar trabajo manual.</span>
             </div>
           </div>
         </div>
@@ -87,8 +87,8 @@ export default function ProblemSolution() {
           <span className="ps-eyebrow ps-eyebrow--accent">La solución</span>
 
           <h2 className="ps-heading">
-            Una estrategia clara con tecnología,
-            <em className="ps-heading__accent"> marketing y ejecución.</em>
+            Marketing para llegar mejor.
+            <em className="ps-heading__accent"> Tecnología para convertir ese interés en algo más simple.</em>
           </h2>
 
           <p className="ps-body">El proceso funciona así:</p>
@@ -140,8 +140,8 @@ export default function ProblemSolution() {
           </div>
 
           <p className="ps-closing">
-            No vendemos piezas sueltas. Armamos lo que tu negocio necesita para&nbsp;
-            <strong>moverse mejor.</strong>
+            Podés contratar marketing, desarrollo o ambas cosas. Lo importante es que cada acción tenga&nbsp;
+            <strong>un objetivo claro.</strong>
           </p>
 
           <Link to="/aplicar" className="ps-cta">

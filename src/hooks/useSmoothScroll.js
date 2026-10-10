@@ -2,24 +2,18 @@ import { useEffect } from 'react';
 
 export const useSmoothScroll = () => {
   useEffect(() => {
-    console.log('🖱️ Configurando smooth scroll...');
-
-    // Detectar tipo de dispositivo
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const isDesktop = window.innerWidth > 1024 && !isMobile;
-
-    console.log(`📱 Dispositivo: ${isDesktop ? 'Desktop' : 'Mobile/Tablet'}`);
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // ============================================
     // SCROLL INDICATOR
     // ============================================
     const scrollIndicator = document.querySelector('.scroll-indicator');
+    let hideOnScroll = null;
     
     const handleScrollClick = () => {
-      console.log('🖱️ Scroll indicator clicked');
       window.scrollTo({
         top: window.innerHeight,
-        behavior: 'smooth'
+        behavior: prefersReducedMotion ? 'auto' : 'smooth'
       });
     };
     
@@ -27,7 +21,7 @@ export const useSmoothScroll = () => {
       scrollIndicator.addEventListener('click', handleScrollClick);
       
       // Ocultar después de scroll
-      const hideOnScroll = () => {
+      hideOnScroll = () => {
         if (window.pageYOffset > 100) {
           scrollIndicator.style.transition = 'opacity 0.3s ease';
           scrollIndicator.style.opacity = '0';
@@ -52,7 +46,7 @@ export const useSmoothScroll = () => {
           const target = document.querySelector(targetId);
           if (target) {
             target.scrollIntoView({
-              behavior: 'smooth',
+              behavior: prefersReducedMotion ? 'auto' : 'smooth',
               block: 'start'
             });
           }
@@ -67,10 +61,12 @@ export const useSmoothScroll = () => {
     // CLEANUP
     // ============================================
     return () => {
-      console.log('🧹 Limpiando smooth scroll...');
-      
       if (scrollIndicator) {
         scrollIndicator.removeEventListener('click', handleScrollClick);
+      }
+
+      if (hideOnScroll) {
+        window.removeEventListener('scroll', hideOnScroll);
       }
       
       linkHandlers.forEach(({ link, handler }) => {

@@ -1,10 +1,40 @@
 import LogoFooter from '../assets/logo-blanco.png';
+import { Link } from 'react-router-dom';
 
 const SERVICES_TAGS = [
   'Marketing',
   'Desarrollo Web',
   'Software',
   'Productos',
+];
+
+const FOOTER_LINKS = [
+  {
+    title: 'Áreas',
+    links: [
+      ['Marketing', '/marketing'],
+      ['Desarrollo', '/desarrollo'],
+      ['Productos', '/productos'],
+    ],
+  },
+  {
+    title: 'Desarrollo',
+    links: [
+      ['Páginas web', '/desarrollo/paginas-web-landing-pages'],
+      ['Software a medida', '/desarrollo/software-a-medida'],
+      ['Tiendas online', '/desarrollo/tiendas-online-plataformas'],
+      ['Automatizaciones', '/desarrollo/automatizaciones'],
+    ],
+  },
+  {
+    title: 'Soporte',
+    links: [
+      ['Integraciones', '/desarrollo/integraciones'],
+      ['Mantenimiento', '/desarrollo/mantenimiento-mejoras'],
+      ['Dominios', '/desarrollo/dominios'],
+      ['Consultar', '/aplicar'],
+    ],
+  },
 ];
 
 const Footer = ({ onWhatsAppClick }) => {
@@ -59,6 +89,17 @@ const Footer = ({ onWhatsAppClick }) => {
               </a>
             </div>
           </div>
+
+          <nav className="footer-links" aria-label="Enlaces del sitio">
+            {FOOTER_LINKS.map((group) => (
+              <div className="footer-links__group" key={group.title}>
+                <p>{group.title}</p>
+                {group.links.map(([label, href]) => (
+                  <Link key={href} to={href}>{label}</Link>
+                ))}
+              </div>
+            ))}
+          </nav>
 
           {/* ── CTA ── */}
           <div className="footer-cta">

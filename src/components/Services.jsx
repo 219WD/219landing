@@ -12,6 +12,7 @@ const SERVICES = [
     tag: 'Marketing',
     cta: 'Ver marketing',
     href: '/marketing',
+    tier: 'main',
   },
   {
     id: '02',
@@ -20,14 +21,16 @@ const SERVICES = [
     tag: 'Desarrollo',
     cta: 'Ver desarrollo',
     href: '/desarrollo',
+    tier: 'main',
   },
   {
     id: '03',
-    title: 'Landing Pages',
+    title: 'Páginas web y landing pages',
     function: 'Páginas pensadas para presentar tu negocio, explicar tu oferta y recibir consultas. Con plantilla o totalmente a medida.',
     tag: 'Webs',
     cta: 'Ver opciones',
-    href: '/landing-pages',
+    href: '/desarrollo/paginas-web-landing-pages',
+    tier: 'secondary',
   },
   {
     id: '04',
@@ -35,15 +38,17 @@ const SERVICES = [
     function: 'Cuando necesitás una herramienta que no existe lista para usar, la pensamos y la desarrollamos con el alcance justo.',
     tag: 'Sistemas',
     cta: 'Hablar de mi sistema',
-    href: '/desarrollo',
+    href: '/desarrollo/software-a-medida',
+    tier: 'secondary',
   },
   {
     id: '05',
     title: 'Plataformas Propias',
-    function: '219Shops, 219Meds y nuevos productos creados por nuestro equipo para resolver problemas concretos de distintos negocios.',
+    function: '219Shops y líneas de producto propias creadas por nuestro equipo para resolver problemas concretos sin vender humo.',
     tag: 'Productos',
     cta: 'Ver productos',
     href: '/productos',
+    tier: 'secondary',
   },
 ];
 
@@ -80,10 +85,10 @@ export default function Services() {
 
       <div className="sv-grid">
         {SERVICES.map((s) => (
-          <article
+          <Link
+            to={s.href}
             key={s.id}
-            className="sv-card"
-            tabIndex={0}
+            className={`sv-card sv-card--${s.tier}`}
             aria-label={s.title}
           >
             <span className="sv-card__bg-num" aria-hidden="true">{s.id}</span>
@@ -96,13 +101,13 @@ export default function Services() {
             <h3 className="sv-card__title">{s.title}</h3>
             <p className="sv-card__function">{s.function}</p>
 
-            <Link to={s.href} className="sv-card__cta" tabIndex={-1} aria-label={s.cta}>
+            <span className="sv-card__cta" aria-hidden="true">
               <span>{s.cta}</span>
               <ArrowRight />
-            </Link>
+            </span>
 
             <div className="sv-card__line" aria-hidden="true" />
-          </article>
+          </Link>
         ))}
       </div>
 

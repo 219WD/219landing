@@ -34,11 +34,17 @@ export default function SiteHeader() {
   const overlayRef = useRef(null);
   const panelRef = useRef(null);
   const closeRef = useRef(null);
+  const lastFocusedRef = useRef(null);
   const linkRefs = useRef([]);
   const location = useLocation();
   const isHome = location.pathname === "/";
   const isCompactPage = location.pathname === "/aplicar";
   const isCompact = isScrolled || isCompactPage;
+  const isActivePath = (to) => (
+    to === "/"
+      ? location.pathname === "/"
+      : location.pathname === to || location.pathname.startsWith(`${to}/`)
+  );
   const menuItems = useMemo(
     () => [
       ...NAV_ITEMS,
@@ -85,7 +91,10 @@ export default function SiteHeader() {
       gsap.set(closeRef.current, { autoAlpha: 0, y: -10, rotate: -8 });
       gsap.set(linkRefs.current, { autoAlpha: 0, y: 34, scale: 0.96 });
 
-      gsap.timeline({ defaults: { ease: "power4.out" } })
+      gsap.timeline({
+        defaults: { ease: "power4.out" },
+        onComplete: () => closeRef.current?.focus(),
+      })
         .to(panelRef.current, {
           yPercent: 0,
           duration: 0.62,
@@ -113,7 +122,29 @@ export default function SiteHeader() {
     if (!isMenuOpen) return;
 
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") closeMenu();
+      if (event.key === "Escape") {
+        closeMenu();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusable = [
+        closeRef.current,
+        ...linkRefs.current,
+      ].filter(Boolean);
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (!first || !last) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -121,6 +152,7 @@ export default function SiteHeader() {
   }, [isMenuOpen]);
 
   const openMenu = () => {
+    lastFocusedRef.current = document.activeElement;
     linkRefs.current = [];
     setIsMenuOpen(true);
   };
@@ -130,7 +162,12 @@ export default function SiteHeader() {
 
     gsap.timeline({
       defaults: { ease: "power3.inOut" },
-      onComplete: () => setIsMenuOpen(false),
+      onComplete: () => {
+        setIsMenuOpen(false);
+        requestAnimationFrame(() => {
+          lastFocusedRef.current?.focus?.();
+        });
+      },
     })
       .to(linkRefs.current.slice().reverse(), {
         autoAlpha: 0,
@@ -183,7 +220,11 @@ export default function SiteHeader() {
                     <AnimatedText label={item.label} className="site-header__text" />
                   </a>
                 ) : (
-                  <Link to={item.to} className="site-header__link hero-nav__link">
+                  <Link
+                    to={item.to}
+                    className="site-header__link hero-nav__link"
+                    aria-current={isActivePath(item.to) ? "page" : undefined}
+                  >
                     <span className="site-header__link-index">0{index + 1}</span>
                     <AnimatedText label={item.label} className="site-header__text" />
                   </Link>
@@ -242,6 +283,7 @@ export default function SiteHeader() {
                     ref={registerMenuLink}
                     to={item.to}
                     className="mobile-menu__link"
+                    aria-current={isActivePath(item.to) ? "page" : undefined}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <span className="mobile-menu__index">0{index + 1}</span>

@@ -7,9 +7,10 @@ import './for-who.css';
 const PROFILES = [
   {
     id: '01',
-    label: 'Empresas',
-    text: 'Empresas que necesitan marketing y tecnología trabajando juntos',
-    cta: 'Hablar con 219Labs',
+    label: 'Más clientes',
+    text: 'Quiero atraer más personas con campañas, contenido y una presencia digital mejor pensada',
+    cta: 'Explorar marketing',
+    href: '/marketing',
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <rect x="2" y="7" width="16" height="11" rx="1" stroke="currentColor" strokeWidth="1.4"/>
@@ -20,9 +21,10 @@ const PROFILES = [
   },
   {
     id: '02',
-    label: 'Negocios',
-    text: 'Negocios que quieren una web clara y campañas mejor pensadas',
-    cta: 'Ordenar mi presencia online',
+    label: 'Web o tienda',
+    text: 'Necesito una página clara, una landing o una tienda online para mostrar y vender mejor',
+    cta: 'Ver desarrollo web',
+    href: '/desarrollo/paginas-web-landing-pages',
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path d="M3 8.5L10 3l7 5.5V17a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5z" stroke="currentColor" strokeWidth="1.4"/>
@@ -32,9 +34,10 @@ const PROFILES = [
   },
   {
     id: '03',
-    label: 'Emprendedores',
-    text: 'Emprendedores con una idea que necesita estructura para crecer',
-    cta: 'Contar mi idea',
+    label: 'Operación',
+    text: 'Quiero ordenar procesos, automatizar tareas o crear un sistema para trabajar mejor',
+    cta: 'Ver sistemas',
+    href: '/desarrollo/software-a-medida',
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <path d="M10 2L12.5 7.5H18L13.5 11l2 6L10 14l-5.5 3 2-6L2 7.5h5.5L10 2z"
@@ -63,7 +66,7 @@ export default function ForWho() {
         <div className="fw-header">
           <span className="fw-eyebrow">Para quién es</span>
           <h2 className="fw-title">
-            Esto es <em className="fw-title__accent">para negocios que quieren moverse</em>
+            Más que por tamaño, trabajamos por <em className="fw-title__accent">necesidad real.</em>
           </h2>
         </div>
 
@@ -74,7 +77,7 @@ export default function ForWho() {
               <div className="fw-card__icon">{p.icon}</div>
               <p className="fw-card__label">{p.label}</p>
               <p className="fw-card__text">{p.text}</p>
-              <Link to="/aplicar" className="fw-card__cta">
+              <Link to={p.href} className="fw-card__cta">
                 {p.cta}
                 <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                   <path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor"
@@ -88,8 +91,8 @@ export default function ForWho() {
 
         <div className="fw-closing-wrap">
           <p className="fw-closing">
-            Si tu negocio necesita clientes,<br />
-            <strong>también necesita herramientas para conseguirlos.</strong>
+            Si el problema está claro,<br />
+            <strong>el camino se vuelve mucho más fácil de elegir.</strong>
           </p>
           <Link to="/aplicar" className="fw-cta">
             <span>Contanos qué necesitás</span>

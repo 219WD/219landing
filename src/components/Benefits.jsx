@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import mockup from "../assets/mockup1.png";
+import mockup from "../assets/mockup1-cutout.png";
 import AmbientOrb from "./AmbientOrb";
 import { useBenefitsAnimations } from "../hooks/useBenefitsAnimations.js";
 import "./benefits.css";
@@ -12,6 +12,7 @@ const BENEFITS = [
     detail:
       "Una comunicación más clara hace que tu negocio deje de depender de explicaciones eternas por mensaje.",
     cta: "Ordenar mi comunicación",
+    href: "/marketing",
   },
   {
     id: "02",
@@ -19,6 +20,7 @@ const BENEFITS = [
     detail:
       "Una página bien hecha muestra servicios, genera confianza y deja listo el próximo paso.",
     cta: "Quiero una web",
+    href: "/desarrollo/paginas-web-landing-pages",
   },
   {
     id: "03",
@@ -26,6 +28,7 @@ const BENEFITS = [
     detail:
       "No se trata de subir cosas por subir. Se trata de publicar, medir y mejorar con un objetivo.",
     cta: "Mejorar mi marketing",
+    href: "/marketing",
   },
   {
     id: "04",
@@ -33,6 +36,7 @@ const BENEFITS = [
     detail:
       "Si tu operación necesita un sistema propio, lo podemos diseñar alrededor de tus procesos reales.",
     cta: "Desarrollar mi sistema",
+    href: "/desarrollo/software-a-medida",
   },
 ];
 
@@ -77,7 +81,7 @@ export default function Benefits() {
                 <div className="bn-item__right">
                   <p className="bn-item__text">{b.text}</p>
                   <p className="bn-item__detail">{b.detail}</p>
-                  <Link to="/aplicar" className="bn-item__cta">
+                  <Link to={b.href} className="bn-item__cta">
                     {b.cta}
                     <svg
                       width="10"

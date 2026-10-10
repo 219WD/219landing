@@ -18,7 +18,7 @@ function ArrowDiagonal() {
 export default function HeroCTA({ onWhatsAppClick }) {
   return (
     <div className="hero-choice" style={{ opacity: 0 }}>
-      <Link to="/desarrollo" className="hero-choice__card hero-choice__card--primary">
+      <Link to="/desarrollo" className="hero-choice__card">
         <span className="hero-choice__eyebrow">Desarrollo y tecnología</span>
         <strong>Necesito una web o un sistema</strong>
         <small>Webs, tiendas online, software y plataformas.</small>

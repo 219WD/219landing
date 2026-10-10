@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * useOrbFluid
@@ -202,33 +206,25 @@ function initFluid(wrapper, section) {
   window.addEventListener('mousemove', onMouseMove);
 
   // ── GSAP parallax (scroll) ────────────────────────────────────────────────
-  let gsapCtx = null;
-  import('gsap').then(({ default: gsap }) => {
-    import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-      gsap.registerPlugin(ScrollTrigger);
-      gsapCtx = gsap.context(() => {
-      // Fade in immediately when section enters
-        gsap.fromTo(wrapper,
-          { opacity: 0, scale: 0.9 },
-          {
-            opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out',
-            scrollTrigger: { trigger: section, start: 'top 90%', toggleActions: 'play none none none' },
-          }
-        );
-        // Parallax: travel from top to bottom of section precisely
-        gsap.to(wrapper, {
-          y: () => section.offsetHeight - wrapper.offsetHeight,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top bottom',
-            end:   'bottom bottom',
-            scrub: 1.2,
-          },
-        });
-      }, section);
+  const gsapCtx = gsap.context(() => {
+    gsap.fromTo(wrapper,
+      { opacity: 0, scale: 0.9 },
+      {
+        opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: section, start: 'top 90%', toggleActions: 'play none none none' },
+      }
+    );
+    gsap.to(wrapper, {
+      y: () => section.offsetHeight - wrapper.offsetHeight,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top bottom',
+        end:   'bottom bottom',
+        scrub: 1.2,
+      },
     });
-  });
+  }, section);
 
   // ── Render loop ───────────────────────────────────────────────────────────
   let raf = null;

@@ -9,6 +9,8 @@ const STEPS = [
 
 const FAQS = [
   ["¿Puedo contratar solo marketing o solo desarrollo?", "Sí. Las dos áreas pueden trabajar juntas o por separado, según lo que necesite tu negocio."],
+  ["¿Marketing se trabaja mensual o por trabajo puntual?", "Las dos opciones existen. Podemos pensar un plan mensual o resolver una necesidad concreta como campaña, reel, diseño o producción."],
+  ["¿Desarrollo siempre implica hacer algo a medida?", "No. A veces conviene una página con plantilla, una plataforma existente o una integración simple. Lo definimos según el objetivo y el presupuesto."],
   ["¿Qué diferencia hay entre una página con plantilla y una a medida?", "La plantilla parte de una base profesional y es más accesible. La web a medida se piensa desde cero para tu marca, objetivos y funciones."],
   ["¿Trabajan con emprendimientos y empresas?", "Sí, pero buscamos proyectos donde podamos aportar algo real. Si todavía no es el momento, también te lo vamos a decir."],
   ["¿Tengo que saber exactamente qué necesito?", "No. Con que sepas qué querés lograr, podemos ayudarte a ordenar el camino."],

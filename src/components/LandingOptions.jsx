@@ -5,36 +5,45 @@ import "./landing-options.css";
 const OPTIONS = [
   {
     id: "01",
-    eyebrow: "Páginas web",
-    title: "Una buena página web no tiene por qué estar fuera de tu presupuesto.",
-    text: "Podemos partir de una base profesional y adaptarla a tu negocio, o crear una web completamente a medida si necesitás algo más específico.",
-    primary: "Ver opciones de páginas",
-    href: "/landing-pages",
-    items: ["Con plantilla", "A medida", "Lista para recibir consultas"],
+    eyebrow: "Presencia digital",
+    title: "Necesito una página que explique bien mi negocio.",
+    text: "Para presentar servicios, mostrar confianza y recibir consultas sin depender de explicaciones eternas por mensaje.",
+    primary: "Ver páginas web",
+    href: "/desarrollo/paginas-web-landing-pages",
+    items: ["Landing pages", "Sitios institucionales", "Plantilla o a medida"],
   },
   {
     id: "02",
-    eyebrow: "Marketing",
-    title: "Publicar por publicar no es una estrategia.",
-    text: "Creamos contenido, campañas y mensajes pensados para llegar a las personas correctas y convertir interés en oportunidades comerciales.",
-    primary: "Explorar marketing",
-    href: "/marketing",
-    items: ["Publicidad", "Contenido", "Medición"],
+    eyebrow: "Venta online",
+    title: "Quiero vender o mostrar productos de forma más ordenada.",
+    text: "Tiendas online, catálogos y plataformas comerciales para que el cliente entienda qué comprás, cómo consulta y cómo avanza.",
+    primary: "Ver tiendas",
+    href: "/desarrollo/tiendas-online-plataformas",
+    items: ["Productos", "Pedidos", "Pagos y envíos"],
+  },
+  {
+    id: "03",
+    eyebrow: "Operación",
+    title: "Hay tareas que mi equipo repite todos los días.",
+    text: "Automatizaciones e integraciones para ordenar consultas, datos, avisos y procesos que hoy se hacen a mano.",
+    primary: "Ver automatizaciones",
+    href: "/desarrollo/automatizaciones",
+    items: ["Formularios", "Avisos", "Datos conectados"],
   },
 ];
 
 export default function LandingOptions() {
   return (
-    <section className="lo-section" id="servicios" aria-label="Servicios destacados">
+    <section className="lo-section" id="servicios-destacados" aria-label="Servicios destacados">
       <AmbientOrb side="right" top="20%" parallaxY={26} size="clamp(260px, 34vw, 500px)" />
       <div className="lo-inner">
         <div className="lo-header">
-          <span className="lo-eyebrow">Servicios clave</span>
+          <span className="lo-eyebrow">Atajos concretos</span>
           <h2 className="lo-title">
-            Entrá por donde tu negocio <em>más lo necesita.</em>
+            Si ya sabés el problema, entrá <em>por ahí.</em>
           </h2>
           <p>
-            La home no tiene que explicarte veinte cosas juntas. Tiene que ayudarte a elegir el camino correcto.
+            No todos llegan con la misma necesidad. Algunos necesitan vender mejor, otros ordenar la operación y otros empezar por una web clara.
           </p>
         </div>
 

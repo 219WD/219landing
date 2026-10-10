@@ -1,36 +1,15 @@
 import { useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const useScrollAnimation = (sectionRefs) => {
   useEffect(() => {
-    console.log('🎬 Iniciando animaciones...');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return undefined;
 
-    // Variable para verificar si GSAP está disponible
-    let gsap = null;
-    let ScrollTrigger = null;
-    let hasGSAP = false;
-
-    // Intentar cargar GSAP
-    try {
-      gsap = require('gsap').gsap;
-      ScrollTrigger = require('gsap/ScrollTrigger').ScrollTrigger;
-      
-      if (gsap && ScrollTrigger) {
-        gsap.registerPlugin(ScrollTrigger);
-        hasGSAP = true;
-        console.log('✅ GSAP cargado correctamente');
-      }
-    } catch (error) {
-      console.warn('⚠️ GSAP no disponible, usando CSS fallback:', error.message);
-      hasGSAP = false;
-    }
-
-    // ============================================
-    // OPCIÓN 1: CON GSAP (si está disponible)
-    // ============================================
-    if (hasGSAP && gsap && ScrollTrigger) {
-      console.log('🎨 Usando animaciones GSAP');
-
-      // Configuración
+    const ctx = gsap.context(() => {
       ScrollTrigger.config({
         autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load'
       });
@@ -56,7 +35,6 @@ export const useScrollAnimation = (sectionRefs) => {
         });
       }
 
-      // Animaciones de secciones
       const triggers = [];
       
       sectionRefs.forEach((ref, index) => {
@@ -99,118 +77,11 @@ export const useScrollAnimation = (sectionRefs) => {
         });
       }
 
-      // Cleanup
       return () => {
         triggers.forEach(t => t && t.kill());
-        ScrollTrigger.getAll().forEach(t => t.kill());
-        gsap.killTweensOf('*');
       };
-    }
+    });
 
-    // ============================================
-    // OPCIÓN 2: SIN GSAP (CSS Fallback)
-    // ============================================
-    else {
-      console.log('🎨 Usando animaciones CSS (fallback)');
-
-      // Agregar clase de animación a todos los elementos
-      const animateElements = () => {
-        // Hero elements
-        const heroElements = document.querySelectorAll(
-          '.hero-badge, .hero-title, .hero-subtitle, .hero-cta, .stat-item'
-        );
-        
-        heroElements.forEach((el, index) => {
-          setTimeout(() => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-            
-            requestAnimationFrame(() => {
-              el.style.opacity = '1';
-              el.style.transform = 'translateY(0)';
-            });
-          }, index * 150);
-        });
-
-        // WhatsApp flotante
-        const floatingWhatsapp = document.querySelector('.floating-whatsapp');
-        if (floatingWhatsapp) {
-          floatingWhatsapp.style.opacity = '0';
-          floatingWhatsapp.style.transform = 'scale(0)';
-          floatingWhatsapp.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-          
-          setTimeout(() => {
-            floatingWhatsapp.style.opacity = '1';
-            floatingWhatsapp.style.transform = 'scale(1)';
-          }, 1500);
-
-          // Animación de flotación con CSS
-          floatingWhatsapp.style.animation = 'float 2s ease-in-out infinite';
-        }
-
-        // Intersection Observer para secciones
-        const observerOptions = {
-          threshold: 0.1,
-          rootMargin: '0px 0px -15% 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.style.opacity = '1';
-              entry.target.style.transform = 'translateY(0)';
-              
-              // Animar hijos (cards)
-              const cards = entry.target.querySelectorAll(
-                '.benefit-card, .testimonial-card, .price-container, .bonus-container'
-              );
-              
-              cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                card.style.transition = `all 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`;
-                
-                setTimeout(() => {
-                  card.style.opacity = '1';
-                  card.style.transform = 'translateY(0)';
-                }, 50);
-              });
-            }
-          });
-        }, observerOptions);
-
-        // Observar secciones
-        sectionRefs.forEach((ref, index) => {
-          if (ref && ref.current && index > 0) {
-            const section = ref.current;
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(40px)';
-            section.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
-            observer.observe(section);
-          }
-        });
-
-        return () => observer.disconnect();
-      };
-
-      // Agregar keyframes para float
-      const style = document.createElement('style');
-      style.textContent = `
-        @keyframes float {
-          0%, 100% { transform: translateY(0) scale(1); }
-          50% { transform: translateY(-10px) scale(1); }
-        }
-      `;
-      document.head.appendChild(style);
-
-      const cleanup = animateElements();
-
-      return () => {
-        if (cleanup) cleanup();
-        document.head.removeChild(style);
-      };
-    }
-
+    return () => ctx.revert();
   }, [sectionRefs]);
 };

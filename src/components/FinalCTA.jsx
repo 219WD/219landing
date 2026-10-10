@@ -4,9 +4,9 @@ import { useFinalCTAAnimations } from '../hooks/useFinalCTAAnimations.js';
 import './final-cta.css';
 
 const AUDIT_POINTS = [
-  'Qué necesita hoy tu negocio',
-  'Qué conviene resolver primero',
-  'Qué camino tiene más sentido para empezar',
+  'Si el problema principal es llegar a más personas',
+  'Si necesitás una web, sistema o herramienta digital',
+  'Qué conviene resolver primero y con qué alcance',
 ];
 
 const ApplyIcon = () => (
@@ -82,12 +82,12 @@ export default function FinalCTA({ onWhatsAppClick }) {
           {/* RIGHT — Main CTA */}
           <div className="fc-cta">
             <h3 className="fc-cta__headline">
-              Una web, una campaña, un sistema o una idea.
+              Marketing, desarrollo o una mezcla de los dos.
               <em className="fc-cta__headline-accent"> Empecemos por entender qué necesitás.</em>
             </h3>
 
             <p className="fc-cta__body">
-              No hace falta que vengas con todo resuelto. Contanos dónde estás parado y vemos qué puede hacer 219Labs por tu negocio.
+              No hace falta que vengas con el nombre técnico del servicio. Contanos qué querés lograr y vemos si conviene una campaña, contenido, una página, un sistema o algo más simple.
             </p>
 
             <button
