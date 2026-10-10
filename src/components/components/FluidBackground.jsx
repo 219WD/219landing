@@ -7,6 +7,7 @@ export default function FluidBackground() {
   return (
     <div
       ref={ref}
+      className="hero-fluid"
       aria-hidden="true"
       style={{
         position: 'absolute',

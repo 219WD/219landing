@@ -50,6 +50,10 @@ a  { text-decoration: none; color: inherit; }
       rgba(8,8,6,0.42) 100%);
 }
 
+.hero-fluid {
+  z-index: 0;
+}
+
 /* ── Content grid ────────────────────────────────────────────────────── */
 .hero__grid {
   position: relative;
@@ -288,21 +292,26 @@ a  { text-decoration: none; color: inherit; }
   .hero {
     min-height: 100svh;
     background:
-      radial-gradient(circle at 50% 38%, rgba(0, 242, 130, 0.13), transparent 34%),
+      radial-gradient(circle at 50% 38%, rgba(0, 242, 130, 0.08), transparent 42%),
       #080806;
+  }
+
+  .hero-fluid {
+    opacity: 1;
+    filter: saturate(1.12) contrast(1.05);
   }
 
   .hero__vignette {
     background:
       linear-gradient(to bottom,
-        rgba(8,8,6,0.82) 0%,
-        rgba(8,8,6,0.58) 30%,
-        rgba(8,8,6,0.70) 62%,
-        rgba(8,8,6,0.92) 100%),
+        rgba(8,8,6,0.56) 0%,
+        rgba(8,8,6,0.24) 30%,
+        rgba(8,8,6,0.32) 62%,
+        rgba(8,8,6,0.68) 100%),
       radial-gradient(ellipse 78% 48% at 52% 42%,
-        rgba(8,8,6,0.26) 0%,
-        rgba(8,8,6,0.66) 58%,
-        rgba(8,8,6,0.92) 100%);
+        rgba(8,8,6,0.04) 0%,
+        rgba(8,8,6,0.32) 58%,
+        rgba(8,8,6,0.70) 100%);
   }
 
   .hero__grid {
