@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import HeroSection from "./components/HeroSection";
 import Benefits from "./components/Benefits";
 import TestimonialsSection from "./components/TestimonialsSection";
@@ -76,10 +76,13 @@ const LandingPage = () => {
 };
 
 const App = () => {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
   return (
     <>
       <SEO />
-      <SiteHeader />
+      {!isAdminRoute && <SiteHeader />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/desarrollo" element={<ServicePage type="desarrollo" />} />

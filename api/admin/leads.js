@@ -100,6 +100,18 @@ async function updateLead(request, response, user) {
   sendJson(response, 200, { ok: true, lead: serializeLead(lead) });
 }
 
+async function deleteLead(request, response) {
+  const collection = await getLeadsCollection();
+  const leadId = getText(request.body?.leadId, 80);
+
+  if (!ObjectId.isValid(leadId)) throw new ApiError(400, "Lead inválido.");
+
+  const result = await collection.deleteOne({ _id: new ObjectId(leadId) });
+  if (!result.deletedCount) throw new ApiError(404, "No encontramos ese lead.");
+
+  sendJson(response, 200, { ok: true, deleted: true, leadId });
+}
+
 export default async function handler(request, response) {
   response.setHeader("Cache-Control", "no-store");
   if (handleOptions(request, response)) return;
@@ -118,7 +130,13 @@ export default async function handler(request, response) {
       return;
     }
 
-    response.setHeader("Allow", "GET, PATCH, OPTIONS");
+    if (request.method === "DELETE") {
+      requireAdminCsrf(request, user);
+      await deleteLead(request, response);
+      return;
+    }
+
+    response.setHeader("Allow", "GET, PATCH, DELETE, OPTIONS");
     sendJson(response, 405, { ok: false, error: "Método no permitido." });
   } catch (error) {
     handleError(response, error);

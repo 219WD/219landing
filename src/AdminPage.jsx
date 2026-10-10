@@ -61,6 +61,80 @@ async function apiRequest(url, options = {}, csrf = "") {
   return data;
 }
 
+function EmptyState({ title, text }) {
+  return (
+    <div className="admin-empty-state">
+      <strong>{title}</strong>
+      <p>{text}</p>
+    </div>
+  );
+}
+
+function KpiCard({ label, value, hint, tone = "default" }) {
+  return (
+    <article className={`admin-kpi-card admin-kpi-card--${tone}`}>
+      <span>{label}</span>
+      <strong>{value}</strong>
+      {hint && <small>{hint}</small>}
+    </article>
+  );
+}
+
+function TinyTrend({ data }) {
+  const points = data || [];
+  const maxValue = Math.max(1, ...points.map((item) => item.count || 0));
+
+  return (
+    <article className="admin-panel">
+      <div className="admin-panel__head">
+        <div>
+          <span>Leads</span>
+          <h2>Ingresos por día</h2>
+        </div>
+        <small>Últimos 30 días</small>
+      </div>
+      <div className="admin-trend-bars" aria-label="Leads por día">
+        {points.length ? points.map((item) => (
+          <span
+            key={item.date}
+            style={{ "--bar-height": `${Math.max(8, Math.round(((item.count || 0) / maxValue) * 100))}%` }}
+            title={`${formatShortDate(item.date)}: ${item.count}`}
+          />
+        )) : <EmptyState title="Sin datos todavía" text="Cuando entren leads, este gráfico muestra el ritmo diario." />}
+      </div>
+    </article>
+  );
+}
+
+function BreakdownPanel({ title, items, labelMap = {} }) {
+  const maxValue = Math.max(1, ...items.map((item) => item.count || 0));
+
+  return (
+    <article className="admin-panel">
+      <div className="admin-panel__head">
+        <div>
+          <span>Desglose</span>
+          <h2>{title}</h2>
+        </div>
+      </div>
+      <div className="admin-breakdown-list">
+        {items.length ? items.map((item) => {
+          const percent = Math.max(3, Math.round(((item.count || 0) / maxValue) * 100));
+          return (
+            <div className="admin-breakdown-row" key={item.key}>
+              <p>
+                <span>{labelMap[item.key] || item.key}</span>
+                <strong>{formatNumber(item.count)}</strong>
+              </p>
+              <i style={{ "--bar-size": `${percent}%` }} />
+            </div>
+          );
+        }) : <EmptyState title="Sin actividad" text="Todavía no hay datos para este desglose." />}
+      </div>
+    </article>
+  );
+}
+
 function AnalyticsLineChart({ data }) {
   const points = data || [];
   const width = 920;
@@ -100,34 +174,36 @@ function AnalyticsLineChart({ data }) {
         </div>
       </div>
 
-      <svg className="admin-chart__svg" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Evolución de sesiones y conversiones">
-        <defs>
-          <linearGradient id="sessionsArea" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="rgba(0, 255, 136, 0.26)" />
-            <stop offset="100%" stopColor="rgba(0, 255, 136, 0)" />
-          </linearGradient>
-        </defs>
-        {[0, 0.25, 0.5, 0.75, 1].map((ratio) => {
-          const y = padTop + chartHeight * ratio;
-          return (
-            <g key={ratio}>
-              <line x1={padX} x2={width - padX} y1={y} y2={y} />
-              <text x={width - padX + 8} y={y + 4}>{compactNumber(maxValue * (1 - ratio))}</text>
-            </g>
-          );
-        })}
-        {areaPath && <path className="admin-chart__area" d={areaPath} />}
-        {sessionsLine && <polyline className="admin-chart__line" points={sessionsLine} />}
-        {conversionsLine && <polyline className="admin-chart__line admin-chart__line--alt" points={conversionsLine} />}
-        {points.map((item, index) => (
-          <circle key={`${item.date}-${index}`} className="admin-chart__dot" cx={padX + index * xStep} cy={padTop + chartHeight - ((item.sessions || 0) / maxValue) * chartHeight} r="3.5" />
-        ))}
-        {labelIndexes.map((index) => (
-          <text key={index} className="admin-chart__date" x={padX + index * xStep} y={height - 8}>
-            {formatShortDate(points[index]?.date)}
-          </text>
-        ))}
-      </svg>
+      {points.length ? (
+        <svg className="admin-chart__svg" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Evolución de sesiones y conversiones">
+          <defs>
+            <linearGradient id="sessionsArea" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="rgba(0, 255, 136, 0.26)" />
+              <stop offset="100%" stopColor="rgba(0, 255, 136, 0)" />
+            </linearGradient>
+          </defs>
+          {[0, 0.25, 0.5, 0.75, 1].map((ratio) => {
+            const y = padTop + chartHeight * ratio;
+            return (
+              <g key={ratio}>
+                <line x1={padX} x2={width - padX} y1={y} y2={y} />
+                <text x={width - padX + 8} y={y + 4}>{compactNumber(maxValue * (1 - ratio))}</text>
+              </g>
+            );
+          })}
+          {areaPath && <path className="admin-chart__area" d={areaPath} />}
+          {sessionsLine && <polyline className="admin-chart__line" points={sessionsLine} />}
+          {conversionsLine && <polyline className="admin-chart__line admin-chart__line--alt" points={conversionsLine} />}
+          {points.map((item, index) => (
+            <circle key={`${item.date}-${index}`} className="admin-chart__dot" cx={padX + index * xStep} cy={padTop + chartHeight - ((item.sessions || 0) / maxValue) * chartHeight} r="3.5" />
+          ))}
+          {labelIndexes.map((index) => (
+            <text key={index} className="admin-chart__date" x={padX + index * xStep} y={height - 8}>
+              {formatShortDate(points[index]?.date)}
+            </text>
+          ))}
+        </svg>
+      ) : <EmptyState title="Sin timeline" text="GA4 respondió, pero todavía no hay datos diarios para graficar." />}
     </div>
   );
 }
@@ -139,7 +215,7 @@ function AnalyticsBars({ title, items, labelKey, valueKey, metaKey }) {
     <article className="admin-bars">
       <h2>{title}</h2>
       <div>
-        {items.map((item) => {
+        {items.length ? items.map((item) => {
           const value = item[valueKey] || 0;
           const percent = Math.max(2, Math.round((value / maxValue) * 100));
           return (
@@ -154,7 +230,7 @@ function AnalyticsBars({ title, items, labelKey, valueKey, metaKey }) {
               {metaKey && <small>{formatNumber(item[metaKey])} conversiones</small>}
             </div>
           );
-        })}
+        }) : <EmptyState title="Sin datos" text="No hay filas disponibles para esta lectura." />}
       </div>
     </article>
   );
@@ -166,10 +242,10 @@ function AnalyticsPanel({ analytics, error }) {
       <section className="admin-analytics admin-analytics--empty">
         <div>
           <span>Google Analytics</span>
-          <h2>Falta conectar GA4.</h2>
+          <h2>GA4 todavía no está leyendo.</h2>
           <p>{error}</p>
         </div>
-        <p>Cuando cargues las credenciales del service account en el env, este módulo muestra tráfico, páginas, canales, dispositivos y conversiones.</p>
+        <p>Cuando el service account tenga permisos en la propiedad, este módulo muestra tráfico, páginas, canales, dispositivos y conversiones.</p>
       </section>
     );
   }
@@ -187,32 +263,17 @@ function AnalyticsPanel({ analytics, error }) {
       <div className="admin-analytics__head">
         <div>
           <p className="admin-kicker">Google Analytics</p>
-          <h2>Lectura comercial del tráfico.</h2>
+          <h2>Panorama total del sitio.</h2>
         </div>
         <span>Últimos 30 días</span>
       </div>
 
       <div className="admin-analytics__kpis">
-        <article>
-          <span>Usuarios activos</span>
-          <strong>{formatNumber(summary.activeUsers)}</strong>
-        </article>
-        <article>
-          <span>Sesiones</span>
-          <strong>{formatNumber(summary.sessions)}</strong>
-        </article>
-        <article>
-          <span>Vistas</span>
-          <strong>{formatNumber(summary.views)}</strong>
-        </article>
-        <article>
-          <span>Engagement</span>
-          <strong>{summary.engagementRate || 0}%</strong>
-        </article>
-        <article>
-          <span>Conversiones</span>
-          <strong>{formatNumber(summary.conversions)}</strong>
-        </article>
+        <KpiCard label="Usuarios activos" value={formatNumber(summary.activeUsers)} hint="Personas únicas activas" />
+        <KpiCard label="Sesiones" value={formatNumber(summary.sessions)} hint="Visitas con actividad" />
+        <KpiCard label="Vistas" value={formatNumber(summary.views)} hint="Páginas vistas" />
+        <KpiCard label="Engagement" value={`${summary.engagementRate || 0}%`} hint="Sesiones con interacción" tone="warm" />
+        <KpiCard label="Conversiones" value={formatNumber(summary.conversions)} hint="Eventos clave GA4" tone="hot" />
       </div>
 
       <AnalyticsLineChart data={timeline} />
@@ -226,12 +287,188 @@ function AnalyticsPanel({ analytics, error }) {
   );
 }
 
+function LeadsView({
+  activeLead,
+  leads,
+  loading,
+  metrics,
+  notes,
+  search,
+  services,
+  serviceFilter,
+  statusFilter,
+  setActiveLeadId,
+  setNotes,
+  setSearch,
+  setServiceFilter,
+  setStatusFilter,
+  loadAdminData,
+  updateLead,
+  deleteLead,
+}) {
+  return (
+    <section className="admin-view">
+      <div className="admin-kpi-grid admin-kpi-grid--four">
+        <KpiCard label="Total leads" value={formatNumber(metrics?.total)} hint="Consultas registradas" />
+        <KpiCard label="Últimos 30 días" value={formatNumber(metrics?.last30Days)} hint="Demanda reciente" />
+        <KpiCard label="Contactables" value={formatNumber(metrics?.contacted)} hint="Contactados o calificados" tone="warm" />
+        <KpiCard label="Calificados" value={`${metrics?.qualifiedRate ?? 0}%`} hint={`${formatNumber(metrics?.qualified)} oportunidades`} tone="hot" />
+      </div>
+
+      <div className="admin-leads-workbench">
+        <aside className="admin-leads-list">
+          <div className="admin-filters">
+            <label>
+              Buscar
+              <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Nombre, WhatsApp, servicio..." />
+            </label>
+            <div className="admin-filter-row">
+              <label>
+                Estado
+                <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
+                  <option value="all">Todos</option>
+                  {STATUS_OPTIONS.map((status) => (
+                    <option key={status.value} value={status.value}>{status.label}</option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Servicio
+                <select value={serviceFilter} onChange={(event) => setServiceFilter(event.target.value)}>
+                  <option value="all">Todos</option>
+                  {services.map((service) => (
+                    <option key={service.value} value={service.value}>{service.label}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <button type="button" onClick={loadAdminData} disabled={loading}>
+              {loading ? "Actualizando..." : "Actualizar"}
+            </button>
+          </div>
+
+          <div className="admin-lead-list">
+            {leads.map((lead) => (
+              <button
+                type="button"
+                key={lead._id}
+                className={activeLead?._id === lead._id ? "is-active" : ""}
+                onClick={() => setActiveLeadId(lead._id)}
+              >
+                <span>{lead.contact?.name || "Sin nombre"}</span>
+                <strong>{lead.service?.label}</strong>
+                <small>{STATUS_LABELS[lead.status] || lead.status} · {formatDate(lead.createdAt)}</small>
+              </button>
+            ))}
+            {!leads.length && <EmptyState title="Sin leads" text="No hay consultas con estos filtros." />}
+          </div>
+        </aside>
+
+        <section className="admin-detail">
+          {activeLead ? (
+            <>
+              <div className="admin-detail__head">
+                <div>
+                  <span>{STATUS_LABELS[activeLead.status] || activeLead.status}</span>
+                  <h2>{activeLead.contact?.name}</h2>
+                  <p>{activeLead.service?.label} · {activeLead.service?.need}</p>
+                </div>
+                <div className="admin-detail__actions">
+                  <select
+                    value={activeLead.status}
+                    onChange={(event) => updateLead(activeLead._id, { status: event.target.value })}
+                  >
+                    {STATUS_OPTIONS.map((status) => (
+                      <option key={status.value} value={status.value}>{status.label}</option>
+                    ))}
+                  </select>
+                  <button type="button" className="admin-danger" onClick={() => deleteLead(activeLead._id)}>
+                    Borrar
+                  </button>
+                </div>
+              </div>
+
+              <div className="admin-grid">
+                <article>
+                  <span>WhatsApp</span>
+                  <a href={`https://wa.me/${activeLead.contact?.whatsapp?.replace(/\D/g, "")}`} target="_blank" rel="noreferrer">
+                    {activeLead.contact?.whatsapp}
+                  </a>
+                </article>
+                <article>
+                  <span>Email</span>
+                  <strong>{activeLead.contact?.email || "No dejó email"}</strong>
+                </article>
+                <article>
+                  <span>Origen</span>
+                  <strong>{activeLead.source?.origin || "Web"}</strong>
+                </article>
+                <article>
+                  <span>Fecha</span>
+                  <strong>{formatDate(activeLead.createdAt)}</strong>
+                </article>
+              </div>
+
+              <article className="admin-block">
+                <span>Detalle</span>
+                <p>{activeLead.service?.detail}</p>
+                {activeLead.service?.secondary && (
+                  <p><strong>{activeLead.service.secondaryLabel}:</strong> {activeLead.service.secondary}</p>
+                )}
+              </article>
+
+              <article className="admin-block">
+                <span>Notas internas</span>
+                <textarea
+                  value={notes[activeLead._id] || ""}
+                  onChange={(event) => setNotes((current) => ({ ...current, [activeLead._id]: event.target.value }))}
+                  placeholder="Agregá una nota comercial..."
+                  rows="4"
+                />
+                <button
+                  type="button"
+                  disabled={!notes[activeLead._id]?.trim()}
+                  onClick={() => updateLead(activeLead._id, { note: notes[activeLead._id] })}
+                >
+                  Guardar nota
+                </button>
+                <div className="admin-notes">
+                  {(activeLead.adminNotes || []).map((item, index) => (
+                    <p key={`${item.at}-${index}`}>
+                      <strong>{formatDate(item.at)}</strong> {item.note}
+                    </p>
+                  ))}
+                </div>
+              </article>
+
+              <article className="admin-block">
+                <span>Historial</span>
+                <div className="admin-timeline">
+                  {(activeLead.statusHistory || []).map((item, index) => (
+                    <p key={`${item.status}-${item.at}-${index}`}>
+                      <strong>{STATUS_LABELS[item.status] || item.status}</strong>
+                      <small>{formatDate(item.at)}</small>
+                    </p>
+                  ))}
+                </div>
+              </article>
+            </>
+          ) : (
+            <EmptyState title="Seleccioná un lead" text="Acá vas a ver contacto, detalle, notas e historial." />
+          )}
+        </section>
+      </div>
+    </section>
+  );
+}
+
 export default function AdminPage() {
   const googleButtonRef = useRef(null);
   const [user, setUser] = useState(null);
   const [csrf, setCsrf] = useState("");
   const [sessionChecked, setSessionChecked] = useState(false);
   const [loginError, setLoginError] = useState("");
+  const [activeView, setActiveView] = useState("metrics");
   const [metrics, setMetrics] = useState(null);
   const [analytics, setAnalytics] = useState(null);
   const [analyticsError, setAnalyticsError] = useState("");
@@ -252,6 +489,14 @@ export default function AdminPage() {
   }, [leads]);
 
   const activeLead = leads.find((lead) => lead._id === activeLeadId) || leads[0];
+
+  const leadPulse = useMemo(() => {
+    const total = metrics?.total || 0;
+    const opened = metrics?.whatsappOpened || 0;
+    const qualified = metrics?.qualified || 0;
+    const pending = Math.max(0, total - opened - qualified);
+    return { total, opened, qualified, pending };
+  }, [metrics]);
 
   const loadSession = async () => {
     try {
@@ -283,8 +528,9 @@ export default function AdminPage() {
         apiRequest(`/api/admin/leads?${params.toString()}`),
         analyticsRequest,
       ]);
+      const nextLeads = leadsData.leads || [];
       setMetrics(metricsData.metrics);
-      setLeads(leadsData.leads || []);
+      setLeads(nextLeads);
       if (analyticsResult.data) {
         setAnalytics(analyticsResult.data.analytics || null);
         setAnalyticsError("");
@@ -292,7 +538,9 @@ export default function AdminPage() {
         setAnalytics(null);
         setAnalyticsError(analyticsResult.error.message);
       }
-      if (!activeLeadId && leadsData.leads?.[0]?._id) setActiveLeadId(leadsData.leads[0]._id);
+      if (!nextLeads.some((lead) => lead._id === activeLeadId)) {
+        setActiveLeadId(nextLeads[0]?._id || "");
+      }
     } finally {
       setLoading(false);
     }
@@ -366,6 +614,15 @@ export default function AdminPage() {
     setMetrics(metricsData.metrics);
   };
 
+  const deleteLead = async (leadId) => {
+    if (!window.confirm("¿Borrar este lead del panel?")) return;
+    await apiRequest("/api/admin/leads", {
+      method: "DELETE",
+      body: JSON.stringify({ leadId }),
+    }, csrf);
+    await loadAdminData();
+  };
+
   const logout = async () => {
     await apiRequest("/api/admin/logout", { method: "POST" }, csrf);
     setUser(null);
@@ -379,10 +636,8 @@ export default function AdminPage() {
 
   if (!sessionChecked) {
     return (
-      <main className="admin-page">
-        <div className="admin-shell">
-          <p className="admin-loading">Cargando panel...</p>
-        </div>
+      <main className="admin-page admin-page--boot">
+        <p className="admin-loading">Cargando panel...</p>
       </main>
     );
   }
@@ -409,11 +664,33 @@ export default function AdminPage() {
 
   return (
     <main className="admin-page">
-      <div className="admin-shell">
-        <header className="admin-header">
+      <aside className="admin-nav">
+        <div className="admin-brand">
+          <strong>219</strong>
+          <span>Labs Admin</span>
+        </div>
+
+        <nav aria-label="Administración">
+          <button type="button" className={activeView === "metrics" ? "is-active" : ""} onClick={() => setActiveView("metrics")}>
+            <span>01</span> Métricas
+          </button>
+          <button type="button" className={activeView === "leads" ? "is-active" : ""} onClick={() => setActiveView("leads")}>
+            <span>02</span> Leads
+          </button>
+        </nav>
+
+        <div className="admin-nav__pulse">
+          <span>Pipeline</span>
+          <strong>{formatNumber(leadPulse.total)}</strong>
+          <p>{formatNumber(leadPulse.pending)} pendientes · {formatNumber(leadPulse.qualified)} calificados</p>
+        </div>
+      </aside>
+
+      <section className="admin-workspace">
+        <header className="admin-topbar">
           <div>
             <p className="admin-kicker">219Labs Admin</p>
-            <h1>Leads y métricas.</h1>
+            <h1>{activeView === "metrics" ? "Métricas generales." : "Gestión de leads."}</h1>
           </div>
           <div className="admin-user">
             {user.picture && <img src={user.picture} alt="" />}
@@ -422,185 +699,45 @@ export default function AdminPage() {
           </div>
         </header>
 
-        <section className="admin-metrics" aria-label="Métricas principales">
-          <article>
-            <span>Total</span>
-            <strong>{metrics?.total ?? "-"}</strong>
-          </article>
-          <article>
-            <span>Últimos 30 días</span>
-            <strong>{metrics?.last30Days ?? "-"}</strong>
-          </article>
-          <article>
-            <span>WhatsApp abierto</span>
-            <strong>{metrics?.whatsappOpenRate ?? 0}%</strong>
-          </article>
-          <article>
-            <span>Calificados</span>
-            <strong>{metrics?.qualifiedRate ?? 0}%</strong>
-          </article>
-        </section>
-
-        <section className="admin-breakdowns" aria-label="Métricas detalladas">
-          <article>
-            <h2>Por estado</h2>
-            {(metrics?.byStatus || []).map((item) => (
-              <p key={item.key}>
-                <span>{STATUS_LABELS[item.key] || item.key}</span>
-                <strong>{item.count}</strong>
-              </p>
-            ))}
-          </article>
-          <article>
-            <h2>Por servicio</h2>
-            {(metrics?.byService || []).map((item) => (
-              <p key={item.key}>
-                <span>{item.key}</span>
-                <strong>{item.count}</strong>
-              </p>
-            ))}
-          </article>
-        </section>
-
-        <AnalyticsPanel analytics={analytics} error={analyticsError} />
-
-        <section className="admin-layout">
-          <aside className="admin-sidebar">
-            <div className="admin-filters">
-              <label>
-                Buscar
-                <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Nombre, WhatsApp, servicio..." />
-              </label>
-              <label>
-                Estado
-                <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
-                  <option value="all">Todos</option>
-                  {STATUS_OPTIONS.map((status) => (
-                    <option key={status.value} value={status.value}>{status.label}</option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Servicio
-                <select value={serviceFilter} onChange={(event) => setServiceFilter(event.target.value)}>
-                  <option value="all">Todos</option>
-                  {services.map((service) => (
-                    <option key={service.value} value={service.value}>{service.label}</option>
-                  ))}
-                </select>
-              </label>
-              <button type="button" onClick={loadAdminData} disabled={loading}>
-                {loading ? "Actualizando..." : "Actualizar"}
-              </button>
+        {activeView === "metrics" ? (
+          <section className="admin-view">
+            <div className="admin-kpi-grid">
+              <KpiCard label="Leads totales" value={formatNumber(metrics?.total)} hint="Consultas guardadas" />
+              <KpiCard label="Últimos 30 días" value={formatNumber(metrics?.last30Days)} hint="Actividad reciente" />
+              <KpiCard label="WhatsApp abierto" value={`${metrics?.whatsappOpenRate ?? 0}%`} hint={`${formatNumber(metrics?.whatsappOpened)} aperturas`} tone="warm" />
+              <KpiCard label="Calificados" value={`${metrics?.qualifiedRate ?? 0}%`} hint={`${formatNumber(metrics?.qualified)} oportunidades`} tone="hot" />
             </div>
 
-            <div className="admin-lead-list">
-              {leads.map((lead) => (
-                <button
-                  type="button"
-                  key={lead._id}
-                  className={activeLead?._id === lead._id ? "is-active" : ""}
-                  onClick={() => setActiveLeadId(lead._id)}
-                >
-                  <span>{lead.contact?.name || "Sin nombre"}</span>
-                  <strong>{lead.service?.label}</strong>
-                  <small>{STATUS_LABELS[lead.status] || lead.status} · {formatDate(lead.createdAt)}</small>
-                </button>
-              ))}
-              {!leads.length && <p className="admin-empty">Todavía no hay leads con estos filtros.</p>}
+            <AnalyticsPanel analytics={analytics} error={analyticsError} />
+
+            <div className="admin-panels-grid">
+              <TinyTrend data={metrics?.byDay || []} />
+              <BreakdownPanel title="Por estado" items={metrics?.byStatus || []} labelMap={STATUS_LABELS} />
+              <BreakdownPanel title="Por servicio" items={metrics?.byService || []} />
             </div>
-          </aside>
-
-          <section className="admin-detail">
-            {activeLead ? (
-              <>
-                <div className="admin-detail__head">
-                  <div>
-                    <span>{STATUS_LABELS[activeLead.status] || activeLead.status}</span>
-                    <h2>{activeLead.contact?.name}</h2>
-                    <p>{activeLead.service?.label} · {activeLead.service?.need}</p>
-                  </div>
-                  <select
-                    value={activeLead.status}
-                    onChange={(event) => updateLead(activeLead._id, { status: event.target.value })}
-                  >
-                    {STATUS_OPTIONS.map((status) => (
-                      <option key={status.value} value={status.value}>{status.label}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="admin-grid">
-                  <article>
-                    <span>WhatsApp</span>
-                    <a href={`https://wa.me/${activeLead.contact?.whatsapp?.replace(/\D/g, "")}`} target="_blank" rel="noreferrer">
-                      {activeLead.contact?.whatsapp}
-                    </a>
-                  </article>
-                  <article>
-                    <span>Email</span>
-                    <strong>{activeLead.contact?.email || "No dejó email"}</strong>
-                  </article>
-                  <article>
-                    <span>Origen</span>
-                    <strong>{activeLead.source?.origin || "Web"}</strong>
-                  </article>
-                  <article>
-                    <span>Fecha</span>
-                    <strong>{formatDate(activeLead.createdAt)}</strong>
-                  </article>
-                </div>
-
-                <article className="admin-block">
-                  <span>Detalle</span>
-                  <p>{activeLead.service?.detail}</p>
-                  {activeLead.service?.secondary && (
-                    <p><strong>{activeLead.service.secondaryLabel}:</strong> {activeLead.service.secondary}</p>
-                  )}
-                </article>
-
-                <article className="admin-block">
-                  <span>Notas internas</span>
-                  <textarea
-                    value={notes[activeLead._id] || ""}
-                    onChange={(event) => setNotes((current) => ({ ...current, [activeLead._id]: event.target.value }))}
-                    placeholder="Agregá una nota comercial..."
-                    rows="4"
-                  />
-                  <button
-                    type="button"
-                    disabled={!notes[activeLead._id]?.trim()}
-                    onClick={() => updateLead(activeLead._id, { note: notes[activeLead._id] })}
-                  >
-                    Guardar nota
-                  </button>
-                  <div className="admin-notes">
-                    {(activeLead.adminNotes || []).map((item, index) => (
-                      <p key={`${item.at}-${index}`}>
-                        <strong>{formatDate(item.at)}</strong> {item.note}
-                      </p>
-                    ))}
-                  </div>
-                </article>
-
-                <article className="admin-block">
-                  <span>Historial</span>
-                  <div className="admin-timeline">
-                    {(activeLead.statusHistory || []).map((item, index) => (
-                      <p key={`${item.status}-${item.at}-${index}`}>
-                        <strong>{STATUS_LABELS[item.status] || item.status}</strong>
-                        <small>{formatDate(item.at)}</small>
-                      </p>
-                    ))}
-                  </div>
-                </article>
-              </>
-            ) : (
-              <p className="admin-empty">Seleccioná un lead para ver el detalle.</p>
-            )}
           </section>
-        </section>
-      </div>
+        ) : (
+          <LeadsView
+            activeLead={activeLead}
+            leads={leads}
+            loading={loading}
+            metrics={metrics}
+            notes={notes}
+            search={search}
+            services={services}
+            serviceFilter={serviceFilter}
+            statusFilter={statusFilter}
+            setActiveLeadId={setActiveLeadId}
+            setNotes={setNotes}
+            setSearch={setSearch}
+            setServiceFilter={setServiceFilter}
+            setStatusFilter={setStatusFilter}
+            loadAdminData={loadAdminData}
+            updateLead={updateLead}
+            deleteLead={deleteLead}
+          />
+        )}
+      </section>
     </main>
   );
 }
