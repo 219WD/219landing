@@ -48,6 +48,7 @@ function bootFluid(container, cfg) {
     isBounce, dt, BFECC,
     autoDemo, autoSpeed, autoIntensity,
     takeoverDuration, autoResumeDelay, autoRampDuration,
+    preferHalfFloat,
   } = cfg;
 
   // ── Palette texture ────────────────────────────────────────────────────────
@@ -109,8 +110,10 @@ function bootFluid(container, cfg) {
   clock.start();
 
   // ── FBO factory ───────────────────────────────────────────────────────────
-  const floatType = /(iPad|iPhone|iPod)/i.test(navigator.userAgent)
-    ? THREE.HalfFloatType : THREE.FloatType;
+  const shouldUseHalfFloat = Boolean(preferHalfFloat)
+    || /(Android|iPad|iPhone|iPod|Mobile|Silk|Kindle)/i.test(navigator.userAgent)
+    || (navigator.maxTouchPoints || 0) > 1;
+  const floatType = shouldUseHalfFloat ? THREE.HalfFloatType : THREE.FloatType;
 
   function makeFBO(w, h) {
     return new THREE.WebGLRenderTarget(w, h, {
