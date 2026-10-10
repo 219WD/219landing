@@ -33,3 +33,13 @@ export async function getLeadsCollection() {
   const db = await getDatabase();
   return db.collection(process.env.MONGODB_LEADS_COLLECTION || "leads");
 }
+
+export async function getEmailTemplatesCollection() {
+  const db = await getDatabase();
+  return db.collection(process.env.MONGODB_EMAIL_TEMPLATES_COLLECTION || "emailMarketingTemplates");
+}
+
+export async function getEmailCampaignSendsCollection() {
+  const db = await getDatabase();
+  return db.collection(process.env.MONGODB_EMAIL_SENDS_COLLECTION || "emailMarketingSends");
+}

@@ -11,6 +11,7 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import AdminEmailMarketing from "./AdminEmailMarketing";
 import Logo219 from "./components/components/Logo219";
 import "./admin.css";
 
@@ -936,6 +937,10 @@ export default function AdminPage() {
             <FontAwesomeIcon icon={faUsers} />
             <strong>Leads</strong>
           </button>
+          <button type="button" className={activeView === "email" ? "is-active" : ""} onClick={() => setActiveView("email")} title="Email MKT">
+            <FontAwesomeIcon icon={faEnvelope} />
+            <strong>Email MKT</strong>
+          </button>
         </nav>
 
         <div className="admin-nav__pulse">
@@ -953,7 +958,7 @@ export default function AdminPage() {
         <header className="admin-topbar">
           <div>
             <p className="admin-kicker">219Labs Admin</p>
-            <h1>{activeView === "metrics" ? "Métricas generales." : "Gestión de leads."}</h1>
+            <h1>{activeView === "metrics" ? "Métricas generales." : activeView === "leads" ? "Gestión de leads." : "Email marketing."}</h1>
           </div>
           <div className="admin-user">
             {user.picture && <img src={user.picture} alt="" />}
@@ -994,7 +999,7 @@ export default function AdminPage() {
               <BreakdownPanel title="Por servicio" items={metrics?.byService || []} />
             </div>
           </section>
-        ) : (
+        ) : activeView === "leads" ? (
           <LeadsView
             activeLead={activeLead}
             leads={leads}
@@ -1014,6 +1019,8 @@ export default function AdminPage() {
             updateLead={updateLead}
             deleteLead={deleteLead}
           />
+        ) : (
+          <AdminEmailMarketing apiRequest={apiRequest} csrf={csrf} />
         )}
       </section>
     </main>
