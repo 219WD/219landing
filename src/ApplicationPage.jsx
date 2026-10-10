@@ -273,6 +273,7 @@ export default function ApplicationPage() {
   const [submitState, setSubmitState] = useState("idle");
   const [leadId, setLeadId] = useState("");
   const [saveError, setSaveError] = useState("");
+  const [backgroundSaveError, setBackgroundSaveError] = useState("");
   const [hasStarted, setHasStarted] = useState(false);
   const [trackedSteps, setTrackedSteps] = useState([]);
 
@@ -292,6 +293,7 @@ export default function ApplicationPage() {
     setSubmitState("idle");
     setLeadId("");
     setSaveError("");
+    setBackgroundSaveError("");
     setHasStarted(false);
     setTrackedSteps([]);
   }, [serviceParam]);
@@ -417,6 +419,7 @@ export default function ApplicationPage() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(leadPayload),
+      keepalive: true,
     });
 
     const data = await response.json().catch(() => ({}));
@@ -468,24 +471,56 @@ export default function ApplicationPage() {
     event.preventDefault();
     if (!canSubmitLead || !config) return;
 
-    setSubmitState("saving");
+    setSubmitState("saved");
+    setSaveError("");
+    setBackgroundSaveError("");
+    markStepCompleted("contact", selectedService);
+    trackEvent("application_form_submitted", {
+      service: config.label,
+      service_key: selectedService,
+      modality: answers.need,
+      lead_saved: "pending",
+    });
+
+    saveLead()
+      .then((data) => {
+        const currentLeadId = data.leadId || "";
+        setLeadId(currentLeadId);
+        trackEvent("application_form_saved", {
+          service: config.label,
+          service_key: selectedService,
+          modality: answers.need,
+          lead_saved: true,
+        });
+      })
+      .catch((error) => {
+        const message = error.message || "No pudimos guardar la consulta.";
+        setBackgroundSaveError(message);
+        trackEvent("application_form_submit_failed", {
+          service: config.label,
+          service_key: selectedService,
+          modality: answers.need,
+        });
+      });
+  };
+
+  const retryBackgroundSave = async () => {
+    if (!config) return;
+    setBackgroundSaveError("");
     setSaveError("");
 
     try {
       const data = await saveLead();
-      const currentLeadId = data.leadId || "";
-      setLeadId(currentLeadId);
-      setSubmitState("saved");
-      markStepCompleted("contact", selectedService);
-      trackEvent("application_form_submitted", {
+      setLeadId(data.leadId || "");
+      trackEvent("application_form_saved", {
         service: config.label,
         service_key: selectedService,
         modality: answers.need,
         lead_saved: true,
       });
     } catch (error) {
-      setSubmitState("error");
-      setSaveError(error.message || "No pudimos guardar la consulta.");
+      const message = error.message || "No pudimos guardar la consulta.";
+      setBackgroundSaveError(message);
       trackEvent("application_form_submit_failed", {
         service: config.label,
         service_key: selectedService,
@@ -637,8 +672,14 @@ export default function ApplicationPage() {
                   <span>Consulta recibida</span>
                   <h2>Ya tenemos tus datos y lo que necesitás.</h2>
                   <p>
-                    Si querés, podés continuar la conversación ahora por WhatsApp. Se abrirá con tu mensaje preparado y solo tendrás que presionar Enviar.
+                    Ya preparamos tu consulta. Si querés, podés continuar la conversación ahora por WhatsApp.
                   </p>
+                  {backgroundSaveError && (
+                    <div className="application-alert" role="alert">
+                      <p>{backgroundSaveError}</p>
+                      <p>Podés reintentar el guardado o continuar por WhatsApp.</p>
+                    </div>
+                  )}
                   <div className="application-actions">
                     <button
                       type="button"
@@ -646,11 +687,17 @@ export default function ApplicationPage() {
                       onClick={() => {
                         setSubmitState("idle");
                         setSaveError("");
+                        setBackgroundSaveError("");
                         setStep(1);
                       }}
                     >
                       Editar consulta
                     </button>
+                    {backgroundSaveError && (
+                      <button type="button" className="application-secondary" onClick={retryBackgroundSave}>
+                        Reintentar guardado
+                      </button>
+                    )}
                     <button type="button" className="application-submit" onClick={() => openWhatsapp()}>
                       Continuar por WhatsApp
                     </button>

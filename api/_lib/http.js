@@ -32,6 +32,8 @@ export function handleOptions(request, response) {
 }
 
 export function handleError(response, error) {
+  console.error(error);
+
   if (error instanceof ApiError) {
     sendJson(response, error.statusCode, { ok: false, error: error.message });
     return;
@@ -43,10 +45,18 @@ export function handleError(response, error) {
   }
 
   const missingConfig = error.message?.includes("MONGODB_URI");
-  sendJson(response, missingConfig ? 503 : 500, {
+  const mongoUnavailable = [
+    "MongoServerSelectionError",
+    "MongoNetworkError",
+    "MongoNetworkTimeoutError",
+  ].includes(error.name) || /ETIMEOUT|ENOTFOUND|ECONNREFUSED|querySrv|server selection/i.test(error.message || "");
+
+  sendJson(response, missingConfig || mongoUnavailable ? 503 : 500, {
     ok: false,
     error: missingConfig
       ? "Todavía falta configurar el guardado de consultas."
-      : "No pudimos completar la operación en este momento.",
+      : mongoUnavailable
+        ? "La base de datos tardó demasiado en responder. Podés reintentar o seguir por WhatsApp."
+        : "No pudimos completar la operación en este momento.",
   });
 }

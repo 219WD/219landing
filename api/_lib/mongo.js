@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
 
 let cachedClient;
+let connectionPromise;
 
 export async function getDatabase() {
   if (!process.env.MONGODB_URI) {
@@ -8,10 +9,23 @@ export async function getDatabase() {
   }
 
   if (!cachedClient) {
-    cachedClient = new MongoClient(process.env.MONGODB_URI);
+    cachedClient = new MongoClient(process.env.MONGODB_URI, {
+      connectTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 8000,
+      maxPoolSize: 8,
+      retryWrites: true,
+    });
   }
 
-  await cachedClient.connect();
+  if (!connectionPromise) {
+    connectionPromise = cachedClient.connect().catch((error) => {
+      connectionPromise = null;
+      throw error;
+    });
+  }
+
+  await connectionPromise;
   return cachedClient.db(process.env.MONGODB_DB || "219labs");
 }
 
